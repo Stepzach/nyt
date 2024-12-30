@@ -241,13 +241,22 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                 return Math.max(0, score); // Ensure score is not negative.
             }
 
-            function saveScore() {
+             function saveScore() {
                 if (playerName.value.trim() === "") {
                    alert("Please enter your name!");
                     return;
                 }
                 const endTime = Date.now();
                 const timeTakenInSeconds = (endTime - startTime.value) / 1000;
+                  if(isNaN(score.value)){
+                     console.error("Invalid Score");
+                     return;
+                 }
+                 if(isNaN(timeTakenInSeconds)){
+                      console.error("Invalid Time");
+                      return;
+                 }
+
                 const gameData = {
                     name: playerName.value,
                     score: score.value,
@@ -255,7 +264,6 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                 };
 
                  localStorage.setItem('currentGameData', JSON.stringify(gameData));
-
                  window.location.href = 'leaderboard.html';
             }
 
@@ -332,11 +340,9 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
 
                 return `${formattedMinutes}:${formattedSeconds}`;
             }
-
-             function closePopup(){
+              function closePopup(){
                  showPopup.value = false;
              }
-
              return (a, n) => (t(), l(k, null, [$(W, null, {
                 default: U(() => [ (t(), l("div", te2, f(formatTime(elapsedTime.value)), 1)), r.value ? (t(), l("div", me, [Z(f(r.value) + " ", 1), c.value ? (t(), l("pre", he, f(c.value), 1)) : x("", !0)])) : x("", !0)
                 ]),
@@ -365,12 +371,12 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                              "onUpdate:modelValue": n[0] || (n[0] = h => playerName.value = h),
                              placeholder: "Enter your name"
                          }, null, 512),
-                         p("button", {
+                        p("button", {
                             onClick: saveScore
-                         }, "Save Score"),
-                         p("button", {
-                            onClick: closePopup
-                        }, "Close")
+                        }, "Save Score"),
+                       p("button", {
+                           onClick: closePopup
+                       }, "Close")
                      ])
                  ])) : x("", true),
               $(ye, {
