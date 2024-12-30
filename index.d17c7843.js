@@ -136,11 +136,11 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
     he = {
         key: 0
     },
-        te2 = {
-          key: 1,
-          class: 'timer'
-        },
-    ge = pe(() => p("header", null, [p("a", {
+    te2 = {
+        key: 1,
+        class: 'timer'
+    },
+    ge = pe(() => p("header", null, [p("h1", null, "WORDLE"),p("a", {
         id: "source-link",
         href: "https://github.com/yyx990803/vue-wordle",
         target: "_blank"
@@ -174,28 +174,28 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                 });
             // Add a start time to the game
             const startTime = m(null);
-             const elapsedTime = m(0);
-              let timerInterval = null;
+            const elapsedTime = m(0);
+            let timerInterval = null;
 
 
-              function startTimer() {
-                  if(!timerInterval){
-                      timerInterval = setInterval(() => {
-                          if(startTime.value) {
-                           elapsedTime.value = Math.floor((Date.now() - startTime.value) / 1000);
-                            }
-                      }, 1000);
-                  }
-              }
+            function startTimer() {
+                if (!timerInterval) {
+                    timerInterval = setInterval(() => {
+                        if (startTime.value) {
+                            elapsedTime.value = Math.floor((Date.now() - startTime.value) / 1000);
+                        }
+                    }, 1000);
+                }
+            }
 
-              function stopTimer() {
-                  clearInterval(timerInterval);
-                  timerInterval = null;
-              }
+            function stopTimer() {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
 
 
             function N(a) {
-                if(!startTime.value) {
+                if (!startTime.value) {
                     startTime.value = Date.now()
                     startTimer();
                 }
@@ -215,7 +215,7 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                         break
                     }
             }
-             // New score calculation function
+            // New score calculation function
             function calculateScore(rows, timeInSeconds) {
                 let score = 1000; // Base score
 
@@ -253,15 +253,15 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                             const endTime = Date.now();
                             const timeTakenInSeconds = (endTime - startTime.value) / 1000;
                             const score = calculateScore(i.value + 1, timeTakenInSeconds);
-                             v(["Genius", "Magnificent", "Impressive", "Splendid", "Great", "Phew"][i.value], -1)
-                              c.value += `\nScore: ${score}`
-                             stopTimer();
+                            v(["Genius", "Magnificent", "Impressive", "Splendid", "Great", "Phew"][i.value], -1)
+                             c.value += `\nScore: ${score}`
+                            stopTimer();
                             T.value = !0
                         }, 1600) : i.value < d.value.length - 1 ? (i.value++, setTimeout(() => {
                             _ = !0
                         }, 1600)) : setTimeout(() => {
                             v(u.toUpperCase(), -1)
-                             stopTimer()
+                             stopTimer();
                         }, 1600)
                 } else
                     R(),
@@ -290,19 +290,18 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
 `
                 )
             }
-             function formatTime(seconds) {
-                const minutes = Math.floor(seconds / 60);
+            function formatTime(seconds) {
+                 const minutes = Math.floor(seconds / 60);
                  const remainingSeconds = seconds % 60;
 
-                const formattedMinutes = String(minutes).padStart(2, '0');
-                const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+                 const formattedMinutes = String(minutes).padStart(2, '0');
+                 const formattedSeconds = String(remainingSeconds).padStart(2, '0');
 
-                return `${formattedMinutes}:${formattedSeconds}`;
-             }
+                 return `${formattedMinutes}:${formattedSeconds}`;
+            }
             return (a, n) => (t(), l(k, null, [$(W, null, {
-                default: U(() => [r.value ? (t(), l("div", me, [Z(f(r.value) + " ", 1), c.value ? (t(), l("pre", he, f(c.value), 1)) : x("", !0)])) : x("", !0),
-                    (t(), l("div", te2, f(formatTime(elapsedTime.value)), 1) )
-                    ]),
+                default: U(() => [ (t(), l("div", te2, f(formatTime(elapsedTime.value)), 1)), r.value ? (t(), l("div", me, [Z(f(r.value) + " ", 1), c.value ? (t(), l("pre", he, f(c.value), 1)) : x("", !0)])) : x("", !0)
+                ]),
                 _: 1
             }), ge, p("div", be, [(t(!0), l(k, null, z(d.value, (o, g) => (t(), l("div", {
                 class: j(["row", w.value === g && "shake", T.value && i.value === g && "jump"])
