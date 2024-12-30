@@ -156,11 +156,18 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
         class: "popup"
     },
     we = {
-         class: "popup-content"
-     },
-     xe = {
-         class: "popup-title"
-     },
+        class: "popup-content"
+    },
+    xe = {
+        class: "popup-title"
+    },
+    ye2 = {
+        class: "leaderboard"
+    },
+    ze = {
+        class: "leaderboard-item"
+    },
+    Ae = ["onClick"],
     ke = C({
         setup(s) {
             const u = X(),
@@ -179,8 +186,11 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                 w = m(-1),
                 T = m(!1);
             const h = m({});
-              const score = m(0);
-             const showPopup = m(false);
+            const score = m(0);
+            const showPopup = m(false);
+            const playerName = m("");
+             const showLeaderboard = m(false);
+            const leaderboard = m([]);
             let _ = !0;
             const I = a => N(a.key);
             window.addEventListener("keyup", I),
@@ -191,7 +201,6 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
             const startTime = m(null);
             const elapsedTime = m(0);
             let timerInterval = null;
-
 
             function startTimer() {
                 if (!timerInterval) {
@@ -207,7 +216,6 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                 clearInterval(timerInterval);
                 timerInterval = null;
             }
-
 
             function N(a) {
                 if (!startTime.value) {
@@ -242,6 +250,25 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                 return Math.max(0, score); // Ensure score is not negative.
             }
 
+            function saveScore() {
+                 if (playerName.value.trim() === "") {
+                     alert("Please enter your name!");
+                     return;
+                 }
+                let currentLeaderboard = JSON.parse(localStorage.getItem("wordleLeaderboard") || "[]");
+                currentLeaderboard.push({
+                    name: playerName.value,
+                    score: score.value
+                });
+
+                currentLeaderboard.sort((a, b) => b.score - a.score);
+
+                localStorage.setItem("wordleLeaderboard", JSON.stringify(currentLeaderboard));
+
+                leaderboard.value = currentLeaderboard;
+                showPopup.value = false;
+
+            }
 
             function V() {
                 if (e.value.every(a => a.letter)) {
@@ -282,6 +309,15 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                     R(),
                     v("Not enough letters")
             }
+
+             function showStoredLeaderboard() {
+                    const storedLeaderboard = localStorage.getItem("wordleLeaderboard")
+                    if(storedLeaderboard){
+                        leaderboard.value = JSON.parse(storedLeaderboard);
+                    }
+
+                    showLeaderboard.value = true;
+            }
             function v(a, n = 1e3) {
                 r.value = a,
                     n > 0 && setTimeout(() => {
@@ -315,10 +351,18 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                 return `${formattedMinutes}:${formattedSeconds}`;
             }
 
-            function closePopup(){
+            function closePopup() {
                 showPopup.value = false;
+                showLeaderboard.value = false;
             }
-            return (a, n) => (t(), l(k, null, [$(W, null, {
+
+             H(() => {
+                 const storedLeaderboard = localStorage.getItem("wordleLeaderboard");
+                 if(storedLeaderboard)
+                     leaderboard.value = JSON.parse(storedLeaderboard);
+             })
+
+             return (a, n) => (t(), l(k, null, [$(W, null, {
                 default: U(() => [ (t(), l("div", te2, f(formatTime(elapsedTime.value)), 1)), r.value ? (t(), l("div", me, [Z(f(r.value) + " ", 1), c.value ? (t(), l("pre", he, f(c.value), 1)) : x("", !0)])) : x("", !0)
                 ]),
                 _: 1
@@ -338,15 +382,33 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                     animationDelay: `${E * 100}ms`
                 })
             }, f(b.letter), 7)], 2))), 256))], 2))), 256))]),
-             showPopup.value ? (t(), l("div", ve, [
-                p("div", we, [
-                   p("h2", xe, "Game Over"),
-                     p("p", null, `Your Score: ${f(score.value)}`,1),
-                    p("button", {
-                        onClick: closePopup,
-                    }, "Close" ),
-                ])
-            ])) : x("",true),
+                 showPopup.value ? (t(), l("div", ve, [
+                     p("div", we, [
+                         p("h2", xe, "Game Over"),
+                         p("p", null, `Your Score: ${f(score.value)}`, 1),
+                         p("input", {
+                             "onUpdate:modelValue": n[0] || (n[0] = h => playerName.value = h),
+                             placeholder: "Enter your name"
+                         }, null, 512),
+                        p("button", {
+                             onClick: saveScore
+                        }, "Save score"),
+                         p("button", {
+                             onClick: closePopup,
+                         }, "Close"),
+                     ])
+                ])) : x("", true),
+                 showLeaderboard.value ? (t(), l("div", ve, [
+                    p("div", we, [
+                        p("h2", xe, "Leaderboard"),
+                        p("div", ye2, [(t(), l(k, null, z(leaderboard.value, (player,index) => (t(), l("div", ze, `${f(index + 1)}. ${f(player.name)} - ${f(player.score)}`, 1))), 256))],
+                        ),
+                        p("button", {
+                            onClick: closePopup
+                        }, "Close")
+                    ])
+                 ])) : x("", true),
+                 p("button",{onClick: showStoredLeaderboard}, "Show leaderboard"),
               $(ye, {
                 onKey: N,
                 "letter-states": h.value
