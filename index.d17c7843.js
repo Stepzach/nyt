@@ -161,13 +161,6 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
     xe = {
         class: "popup-title"
     },
-    ye2 = {
-        class: "leaderboard"
-    },
-    ze = {
-        class: "leaderboard-item"
-    },
-    Ae = ["onClick"],
     ke = C({
         setup(s) {
             const u = X(),
@@ -189,9 +182,7 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
             const score = m(0);
             const showPopup = m(false);
             const playerName = m("");
-             const showLeaderboard = m(false);
-            const leaderboard = m([]);
-            let _ = !0;
+             let _ = !0;
             const I = a => N(a.key);
             window.addEventListener("keyup", I),
                 H(() => {
@@ -251,23 +242,21 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
             }
 
             function saveScore() {
-                 if (playerName.value.trim() === "") {
-                     alert("Please enter your name!");
-                     return;
-                 }
-                let currentLeaderboard = JSON.parse(localStorage.getItem("wordleLeaderboard") || "[]");
-                currentLeaderboard.push({
+                if (playerName.value.trim() === "") {
+                   alert("Please enter your name!");
+                    return;
+                }
+                const endTime = Date.now();
+                const timeTakenInSeconds = (endTime - startTime.value) / 1000;
+                const gameData = {
                     name: playerName.value,
-                    score: score.value
-                });
+                    score: score.value,
+                    time: timeTakenInSeconds
+                };
 
-                currentLeaderboard.sort((a, b) => b.score - a.score);
+                 localStorage.setItem('currentGameData', JSON.stringify(gameData));
 
-                localStorage.setItem("wordleLeaderboard", JSON.stringify(currentLeaderboard));
-
-                leaderboard.value = currentLeaderboard;
-                showPopup.value = false;
-
+                 window.location.href = 'leaderboard.html';
             }
 
             function V() {
@@ -303,21 +292,14 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                             _ = !0
                         }, 1600)) : setTimeout(() => {
                             v(u.toUpperCase(), -1)
-                            stopTimer();
+                             stopTimer();
                         }, 1600)
                 } else
                     R(),
                     v("Not enough letters")
             }
 
-             function showStoredLeaderboard() {
-                    const storedLeaderboard = localStorage.getItem("wordleLeaderboard")
-                    if(storedLeaderboard){
-                        leaderboard.value = JSON.parse(storedLeaderboard);
-                    }
 
-                    showLeaderboard.value = true;
-            }
             function v(a, n = 1e3) {
                 r.value = a,
                     n > 0 && setTimeout(() => {
@@ -351,16 +333,9 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                 return `${formattedMinutes}:${formattedSeconds}`;
             }
 
-            function closePopup() {
-                showPopup.value = false;
-                showLeaderboard.value = false;
-            }
-
-             H(() => {
-                 const storedLeaderboard = localStorage.getItem("wordleLeaderboard");
-                 if(storedLeaderboard)
-                     leaderboard.value = JSON.parse(storedLeaderboard);
-             })
+             function closePopup(){
+                 showPopup.value = false;
+             }
 
              return (a, n) => (t(), l(k, null, [$(W, null, {
                 default: U(() => [ (t(), l("div", te2, f(formatTime(elapsedTime.value)), 1)), r.value ? (t(), l("div", me, [Z(f(r.value) + " ", 1), c.value ? (t(), l("pre", he, f(c.value), 1)) : x("", !0)])) : x("", !0)
@@ -390,25 +365,14 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                              "onUpdate:modelValue": n[0] || (n[0] = h => playerName.value = h),
                              placeholder: "Enter your name"
                          }, null, 512),
-                        p("button", {
-                             onClick: saveScore
-                        }, "Save score"),
                          p("button", {
-                             onClick: closePopup,
-                         }, "Close"),
-                     ])
-                ])) : x("", true),
-                 showLeaderboard.value ? (t(), l("div", ve, [
-                    p("div", we, [
-                        p("h2", xe, "Leaderboard"),
-                        p("div", ye2, [(t(), l(k, null, z(leaderboard.value, (player,index) => (t(), l("div", ze, `${f(index + 1)}. ${f(player.name)} - ${f(player.score)}`, 1))), 256))],
-                        ),
-                        p("button", {
+                            onClick: saveScore
+                         }, "Save Score"),
+                         p("button", {
                             onClick: closePopup
                         }, "Close")
-                    ])
+                     ])
                  ])) : x("", true),
-                 p("button",{onClick: showStoredLeaderboard}, "Show leaderboard"),
               $(ye, {
                 onKey: N,
                 "letter-states": h.value
