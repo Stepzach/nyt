@@ -116,11 +116,11 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
     he = {
         key: 0
     },
-    ge = pe(() => p("header", null, [p("h1", null, "WORDLE"), p("a", {
+    ge = pe(() => p("header", null, [p("h1", null, "VVORDLE"), p("a", {
         id: "source-link",
         href: "https://github.com/yyx990803/vue-wordle",
         target: "_blank"
-    }, "Leaderboard")], -1)),
+    }, "Source")], -1)),
     be = {
         id: "board"
     },
