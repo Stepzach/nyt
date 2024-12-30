@@ -143,7 +143,7 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
         key: 1,
         class: 'timer'
     },
-    ge = pe(() => p("header", null, [p("h1", null, "WORDLE"),p("a", {
+    ge = pe(() => p("header", null, [p("h1", null, "WORDLE"), p("a", {
         id: "source-link",
         href: "https://github.com/yyx990803/vue-wordle",
         target: "_blank"
@@ -151,6 +151,16 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
     be = {
         id: "board"
     },
+    ve = {
+        key: 0,
+        class: "popup"
+    },
+    we = {
+         class: "popup-content"
+     },
+     xe = {
+         class: "popup-title"
+     },
     ke = C({
         setup(s) {
             const u = X(),
@@ -169,6 +179,8 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                 w = m(-1),
                 T = m(!1);
             const h = m({});
+              const score = m(0);
+             const showPopup = m(false);
             let _ = !0;
             const I = a => N(a.key);
             window.addEventListener("keyup", I),
@@ -255,16 +267,16 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                             // Calculate score only on a win
                             const endTime = Date.now();
                             const timeTakenInSeconds = (endTime - startTime.value) / 1000;
-                            const score = calculateScore(i.value + 1, timeTakenInSeconds);
+                            score.value = calculateScore(i.value + 1, timeTakenInSeconds);
                             v(["Genius", "Magnificent", "Impressive", "Splendid", "Great", "Phew"][i.value], -1)
-                             c.value += `\nScore: ${score}`
                             stopTimer();
+                            showPopup.value = true;
                             T.value = !0
                         }, 1600) : i.value < d.value.length - 1 ? (i.value++, setTimeout(() => {
                             _ = !0
                         }, 1600)) : setTimeout(() => {
                             v(u.toUpperCase(), -1)
-                             stopTimer();
+                            stopTimer();
                         }, 1600)
                 } else
                     R(),
@@ -294,13 +306,17 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                 )
             }
             function formatTime(seconds) {
-                 const minutes = Math.floor(seconds / 60);
-                 const remainingSeconds = seconds % 60;
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
 
-                 const formattedMinutes = String(minutes).padStart(2, '0');
-                 const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+                const formattedMinutes = String(minutes).padStart(2, '0');
+                const formattedSeconds = String(remainingSeconds).padStart(2, '0');
 
-                 return `${formattedMinutes}:${formattedSeconds}`;
+                return `${formattedMinutes}:${formattedSeconds}`;
+            }
+
+            function closePopup(){
+                showPopup.value = false;
             }
             return (a, n) => (t(), l(k, null, [$(W, null, {
                 default: U(() => [ (t(), l("div", te2, f(formatTime(elapsedTime.value)), 1)), r.value ? (t(), l("div", me, [Z(f(r.value) + " ", 1), c.value ? (t(), l("pre", he, f(c.value), 1)) : x("", !0)])) : x("", !0)
@@ -321,7 +337,17 @@ const pe = s => (S("data-v-08507b68"), s = s(), L(), s),
                     transitionDelay: `${E * 300}ms`,
                     animationDelay: `${E * 100}ms`
                 })
-            }, f(b.letter), 7)], 2))), 256))], 2))), 256))]), $(ye, {
+            }, f(b.letter), 7)], 2))), 256))], 2))), 256))]),
+             showPopup.value ? (t(), l("div", ve, [
+                p("div", we, [
+                   p("h2", xe, "Game Over"),
+                     p("p", null, `Your Score: ${f(score.value)}`,1),
+                    p("button", {
+                        onClick: closePopup,
+                    }, "Close" ),
+                ])
+            ])) : x("",true),
+              $(ye, {
                 onKey: N,
                 "letter-states": h.value
             }, null, 8, ["letter-states"])], 64))
