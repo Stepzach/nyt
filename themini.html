@@ -1,0 +1,654 @@
+<head>
+    <title>Wrist Crosswords</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:title" content="Crucig"/>
+    <meta property="og:image" content="thumb.png"/>
+    <meta property="og:description" content="A daily free 5x5 crossword puzzle"/>
+    <meta property="og:url" content="http://www.crucig.com"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="626"/>
+    <meta property="og:type" content="website"/>
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+
+    <link href="style.css" rel="stylesheet"></link>
+    <script type="text/javascript" src="game.js"></script>
+</head>
+
+<body>
+    <div class="topnav">
+        <a class="active"><center><b id="title2">Crucig</b> Points:<b id="score"></b></center></a>
+
+
+    </div>
+
+    <center>
+        <br>
+        <table bgcolor="black" id="table" onkeyup="keyfunc()">
+        </table>
+        <p>
+            <button id="horizontal_tip" onclick="clickf(true)" style="font-size:16px;"></button>
+            <button id="vertical_tip" onclick="clickf(false)" style="font-size:16px;"></button>
+        </p>
+        <div>
+            <button id="prev_hint" onclick="prevHint()" style="font-size:16px;"><</button>
+            <button id="next_hint" onclick="nextHint()" style="font-size:16px;">></button>
+        </div>
+    </center>
+
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('myModal')">×</span>
+                <p><b>You won!</b></p>
+                <p id="puntaje">Score: </p>
+                <p>Come back tomorrow for next Crucig! <b id="siguiente">00:00:00</b></p>
+                <p>Or play all levels on our app: </p>
+                <a href="https://bl8g.short.gy/wristcrosswords"><img src="appstore.svg"></a>
+        </div>
+    </div>
+
+    <div id="onboard" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('onboard')">×</span>
+                <p><b>Wrist crosswords</b> are small 5x5 letter crosswords</p>
+                <p>Touch the ACROSS and DOWN buttons to change the <b>direction</b> of writing:</p>
+                    <table bgcolor="black">
+                        <tr>
+                            <td style="background-color:gold;"><input class="cell" style="opacity:0;"></td>
+                            <td id="anim1"><input class="cell" style="opacity:0;"></td>
+                            <td id="anim2"><input class="cell" style="opacity:0;"></td>
+                            <td id="anim3"><input class="cell" style="opacity:0;"></td>
+                            <td id="anim4"><input class="cell" style="opacity:0;"></td>
+                        </tr>
+                        <tr>
+                            <td id="anim5"><input class="cell" style="opacity:0;"></td>
+                            <td><input class="cell"></td>
+                            <td><input class="cell"></td>
+                            <td><input class="cell"></td>
+                            <td><input class="cell"></td>
+                        </tr>
+                    </table>
+                    <p><button id="anim6" style="font-size:16px;"><b>ACROSS:</b> Sentences are made of these</button></p>
+                    <button id="anim7" style="font-size:16px;"><b>DOWN:</b> Opposite of below</button>
+                    <p style="text-align:right;" onclick="closeModal('onboard');showModal('onboard2');"><button>Next</button></p>
+        </div>
+    </div>
+
+    <div id="onboard2" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('onboard2');f(0,0)">×</span>
+            <p>Any wrong letters will appear in <b style="color:red;">red</b>:</p>
+                <table bgcolor="black">
+                    <tr>
+                        <td><input class="cell" value="W"></td>
+                        <td><input class="cell" value="O"></td>
+                        <td><input class="cell" value="R"></td>
+                        <td><input class="cell" value="D"></td>
+                        <td><input class="cell" style="-webkit-text-fill-color:red;" value="Z"></td>
+                    </tr>
+                </table>
+            <p>Solve it with <b>less mistakes</b> for higher scores</p>
+            <p>Download our Apple Watch app for more levels:</p>
+            <p><a href="https://bl8g.short.gy/wristcrosswords"><img src="appstore.svg"></a></p>
+            <p style="text-align:right;" onclick="closeModal('onboard2');f(0,0)"><button>Start</button></p>
+        </div>
+    </div>
+</body>
+
+<script>
+    tips=["(In birds) Limbs used for flying","Formal system, set of rules used for reasoning correctness in computer programs","Japanese hot spring and bathing facilities","Religious ceremonies or acts","American singer and original lead vocalist of Alice in Chains, last name Staley","Type of spiral or circular pattern","An ancient region of central coastal Anatolia in present-day Turkey","Highly unpleasant to the senses, physically nauseating","Color between blue and yellow on the spectrum of visible light","One of the faculties of sight, smell, hearing, taste and touch"]
+    acrossWords=["WINGS","HOARE","ONSEN","RITES","LAYNE"]
+</script>
+
+<script type="text/javascript" src="confetti.js">var startConfetti,
+    stopConfetti,
+    toggleConfetti,
+    removeConfetti,
+    maxParticleCount = 150,
+    particleSpeed = 2;
+!function() {
+    startConfetti = a,
+    stopConfetti = l,
+    toggleConfetti = function() {
+        e ? l() : a()
+    },
+    removeConfetti = function() {
+        stopConfetti(),
+        i = []
+    };
+    var t = ["DodgerBlue", "OliveDrab", "Gold", "Pink", "SlateBlue", "LightBlue", "Violet", "PaleGreen", "SteelBlue", "SandyBrown", "Chocolate", "Crimson"],
+        e = !1,
+        n = null,
+        i = [],
+        o = 0;
+    function r(e, n, i) {
+        return e.color = t[Math.random() * t.length | 0], e.x = Math.random() * n, e.y = Math.random() * i - i, e.diameter = 10 * Math.random() + 5, e.tilt = 10 * Math.random() - 10, e.tiltAngleIncrement = .07 * Math.random() + .05, e.tiltAngle = 0, e
+    }
+    function a() {
+        var t = window.innerWidth,
+            a = window.innerHeight;
+        window.requestAnimFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(t) {
+            return window.setTimeout(t, 16.6666667)
+        };
+        var l = document.getElementById("confetti-canvas");
+        null === l && ((l = document.createElement("canvas")).setAttribute("id", "confetti-canvas"), l.setAttribute("style", "display:block;z-index:999999;pointer-events:none;position:fixed;left:0;top:0;"), document.body.appendChild(l), l.width = t, l.height = a, window.addEventListener("resize", (function() {
+            l.width = window.innerWidth,
+            l.height = window.innerHeight
+        }), !0));
+        for (var d = l.getContext("2d"); i.length < maxParticleCount;)
+            i.push(r({}, t, a));
+        e = !0,
+        null === n && function t() {
+            d.clearRect(0, 0, window.innerWidth, window.innerHeight),
+            0 === i.length ? n = null : (!function() {
+                var t,
+                    n = window.innerWidth,
+                    a = window.innerHeight;
+                o += .01;
+                for (var l = 0; l < i.length; l++)
+                    t = i[l],
+                    !e && t.y < -15 ? t.y = a + 100 : (t.tiltAngle += t.tiltAngleIncrement, t.x += Math.sin(o), t.y += .5 * (Math.cos(o) + t.diameter + particleSpeed), t.tilt = 15 * Math.sin(t.tiltAngle)),
+                    (t.x > n + 20 || t.x < -20 || t.y > a) && (e && i.length <= maxParticleCount ? r(t, n, a) : (i.splice(l, 1), l--))
+            }(), function(t) {
+                for (var e, n, o = 0; o < i.length; o++)
+                    e = i[o],
+                    t.beginPath(),
+                    t.lineWidth = e.diameter,
+                    t.strokeStyle = e.color,
+                    n = e.x + e.tilt,
+                    t.moveTo(n + e.diameter / 2, e.y),
+                    t.lineTo(n, e.y + e.tilt + e.diameter / 2),
+                    t.stroke()
+            }(d), n = requestAnimFrame(t))
+        }()
+    }
+    function l() {
+        e = !1
+    }
+}();
+</script>
+</html>
+<script>
+//global vars
+horizontal=true;
+maxscore = 100;
+var x, y;
+var currentHintIndex = 0;
+var hintsShown = true; // Always show hints
+
+//instructions
+function closeModal(name){
+    document.getElementById(name).style.display = "none";
+}
+function showModal(name){
+    document.getElementById(name).style.display = "block";
+}
+animState = false
+function animTutorial(){
+    if(animState==false){
+        document.getElementById("anim1").style.backgroundColor = "LightBlue"
+        document.getElementById("anim2").style.backgroundColor = "LightBlue"
+        document.getElementById("anim3").style.backgroundColor = "LightBlue"
+        document.getElementById("anim4").style.backgroundColor = "LightBlue"
+        document.getElementById("anim5").style.backgroundColor = "White"
+        document.getElementById("anim6").style.backgroundColor = "LightBlue"
+        document.getElementById("anim7").style.backgroundColor = "LightGray"
+        animState=true
+    } else {
+        document.getElementById("anim1").style.backgroundColor = "White"
+        document.getElementById("anim2").style.backgroundColor = "White"
+        document.getElementById("anim3").style.backgroundColor = "White"
+        document.getElementById("anim4").style.backgroundColor = "White"
+        document.getElementById("anim5").style.backgroundColor = "LightBlue"
+        document.getElementById("anim6").style.backgroundColor = "LightGray"
+        document.getElementById("anim7").style.backgroundColor = "LightBlue"
+        animState=false
+    }
+    animState != animState
+}
+
+function clickf(direction){
+    horizontal = direction
+    colorSquares()
+    document.getElementById("i"+x+"_"+y).focus()
+    showTip(x,y); // Update tip display
+}
+
+function keyfunc(){
+    var x, y, i
+    x=this.x
+    y=this.y
+    switch(event.keyCode){
+    //backspace
+    case 8:
+    if(document.getElementById("i"+x+"_"+y).value=='')
+        if(horizontal==true){
+            if(y>0)y--;
+        } else {
+            if(x>0)x--;
+        }
+    break;
+
+    //left
+    case 37:
+        if(y>0)y--;
+    break;
+
+    //up
+    case 38:
+        if(x>0)x--;
+    break;
+
+    //right
+    case 39:
+        if(y<4)y++;
+    break;
+
+    //down
+    case 40:
+        if(x<4)x++;
+    break;
+    }
+    if(document.getElementById("i"+x+"_"+y).disabled==false){
+        this.x=x
+        this.y=y
+        f(this.x,this.y)
+    }
+}
+
+function blackOut(){
+    for(i=0;i<5;i++){
+        for(j=0;j<5;j++){
+            field = document.getElementById("i"+i+"_"+j);
+            if(acrossWords[i].charAt(j)==' '){
+                field.style.backgroundColor = "Black";
+            }
+        }
+    }
+}
+
+function showWinModal(){
+    document.getElementById("myModal").style.display = "block";
+    document.getElementById("myModal").focus()
+}
+
+function stopConfettiAndShowModal(){
+    stopConfetti()
+    setTimeout(showWinModal, 1000)
+}
+
+function checkLetters(){
+    win = true;
+    for(i=0;i<5;i++){
+        for(j=0;j<5;j++){
+            field = document.getElementById("i"+i+"_"+j);
+            if(field.value!=''){
+                if(acrossWords[j].charAt(i)!=field.value){
+                    if(field.style.color!="red"){
+                        correcciones--;
+                    }
+                    field.style.color = "red"
+                    field.style.webkitTextFillColor = "red"
+                    win = false;
+                } else {
+                    field.style.color = "Black"
+                    field.style.webkitTextFillColor = "Black"
+                    if(field.disabled==false){
+                        correcciones+=4
+                    }
+                    field.disabled = true
+                }
+            } else {
+                win = false;
+            }
+        }
+    }
+    document.getElementById("score").innerHTML = correcciones;
+    if(win){
+        if(correcciones<0){correcciones=0}
+        document.getElementById("puntaje").innerHTML = "Score: "+ correcciones + "/" + maxscore
+        startConfetti()
+        setTimeout(stopConfettiAndShowModal,correcciones*30)
+        updateCountDown()
+        setInterval(updateCountDown,1000);
+    }
+    colorSquares()
+}
+
+function colorSquares(){
+    for(i=0;i<5;i++)
+        for(j=0;j<5;j++)
+            document.getElementById("i"+i+"_"+j).style.backgroundColor = "White"
+    if(horizontal==true){
+        document.getElementById("horizontal_tip").style.backgroundColor = "LightBlue"
+        document.getElementById("vertical_tip").style.backgroundColor = "LightGray"
+        for(i=0;i<5;i++){document.getElementById("i"+x+"_"+i).style.backgroundColor = "LightBlue"}
+    } else {
+        document.getElementById("horizontal_tip").style.backgroundColor = "LightGray"
+        document.getElementById("vertical_tip").style.backgroundColor = "LightBlue"
+        for(i=0;i<5;i++){document.getElementById("i"+i+"_"+y).style.backgroundColor = "LightBlue"}
+    }
+    document.getElementById("i"+x+"_"+y).style.backgroundColor = "Gold";
+}
+
+function focusfunct(x,y){
+    if(document.getElementById("i"+x+"_"+y).disabled==false){
+        this.x = x;
+        this.y = y;
+        colorSquares()
+        blackOut()
+        showTip(x,y)
+        if(document.getElementById("i"+x+"_"+y).style.color=="red"){
+            document.getElementById("i"+x+"_"+y).value=""
+        }
+    }
+}
+
+function f(x,y){
+    if(document.getElementById("i"+x+"_"+y).disabled==false && document.getElementById("i"+x+"_"+y).value!="" && event.keyCode!=8 && event.keyCode!=37 && event.keyCode!=38 && event.keyCode!=39 && event.keyCode!=40)
+    do {
+        if(horizontal==false){
+            x++
+            if(x>4){
+                x=0
+                y++
+                if(y>4){
+                    y=0
+                    horizontal = true
+                }
+            }
+        } else if(horizontal==true){
+            y++
+            if(y>4){
+                y=0
+                x++
+                if(x>4){
+                    x=0
+                    horizontal = false
+                }
+            }
+        }
+    } while(document.getElementById("i"+x+"_"+y).disabled==true)
+    for(i=0;i<5;i++){
+        for(j=0;j<5;j++){
+            str = document.getElementById("i"+i+"_"+j).value
+            document.getElementById("i"+i+"_"+j).value = str.charAt(str.length-1).toUpperCase()
+        }
+    }
+    document.getElementById("i"+x+"_"+y).focus()
+    showTip(x,y)
+    checkLetters()
+    colorSquares()
+    this.x = x;
+    this.y = y;
+}
+
+function showTip(x, y) {
+  let horizontalTip = "<b>ACROSS: </b>";
+  let verticalTip = "<b>DOWN: </b>";
+
+  // Apply highlighting logic
+  let horizontalHighlight = "";
+  let verticalHighlight = "";
+
+  if (horizontal && currentHintIndex < 5) { // across word active
+    if (x == currentHintIndex) {
+      horizontalHighlight = " style='background-color: yellow;'";
+      verticalHighlight="";
+
+    } else{
+         horizontalHighlight = "";
+    }
+      horizontalTip += "<span"+ horizontalHighlight +">" + tips[x+5] + "</span>";
+    
+  }
+   else if(!horizontal && currentHintIndex < 5) { // down word active
+    if (y == currentHintIndex) {
+        verticalHighlight = " style='background-color: yellow;'";
+        horizontalHighlight = "";
+    }else{
+         verticalHighlight = "";
+    }
+      verticalTip += "<span"+ verticalHighlight +">" + tips[y] + "</span>";
+  }
+
+  // Update all tips
+    for (let i = 0; i < 5; i++) {
+        let hintDisplay = (horizontal) ? "<b>ACROSS: </b>" : "<b>DOWN: </b>"
+        let highlight = "";
+        if (horizontal && i == x) {
+            highlight = " style='background-color: yellow;'";
+        }
+         if(!horizontal && i == y) {
+            highlight = " style='background-color: yellow;'";
+        }
+
+        if(horizontal){
+              document.getElementById("horizontal_tip").innerHTML = "<b>ACROSS: </b>" +  tips.slice(5).map((tip,index)=> {
+                let style = "";
+                  if (currentHintIndex == index && horizontal) {
+                        style = " style='background-color: yellow;'";
+                  }
+                  return "<span"+ style +">" + tip + "</span>";
+            }).join(" <br> <b>ACROSS: </b>") ;
+            document.getElementById("vertical_tip").innerHTML = "<b>DOWN: </b>" + tips.slice(0,5).map((tip,index)=>{
+                 let style = "";
+                 if(currentHintIndex == index && !horizontal){
+                      style=" style='background-color: yellow;'";
+                 }
+                 return "<span"+ style +">"+ tip + "</span>";
+            }).join(" <br> <b>DOWN: </b>") ;
+
+        } else {
+             document.getElementById("horizontal_tip").innerHTML = "<b>ACROSS: </b>" +  tips.slice(5).map((tip,index)=> {
+                   let style = "";
+                  if (currentHintIndex == index && horizontal) {
+                        style = " style='background-color: yellow;'";
+                  }
+                  return "<span"+ style +">" + tip + "</span>";
+            }).join(" <br> <b>ACROSS: </b>") ;
+           document.getElementById("vertical_tip").innerHTML = "<b>DOWN: </b>" + tips.slice(0,5).map((tip,index)=>{
+                let style = "";
+                 if(currentHintIndex == index && !horizontal){
+                      style=" style='background-color: yellow;'";
+                 }
+                 return "<span"+ style +">"+ tip + "</span>";
+            }).join(" <br> <b>DOWN: </b>") ;
+
+        }
+  }
+}
+
+function prevHint() {
+    currentHintIndex--;
+    if (currentHintIndex < 0) {
+        currentHintIndex = 4;
+    }
+    moveCursorToHint();
+    showTip(x,y)
+}
+
+function nextHint() {
+    currentHintIndex++;
+    if (currentHintIndex > 4) {
+        currentHintIndex = 0;
+    }
+     moveCursorToHint();
+    showTip(x,y)
+}
+function moveCursorToHint() {
+    if(horizontal){
+         x = currentHintIndex;
+         y = 0
+          while(document.getElementById("i"+x+"_"+y).disabled==true){
+            y++
+           }
+    }else {
+          y = currentHintIndex;
+          x=0;
+           while(document.getElementById("i"+x+"_"+y).disabled==true){
+            x++
+           }
+
+    }
+    document.getElementById("i"+x+"_"+y).focus();
+     colorSquares();
+}
+
+
+window.onload = function(){
+    if(!(window.location.pathname).includes("anteriores")){
+        correcciones = 0;
+    }
+    animTutorial()
+    setInterval(animTutorial,2000)
+
+    //set up game
+    table = document.getElementById("table");
+    t = ""
+    for(i=0;i<5;i++){
+        t += "<tr>";
+        for(j=0;j<5;j++){
+            t += "<td><input autocomplete='off' onkeyup='f("+i+","+j+")' onfocus='focusfunct("+i+","+j+")' class='cell' id='i"+i+"_"+j+"'></input></td>";
+        }
+        t += "</tr>";
+    }
+    table.innerHTML = t;
+    if(correcciones==0){
+         f(0,0)
+          moveCursorToHint();
+
+    } else {
+        for(i=0;i<5;i++){
+            for(j=0;j<5;j++){
+                document.getElementById('i'+i+'_'+j).value = acrossWords[j].charAt(i)
+                document.getElementById('i'+i+'_'+j).disabled = true
+                showTip(0,0)
+                 moveCursorToHint();
+            }
+        }
+    }
+    blackOut()
+}
+
+function myFunction() {
+  var x = document.getElementById("myLinks");
+  if (x.style.display === "block") {
+    x.style.display = "none";
+  } else {
+    x.style.display = "block";
+  }
+}
+
+function updateCountDown(){
+  var toDate=new Date();
+  var tomorrow=new Date();
+  tomorrow.setHours(24,0,0,0);
+  var diffMS=tomorrow.getTime()/1000-toDate.getTime()/1000;
+  var diffHr=Math.floor(diffMS/3600);
+  diffMS=diffMS-diffHr*3600;
+  var diffMi=Math.floor(diffMS/60);
+  diffMS=diffMS-diffMi*60;
+  var diffS=Math.floor(diffMS);
+  var result=((diffHr<10)?"0"+diffHr:diffHr);
+  result+=":"+((diffMi<10)?"0"+diffMi:diffMi);
+  result+=":"+((diffS<10)?"0"+diffS:diffS);
+  document.getElementById("siguiente").innerHTML=result;
+}
+</script>
+<style>
+* {
+    font-family: Verdana;
+    font-size: 20px;
+}
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 50px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cell {
+  border-radius: 0;
+  width:50px !important;
+  height:50px !important;
+  outline: none;
+  border: none;
+  text-align: center;
+  font-size: 20px;
+  opacity: 1;
+  -webkit-text-fill-color:black;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: white;
+  position: relative;
+}
+
+.topnav #myLinks {
+  display: none;
+}
+
+.topnav a {
+  color: black;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  display: block;
+}
+
+.topnav a.icon {
+  background: white;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.topnav a:hover {
+  background-color: lightblue;
+  color: black;
+}
+
+.active {
+  background-color: white;
+  color: white;
+}
+</style>
