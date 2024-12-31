@@ -34,7 +34,7 @@
 
     <center>
         <br>
-        <table id="table" onkeyup="keyfunc()">
+        <table id="table">
         </table>
         <div id="hint-container">
             <button id="prev-hint" onclick="scrollHint(-1)"> < </button>
@@ -597,6 +597,8 @@ function handleCellClick(clickedX, clickedY) {
     }
     
     const cellId = `i${clickedX}_${clickedY}`;
+    document.getElementById("i" + clickedX + "_" + clickedY).value=""
+     document.getElementById("i" + clickedX + "_" + clickedY).focus()
 
     if (!directionMap[cellId]) {
            directionMap[cellId] = 'across'; // Initial direction
@@ -610,7 +612,7 @@ function handleCellClick(clickedX, clickedY) {
                  }
                  if(y>=5) y=start;
            }
-            document.getElementById("i"+x+"_"+y).focus()
+           document.getElementById("i"+x+"_"+y).focus()
       } else if(directionMap[cellId] === 'across'){
              directionMap[cellId] = 'down';
              horizontal = false;
@@ -663,7 +665,7 @@ window.onload = function(){
     for(i=0;i<5;i++){
         t += "<tr>";
         for(j=0;j<5;j++){
-          t += `<td><input autocomplete='off' onkeyup='keyfunc()' onfocus='focusfunct(${i},${j})' onclick='handleCellClick(${i}, ${j})' class='cell' id='i${i}_${j}'></input></td>`;
+          t += `<td><input autocomplete='off' readonly onkeyup='keyfunc()' onfocus='focusfunct(${i},${j})' onclick='handleCellClick(${i}, ${j})' class='cell' id='i${i}_${j}'></input></td>`;
         }
         t += "</tr>";
     }
