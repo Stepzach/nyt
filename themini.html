@@ -42,7 +42,7 @@
             <button id="next-hint" onclick="scrollHint(1)"> > </button>
         </div>
     </center>
-
+<div id="bruh">
     <div id="keyboard">
         <div class="keyboard-row">
             <button onclick="insertChar('Q')">Q</button>
@@ -78,17 +78,8 @@
             <button onclick="deleteChar()" style="background-color: lightgray">⌫</button>
         </div>
     </div>
-
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('myModal')">×</span>
-                <p><b>You won!</b></p>
-                <p id="puntaje">Score: </p>
-                <p>Come back tomorrow for next Crucig! <b id="siguiente">00:00:00</b></p>
-                <p>Or play all levels on our app: </p>
-                <a href="https://bl8g.short.gy/wristcrosswords"><img src="appstore.svg"></a>
-        </div>
-    </div>
+</div>
+   
 
     <div id="onboard" class="modal">
         <div class="modal-content">
@@ -832,6 +823,22 @@ function updateCountDown(){
     flex-shrink: 0; /* Prevent buttons from shrinking */
 }
 }
+#bruh {
+ background-color: #ececec;
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+   
+    padding: 5px;
+    box-sizing: border-box;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
 #keyboard {
     display: flex;
     flex-direction: column;
@@ -840,7 +847,7 @@ function updateCountDown(){
     max-width: 400px;
     margin-left: auto;
     margin-right: auto;
-    background-color: #ececec;
+   
     padding: 5px;
     box-sizing: border-box;
     padding-top: 15px;
