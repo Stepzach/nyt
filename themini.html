@@ -585,12 +585,7 @@ function updateCountDown(){
   font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
+
 
 .cell {
     border-radius: 0;
@@ -610,35 +605,13 @@ function updateCountDown(){
   position: relative;
 }
 
-.topnav #myLinks {
-  display: none;
-}
 
-.topnav a {
-  color: black;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-  display: block;
-}
 
-.topnav a.icon {
-  background: white;
-  display: block;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-.topnav a:hover {
-  background-color: lightblue;
-  color: black;
-}
 
 /* Modified Styles */
 #hint-container {
     display: flex;
-    align-items: center;
+ 
     justify-content: center;
     margin-top: 10px;
     width: 100%;
@@ -650,10 +623,10 @@ function updateCountDown(){
     box-sizing: border-box;
 }
 #hint-text {
-    margin: 0 10px;
-    font-size: 16px;
-    flex-grow: 1; /* Allows text to take up available space */
-    text-align: center;
+    margin: 0 5px;
+    font-size: 10px;
+   
+    text-align: left;
 }
 #prev-hint,
 #next-hint {
@@ -662,6 +635,7 @@ function updateCountDown(){
     cursor: pointer;
     background-color: transparent; /* Remove button background color */
     border: none; /* Remove button border */
+    font-weight: bold;
 }
 #keyboard {
     display: flex;
