@@ -21,6 +21,13 @@
 </head>
 
 <body>
+<div id="overlay">
+        <div id="popup">
+            <label for="nameInput">Enter your name:</label><br>
+            <input type="text" id="nameInput"><br>
+            <button onclick="startGame()">Start Crossword</button>
+        </div>
+    </div>
     <div class="topnav">
         <a class="active"><center><b id="title2">Crucig</b> Points:<b id="score"></b></center></a>
     </div>
@@ -635,7 +642,12 @@ function handleCellClick(clickedX, clickedY) {
     colorSquares()
     
 }
-
+function startGame() {
+    const name = document.getElementById('nameInput').value;
+    document.getElementById('title2').textContent = name;
+    document.getElementById('overlay').style.display = 'none';
+   
+}
 
 
 window.onload = function(){
@@ -864,5 +876,55 @@ function updateCountDown(){
     border: 1px solid gray; /* Thinner inner borders */
     padding: 0;
 }
+  #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure it's on top */
+        }
+        #popup {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px; /* Limit width */
+             width: 70%; /* Make it responsive */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+         #popup label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+          }
+          #popup input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            width: 80%;
+             font-size: 16px;
+            box-sizing: border-box;
+        }
+        #popup button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+             font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #popup button:hover {
+            background-color: #0056b3;
+        }
+
 </style>
 </html>
