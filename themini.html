@@ -476,7 +476,7 @@ window.onload = function(){
     for(i=0;i<5;i++){
         t += "<tr>";
         for(j=0;j<5;j++){
-            t += "<td><input autocomplete='off' onkeyup='f("+i+","+j+")' onfocus='focusfunct("+i+","+j+")' class='cell' id='i"+i+"_"+j+"'></input></td>";
+          t += "<td><input autocomplete='off' onkeyup='f("+i+","+j+")' onfocus='focusfunct("+i+","+j+")' class='cell' id='i"+i+"_"+j+"'></input></td>";
         }
         t += "</tr>";
     }
@@ -493,6 +493,27 @@ window.onload = function(){
     }
     blackOut()
     updateHintText()
+    
+     function adjustSizes() {
+    // Get the width of the keyboard container
+        const keyboardWidth = document.getElementById('keyboard').offsetWidth;
+        // Calculate the height of the crossword table cells to match the width
+         const cellSize = (keyboardWidth / 5);
+
+          // Set the table cell size
+        const cells = document.querySelectorAll('#table .cell');
+        cells.forEach(cell => {
+          cell.style.width = cellSize + 'px';
+          cell.style.height = cellSize + 'px';
+        });
+
+        //adjust table to be the same width as the keyboard
+        document.getElementById('table').style.width = keyboardWidth+'px';
+            document.getElementById('hint-container').style.width = keyboardWidth+'px';
+    }
+    adjustSizes()
+    window.addEventListener('resize', adjustSizes);
+
 }
 
 function myFunction() {
@@ -565,15 +586,15 @@ function updateCountDown(){
 }
 
 .cell {
-  border-radius: 0;
-  width:50px !important;
-  height:50px !important;
-  outline: none;
-  border: none;
-  text-align: center;
-  font-size: 20px;
-  opacity: 1;
-  -webkit-text-fill-color:black;
+    border-radius: 0;
+    outline: none;
+    border: none;
+    text-align: center;
+    font-size: 20px;
+    opacity: 1;
+    -webkit-text-fill-color: black;
+    box-sizing: border-box; /*Ensure padding and border don't affect size*/
+    padding: 0;
 }
 
 .topnav {
@@ -607,35 +628,39 @@ function updateCountDown(){
   color: black;
 }
 
+/* Modified Styles */
 #hint-container {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 10px;
+    width: 100%;
+    max-width: 400px; 
+    margin-left: auto;
+    margin-right: auto;
 }
-
 #hint-text {
     margin: 0 10px;
     font-size: 16px;
+    flex-grow: 1; /* Allows text to take up available space */
+    text-align: center;
 }
-
 #prev-hint,
 #next-hint {
     font-size: 16px;
     padding: 5px 10px;
     cursor: pointer;
 }
-
 #keyboard {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 20px;
-    max-width: 400px; /* Limit keyboard width */
+    width: 100%; /* Make keyboard full width */
+    max-width: 400px; /* Limit keyboard width on larger screens */
     margin-left: auto;
     margin-right: auto;
 }
-
 #keyboard button {
     width: 40px;
     height: 40px;
@@ -649,5 +674,13 @@ function updateCountDown(){
 }
 #keyboard button:hover {
     background-color: #e0e0e0;
+}
+/* Style for the crossword table to match keyboard width*/
+#table {
+  width: 100%;
+  max-width: 400px; /* Match keyboard max-width */
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse; /* Required to stop table growing*/
 }
 </style>
