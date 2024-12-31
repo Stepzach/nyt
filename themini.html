@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <title>Wrist Crosswords</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,33 +37,39 @@
     </center>
 
     <div id="keyboard">
-        <button onclick="insertChar('Q')">Q</button>
-        <button onclick="insertChar('W')">W</button>
-        <button onclick="insertChar('E')">E</button>
-        <button onclick="insertChar('R')">R</button>
-        <button onclick="insertChar('T')">T</button>
-        <button onclick="insertChar('Y')">Y</button>
-        <button onclick="insertChar('U')">U</button>
-        <button onclick="insertChar('I')">I</button>
-        <button onclick="insertChar('O')">O</button>
-        <button onclick="insertChar('P')">P</button><br>
-        <button onclick="insertChar('A')">A</button>
-        <button onclick="insertChar('S')">S</button>
-        <button onclick="insertChar('D')">D</button>
-        <button onclick="insertChar('F')">F</button>
-        <button onclick="insertChar('G')">G</button>
-        <button onclick="insertChar('H')">H</button>
-        <button onclick="insertChar('J')">J</button>
-        <button onclick="insertChar('K')">K</button>
-        <button onclick="insertChar('L')">L</button><br>
-        <button onclick="insertChar('Z')">Z</button>
-        <button onclick="insertChar('X')">X</button>
-        <button onclick="insertChar('C')">C</button>
-        <button onclick="insertChar('V')">V</button>
-        <button onclick="insertChar('B')">B</button>
-        <button onclick="insertChar('N')">N</button>
-        <button onclick="insertChar('M')">M</button>
-        <button onclick="deleteChar()">⌫</button>
+        <div class="keyboard-row">
+            <button onclick="insertChar('Q')">Q</button>
+            <button onclick="insertChar('W')">W</button>
+            <button onclick="insertChar('E')">E</button>
+            <button onclick="insertChar('R')">R</button>
+            <button onclick="insertChar('T')">T</button>
+            <button onclick="insertChar('Y')">Y</button>
+            <button onclick="insertChar('U')">U</button>
+            <button onclick="insertChar('I')">I</button>
+            <button onclick="insertChar('O')">O</button>
+            <button onclick="insertChar('P')">P</button>
+        </div>
+        <div class="keyboard-row">
+            <button onclick="insertChar('A')">A</button>
+            <button onclick="insertChar('S')">S</button>
+            <button onclick="insertChar('D')">D</button>
+            <button onclick="insertChar('F')">F</button>
+            <button onclick="insertChar('G')">G</button>
+            <button onclick="insertChar('H')">H</button>
+            <button onclick="insertChar('J')">J</button>
+            <button onclick="insertChar('K')">K</button>
+            <button onclick="insertChar('L')">L</button>
+        </div>
+         <div class="keyboard-row">
+            <button onclick="insertChar('Z')">Z</button>
+            <button onclick="insertChar('X')">X</button>
+            <button onclick="insertChar('C')">C</button>
+            <button onclick="insertChar('V')">V</button>
+            <button onclick="insertChar('B')">B</button>
+            <button onclick="insertChar('N')">N</button>
+             <button onclick="insertChar('M')">M</button>
+            <button onclick="deleteChar()" style="background-color: lightgray">⌫</button>
+        </div>
     </div>
 
     <div id="myModal" class="modal">
@@ -195,7 +203,6 @@ acrossWords=["WINGS","HOARE","ONSEN","RITES","LAYNE"]
     }
 }();
 </script>
-</html>
 <script>
 //global vars
 horizontal=true;
@@ -398,9 +405,9 @@ function f(x,y){
 function updateHintText() {
     const hintTextElement = document.getElementById('hint-text');
     if (horizontal) {
-        hintTextElement.textContent = "ACROSS: " + tips[x];
+        hintTextElement.textContent = tips[x];
     } else {
-        hintTextElement.textContent = "DOWN: " + tips[y + 5];
+        hintTextElement.textContent = tips[y + 5];
     }
 }
 function scrollHint(direction) {
@@ -633,11 +640,14 @@ function updateCountDown(){
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
+    margin-top: 10px;
     width: 100%;
-    max-width: 400px; 
+    max-width: 400px;
     margin-left: auto;
     margin-right: auto;
+    background-color: #add8e6; /* Light blue background color */
+    padding: 10px; /* Add some padding */
+    box-sizing: border-box;
 }
 #hint-text {
     margin: 0 10px;
@@ -650,37 +660,53 @@ function updateCountDown(){
     font-size: 16px;
     padding: 5px 10px;
     cursor: pointer;
+    background-color: transparent; /* Remove button background color */
+    border: none; /* Remove button border */
 }
 #keyboard {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
-    margin-top: 20px;
-    width: 100%; /* Make keyboard full width */
-    max-width: 400px; /* Limit keyboard width on larger screens */
+    width: 100%;
+    max-width: 400px;
     margin-left: auto;
     margin-right: auto;
+    background-color: #ececec;
+    padding: 5px;
+    box-sizing: border-box;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
+
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 #keyboard button {
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 42px;
     margin: 2px;
+    margin-bottom: 5px;
     font-size: 18px;
     text-align: center;
     border: 1px solid #ccc;
-    background-color: #f0f0f0;
+    background-color: white;
     cursor: pointer;
     border-radius: 5px;
 }
+
 #keyboard button:hover {
     background-color: #e0e0e0;
 }
 /* Style for the crossword table to match keyboard width*/
 #table {
   width: 100%;
-  max-width: 400px; /* Match keyboard max-width */
+  max-width: 350px; /* Match keyboard max-width */
   margin-left: auto;
   margin-right: auto;
   border-collapse: collapse; /* Required to stop table growing*/
 }
 </style>
+</html>
