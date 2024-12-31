@@ -21,24 +21,48 @@
 <body>
     <div class="topnav">
         <a class="active"><center><b id="title2">Crucig</b> Points:<b id="score"></b></center></a>
-
-
     </div>
 
     <center>
         <br>
         <table bgcolor="black" id="table" onkeyup="keyfunc()">
         </table>
-        <p>
-            <button id="horizontal_tip" onclick="clickf(true)" style="font-size:16px;"></button>
-            <button id="vertical_tip" onclick="clickf(false)" style="font-size:16px;"></button>
-        </p>
-        <div>
-            <button id="prev_hint" onclick="prevHint()" style="font-size:16px;"><</button>
-            <button id="next_hint" onclick="nextHint()" style="font-size:16px;">></button>
+        <div id="hint-container">
+            <button id="prev-hint" onclick="scrollHint(-1)"> < </button>
+            <span id="hint-text" style="font-size:16px;"></span>
+            <button id="next-hint" onclick="scrollHint(1)"> > </button>
         </div>
     </center>
 
+    <div id="keyboard">
+        <button onclick="insertChar('Q')">Q</button>
+        <button onclick="insertChar('W')">W</button>
+        <button onclick="insertChar('E')">E</button>
+        <button onclick="insertChar('R')">R</button>
+        <button onclick="insertChar('T')">T</button>
+        <button onclick="insertChar('Y')">Y</button>
+        <button onclick="insertChar('U')">U</button>
+        <button onclick="insertChar('I')">I</button>
+        <button onclick="insertChar('O')">O</button>
+        <button onclick="insertChar('P')">P</button><br>
+        <button onclick="insertChar('A')">A</button>
+        <button onclick="insertChar('S')">S</button>
+        <button onclick="insertChar('D')">D</button>
+        <button onclick="insertChar('F')">F</button>
+        <button onclick="insertChar('G')">G</button>
+        <button onclick="insertChar('H')">H</button>
+        <button onclick="insertChar('J')">J</button>
+        <button onclick="insertChar('K')">K</button>
+        <button onclick="insertChar('L')">L</button><br>
+        <button onclick="insertChar('Z')">Z</button>
+        <button onclick="insertChar('X')">X</button>
+        <button onclick="insertChar('C')">C</button>
+        <button onclick="insertChar('V')">V</button>
+        <button onclick="insertChar('B')">B</button>
+        <button onclick="insertChar('N')">N</button>
+        <button onclick="insertChar('M')">M</button>
+        <button onclick="deleteChar()">⌫</button>
+    </div>
 
     <div id="myModal" class="modal">
         <div class="modal-content">
@@ -101,7 +125,7 @@
 
 <script>
     tips=["(In birds) Limbs used for flying","Formal system, set of rules used for reasoning correctness in computer programs","Japanese hot spring and bathing facilities","Religious ceremonies or acts","American singer and original lead vocalist of Alice in Chains, last name Staley","Type of spiral or circular pattern","An ancient region of central coastal Anatolia in present-day Turkey","Highly unpleasant to the senses, physically nauseating","Color between blue and yellow on the spectrum of visible light","One of the faculties of sight, smell, hearing, taste and touch"]
-    acrossWords=["WINGS","HOARE","ONSEN","RITES","LAYNE"]
+acrossWords=["WINGS","HOARE","ONSEN","RITES","LAYNE"]
 </script>
 
 <script type="text/javascript" src="confetti.js">var startConfetti,
@@ -176,9 +200,8 @@
 //global vars
 horizontal=true;
 maxscore = 100;
-var x, y;
-var currentHintIndex = 0;
-var hintsShown = true; // Always show hints
+var x, y
+let currentHintIndex = 0;
 
 //instructions
 function closeModal(name){
@@ -211,12 +234,6 @@ function animTutorial(){
     animState != animState
 }
 
-function clickf(direction){
-    horizontal = direction
-    colorSquares()
-    document.getElementById("i"+x+"_"+y).focus()
-    showTip(x,y); // Update tip display
-}
 
 function keyfunc(){
     var x, y, i
@@ -232,34 +249,34 @@ function keyfunc(){
             if(x>0)x--;
         }
     break;
-
+            
     //left
     case 37:
         if(y>0)y--;
     break;
-
+            
     //up
     case 38:
         if(x>0)x--;
     break;
-
+            
     //right
     case 39:
         if(y<4)y++;
     break;
-
+            
     //down
     case 40:
         if(x<4)x++;
     break;
-    }
+    } 
     if(document.getElementById("i"+x+"_"+y).disabled==false){
         this.x=x
         this.y=y
         f(this.x,this.y)
     }
 }
-
+    
 function blackOut(){
     for(i=0;i<5;i++){
         for(j=0;j<5;j++){
@@ -280,7 +297,7 @@ function stopConfettiAndShowModal(){
     stopConfetti()
     setTimeout(showWinModal, 1000)
 }
-
+    
 function checkLetters(){
     win = true;
     for(i=0;i<5;i++){
@@ -288,19 +305,14 @@ function checkLetters(){
             field = document.getElementById("i"+i+"_"+j);
             if(field.value!=''){
                 if(acrossWords[j].charAt(i)!=field.value){
-                    if(field.style.color!="red"){
+                    if(field.disabled==false){
                         correcciones--;
                     }
-                    field.style.color = "red"
-                    field.style.webkitTextFillColor = "red"
                     win = false;
                 } else {
-                    field.style.color = "Black"
-                    field.style.webkitTextFillColor = "Black"
                     if(field.disabled==false){
                         correcciones+=4
                     }
-                    field.disabled = true
                 }
             } else {
                 win = false;
@@ -324,24 +336,20 @@ function colorSquares(){
         for(j=0;j<5;j++)
             document.getElementById("i"+i+"_"+j).style.backgroundColor = "White"
     if(horizontal==true){
-        document.getElementById("horizontal_tip").style.backgroundColor = "LightBlue"
-        document.getElementById("vertical_tip").style.backgroundColor = "LightGray"
         for(i=0;i<5;i++){document.getElementById("i"+x+"_"+i).style.backgroundColor = "LightBlue"}
     } else {
-        document.getElementById("horizontal_tip").style.backgroundColor = "LightGray"
-        document.getElementById("vertical_tip").style.backgroundColor = "LightBlue"
         for(i=0;i<5;i++){document.getElementById("i"+i+"_"+y).style.backgroundColor = "LightBlue"}
     }
     document.getElementById("i"+x+"_"+y).style.backgroundColor = "Gold";
 }
-
+    
 function focusfunct(x,y){
     if(document.getElementById("i"+x+"_"+y).disabled==false){
         this.x = x;
         this.y = y;
         colorSquares()
         blackOut()
-        showTip(x,y)
+        updateHintText();
         if(document.getElementById("i"+x+"_"+y).style.color=="red"){
             document.getElementById("i"+x+"_"+y).value=""
         }
@@ -350,7 +358,7 @@ function focusfunct(x,y){
 
 function f(x,y){
     if(document.getElementById("i"+x+"_"+y).disabled==false && document.getElementById("i"+x+"_"+y).value!="" && event.keyCode!=8 && event.keyCode!=37 && event.keyCode!=38 && event.keyCode!=39 && event.keyCode!=40)
-    do {
+    do {    
         if(horizontal==false){
             x++
             if(x>4){
@@ -380,125 +388,80 @@ function f(x,y){
         }
     }
     document.getElementById("i"+x+"_"+y).focus()
-    showTip(x,y)
+    updateHintText();
     checkLetters()
     colorSquares()
     this.x = x;
     this.y = y;
 }
 
-function showTip(x, y) {
-  let horizontalTip = "<b>ACROSS: </b>";
-  let verticalTip = "<b>DOWN: </b>";
-
-  // Apply highlighting logic
-  let horizontalHighlight = "";
-  let verticalHighlight = "";
-
-  if (horizontal && currentHintIndex < 5) { // across word active
-    if (x == currentHintIndex) {
-      horizontalHighlight = " style='background-color: yellow;'";
-      verticalHighlight="";
-
-    } else{
-         horizontalHighlight = "";
+function updateHintText() {
+    const hintTextElement = document.getElementById('hint-text');
+    if (horizontal) {
+        hintTextElement.textContent = "ACROSS: " + tips[x];
+    } else {
+        hintTextElement.textContent = "DOWN: " + tips[y + 5];
     }
-      horizontalTip += "<span"+ horizontalHighlight +">" + tips[x+5] + "</span>";
+}
+function scrollHint(direction) {
+    if (horizontal) {
+        currentHintIndex = x;
+    } else {
+        currentHintIndex = y + 5;
+    }
+
+    currentHintIndex += direction;
     
-  }
-   else if(!horizontal && currentHintIndex < 5) { // down word active
-    if (y == currentHintIndex) {
-        verticalHighlight = " style='background-color: yellow;'";
-        horizontalHighlight = "";
-    }else{
-         verticalHighlight = "";
-    }
-      verticalTip += "<span"+ verticalHighlight +">" + tips[y] + "</span>";
-  }
-
-  // Update all tips
-    for (let i = 0; i < 5; i++) {
-        let hintDisplay = (horizontal) ? "<b>ACROSS: </b>" : "<b>DOWN: </b>"
-        let highlight = "";
-        if (horizontal && i == x) {
-            highlight = " style='background-color: yellow;'";
-        }
-         if(!horizontal && i == y) {
-            highlight = " style='background-color: yellow;'";
-        }
-
-        if(horizontal){
-              document.getElementById("horizontal_tip").innerHTML = "<b>ACROSS: </b>" +  tips.slice(5).map((tip,index)=> {
-                let style = "";
-                  if (currentHintIndex == index && horizontal) {
-                        style = " style='background-color: yellow;'";
-                  }
-                  return "<span"+ style +">" + tip + "</span>";
-            }).join(" <br> <b>ACROSS: </b>") ;
-            document.getElementById("vertical_tip").innerHTML = "<b>DOWN: </b>" + tips.slice(0,5).map((tip,index)=>{
-                 let style = "";
-                 if(currentHintIndex == index && !horizontal){
-                      style=" style='background-color: yellow;'";
-                 }
-                 return "<span"+ style +">"+ tip + "</span>";
-            }).join(" <br> <b>DOWN: </b>") ;
-
-        } else {
-             document.getElementById("horizontal_tip").innerHTML = "<b>ACROSS: </b>" +  tips.slice(5).map((tip,index)=> {
-                   let style = "";
-                  if (currentHintIndex == index && horizontal) {
-                        style = " style='background-color: yellow;'";
-                  }
-                  return "<span"+ style +">" + tip + "</span>";
-            }).join(" <br> <b>ACROSS: </b>") ;
-           document.getElementById("vertical_tip").innerHTML = "<b>DOWN: </b>" + tips.slice(0,5).map((tip,index)=>{
-                let style = "";
-                 if(currentHintIndex == index && !horizontal){
-                      style=" style='background-color: yellow;'";
-                 }
-                 return "<span"+ style +">"+ tip + "</span>";
-            }).join(" <br> <b>DOWN: </b>") ;
-
-        }
-  }
-}
-
-function prevHint() {
-    currentHintIndex--;
     if (currentHintIndex < 0) {
-        currentHintIndex = 4;
-    }
-    moveCursorToHint();
-    showTip(x,y)
-}
-
-function nextHint() {
-    currentHintIndex++;
-    if (currentHintIndex > 4) {
+       currentHintIndex = 9;
+        horizontal = false;
+    } else if (currentHintIndex > 9) {
         currentHintIndex = 0;
+         horizontal = true;
     }
-     moveCursorToHint();
-    showTip(x,y)
-}
-function moveCursorToHint() {
+     if (horizontal && currentHintIndex === 5 && direction === 1) {
+        horizontal = false;
+        currentHintIndex = 5
+       
+    }
+    if(!horizontal && currentHintIndex === 4 && direction === -1){
+        horizontal = true;
+        currentHintIndex = 4;
+        
+    }
     if(horizontal){
-         x = currentHintIndex;
-         y = 0
-          while(document.getElementById("i"+x+"_"+y).disabled==true){
-            y++
-           }
-    }else {
-          y = currentHintIndex;
-          x=0;
-           while(document.getElementById("i"+x+"_"+y).disabled==true){
-            x++
-           }
-
+        x=currentHintIndex;
+        y=0; //set y to 0 when scrolling across
+    } else {
+        y=currentHintIndex-5;
+        x=0; //set x to 0 when scrolling down
     }
-    document.getElementById("i"+x+"_"+y).focus();
-     colorSquares();
+    colorSquares()
+    updateHintText()
+    document.getElementById("i"+x+"_"+y).focus()
 }
 
+function insertChar(char) {
+    if (document.getElementById("i" + x + "_" + y).disabled == false) {
+        document.getElementById("i" + x + "_" + y).value = char;
+        f(x, y);
+    }
+}
+function deleteChar(){
+    if (document.getElementById("i" + x + "_" + y).disabled == false) {
+        if(document.getElementById("i" + x + "_" + y).value == ''){
+            if(horizontal==true){
+                if(y>0)y--;
+            } else {
+                if(x>0)x--;
+            }
+        }
+        document.getElementById("i" + x + "_" + y).value = "";
+        document.getElementById("i" + x + "_" + y).focus();
+        colorSquares();
+        updateHintText();
+    }
+}
 
 window.onload = function(){
     if(!(window.location.pathname).includes("anteriores")){
@@ -519,20 +482,17 @@ window.onload = function(){
     }
     table.innerHTML = t;
     if(correcciones==0){
-         f(0,0)
-          moveCursorToHint();
-
+        f(0,0)
     } else {
         for(i=0;i<5;i++){
             for(j=0;j<5;j++){
                 document.getElementById('i'+i+'_'+j).value = acrossWords[j].charAt(i)
-                document.getElementById('i'+i+'_'+j).disabled = true
-                showTip(0,0)
-                 moveCursorToHint();
+                updateHintText()
             }
         }
     }
     blackOut()
+    updateHintText()
 }
 
 function myFunction() {
@@ -647,8 +607,47 @@ function updateCountDown(){
   color: black;
 }
 
-.active {
-  background-color: white;
-  color: white;
+#hint-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+#hint-text {
+    margin: 0 10px;
+    font-size: 16px;
+}
+
+#prev-hint,
+#next-hint {
+    font-size: 16px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    max-width: 400px; /* Limit keyboard width */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#keyboard button {
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+    font-size: 18px;
+    text-align: center;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    border-radius: 5px;
+}
+#keyboard button:hover {
+    background-color: #e0e0e0;
 }
 </style>
