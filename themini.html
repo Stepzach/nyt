@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Wrist Crosswords</title>
+    <title>Mini Crossword</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta property="og:title" content="Crucig"/>
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="topnav">
-        <a class="active"><center><b id="title2">Crucig</b> Points:<b id="score"></b></center></a>
+        <a class="active"><center><b id="title2">Zach</b> Points:<b id="score"></b></center></a>
     </div>
 
     <center>
@@ -139,8 +139,8 @@
 </body>
 
 <script>
-    tips=["(In birds) Limbs used for flying","Formal system, set of rules used for reasoning correctness in computer programs","Japanese hot spring and bathing facilities","Religious ceremonies or acts","American singer and original lead vocalist of Alice in Chains, last name Staley","Type of spiral or circular pattern","An ancient region of central coastal Anatolia in present-day Turkey","Highly unpleasant to the senses, physically nauseating","Color between blue and yellow on the spectrum of visible light","One of the faculties of sight, smell, hearing, taste and touch"]
-acrossWords=[" WING","HOARE","ONSEN","RITE","LAYN "]
+    tips=["Limb used for flying","Set of rules used for correctness in computer programs","Japanese hot spring","Religious ceremonies or acts","American singer of Alice in Chains","Type of spiral","An ancient region in present-day Turkey","Highly unpleasant to the senses","Color between blue and yellow","Sight, smell, hearing, taste and touch"]
+acrossWords=[" WING","HOARE","ONSEN","RITES","LAYN "]
 </script>
 
 <script type="text/javascript" src="confetti.js">var startConfetti,
@@ -800,8 +800,8 @@ function updateCountDown(){
 /* Modified Styles */
 #hint-container {
     display: flex;
- 
-    justify-content: center;
+    align-items: center; /* Vertically center items */
+    justify-content: space-between; /* Distribute space around items */
     margin-top: 10px;
     width: 100%;
     max-width: 400px;
@@ -811,12 +811,14 @@ function updateCountDown(){
     padding: 10px; /* Add some padding */
     box-sizing: border-box;
 }
+
 #hint-text {
-    margin: 0 5px;
     font-size: 10px;
-   
     text-align: left;
+   
+    margin: 0 10px; /* Add horizontal margin */
 }
+
 #prev-hint,
 #next-hint {
     font-size: 16px;
@@ -825,6 +827,8 @@ function updateCountDown(){
     background-color: transparent; /* Remove button background color */
     border: none; /* Remove button border */
     font-weight: bold;
+    flex-shrink: 0; /* Prevent buttons from shrinking */
+}
 }
 #keyboard {
     display: flex;
