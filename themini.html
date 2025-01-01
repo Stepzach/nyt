@@ -721,7 +721,12 @@ function updateCountDown(){
 </script>
 <style>
 
-
+ html, body {
+            overflow: hidden; /* Prevent vertical and horizontal scrolling */
+            margin: 0;       /* Remove default margin to avoid unexpected shifts */
+            height: 100%;    /* Ensure the body fills the viewport */
+            width: 100%;     /* Ensure no unintended horizontal overflow */
+        }
 * {
     font-family: Verdana;
     font-size: 20px;
@@ -846,12 +851,13 @@ position: relative;
   padding-top: 25px;
   height: 200px;
   background-color: #ececec !important;
+  display:block;
 }
 
 
 #keyboard {
 
- height: 200px;
+    height: 200px;
     display: flex;
     flex-direction: column;
     justify-content: space-between; 
@@ -864,6 +870,8 @@ position: relative;
     padding-bottom: 35px;
     padding-right: 15px;
     padding-left: 15px;
+    position: fixed;
+    bottom: 0;
    
 }
 
@@ -878,7 +886,8 @@ position: relative;
     width: 34px;
     height: 42px;
     margin: 1.5px;
-    margin-bottom: 5px;
+     
+    margin-bottom: 8px;
     font-size: 19px;
     text-align: center !important;
     border: 1px solid #ccc;
