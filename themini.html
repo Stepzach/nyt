@@ -32,7 +32,7 @@
     </div> 
    
     <div class="topnav">
-        <a class="active"><center><b id="title2">Zach</b> Points:<b id="score"></b></center></a>
+        <a class="active"><center><b id="title2"></b> Points:<b id="score"></b></center></a>
     </div>
 
  
@@ -766,9 +766,12 @@ height: 65px !important;
 }
 
 .topnav {
+padding-top: 10px;
   overflow: hidden;
   background-color: white;
   position: relative;
+    background-color: #ececec;
+    height: 35px;
 }
 
 
@@ -781,7 +784,9 @@ html, body {
 }
 /* Modified Styles */
 #hint-container {
-
+z-index: 2;
+position: relative;
+bottom: -18px;
     display: flex;
     align-items: center; /* Vertically center items */
     position: relative;
@@ -824,7 +829,8 @@ html, body {
 
 
 #keyboard {
- 
+    position: absolute;
+    bottom: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between; 
@@ -835,8 +841,8 @@ html, body {
    
      background-color: #ececec;
     box-sizing: border-box;
-    padding-top: 15px;
-    padding-bottom: 25px;
+    padding-top: 25px;
+    padding-bottom: 35px;
 }
 
 .keyboard-row {
@@ -865,7 +871,10 @@ html, body {
 }
 /* Style for the crossword table to match keyboard width*/
 #table {
+position: relative;
+bottom: -8px;
  width: 90% !important;
+ max-width: 350px;
   border-collapse: collapse; /* Required to stop table growing*/
   border: 3px solid black; /* Thicker outer border */
   margin-left: auto;
