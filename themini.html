@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <title>Mini Crossword</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -18,30 +19,34 @@
 
     <link href="style.css" rel="stylesheet"></link>
     <script type="text/javascript" src="game.js"></script>
+    
 </head>
+ <div class="bruhbruh">
 
-<body>
 <div id="overlay">
         <div id="popup">
             <label for="nameInput">Enter your name:</label><br>
             <input type="text" id="nameInput"><br>
             <button onclick="startGame()">Start Crossword</button>
         </div>
-    </div>
+    </div> 
+   
     <div class="topnav">
         <a class="active"><center><b id="title2">Zach</b> Points:<b id="score"></b></center></a>
     </div>
 
-    <center>
+ 
         <br>
+ 
         <table id="table">
-        </table>
+      
+         </table>
         <div id="hint-container">
             <button id="prev-hint" onclick="scrollHint(-1)"> < </button>
             <span id="hint-text" style="font-size:16px;"></span>
             <button id="next-hint" onclick="scrollHint(1)"> > </button>
-        </div>
-    </center>
+        </div>  
+    
 <div id="bruh">
     <div id="keyboard">
         <div class="keyboard-row">
@@ -79,7 +84,7 @@
         </div>
     </div>
 </div>
-   
+   </div>
 
     <div id="onboard" class="modal">
         <div class="modal-content">
@@ -108,26 +113,9 @@
         </div>
     </div>
 
-    <div id="onboard2" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('onboard2');f(0,0)">×</span>
-            <p>Any wrong letters will appear in <b style="color:red;">red</b>:</p>
-                <table bgcolor="black">
-                    <tr>
-                        <td><input class="cell" value="W"></td>
-                        <td><input class="cell" value="O"></td>
-                        <td><input class="cell" value="R"></td>
-                        <td><input class="cell" value="D"></td>
-                        <td><input class="cell" style="-webkit-text-fill-color:red;" value="Z"></td>
-                    </tr>
-                </table>
-            <p>Solve it with <b>less mistakes</b> for higher scores</p>
-            <p>Download our Apple Watch app for more levels:</p>
-            <p><a href="https://bl8g.short.gy/wristcrosswords"><img src="appstore.svg"></a></p>
-            <p style="text-align:right;" onclick="closeModal('onboard2');f(0,0)"><button>Start</button></p>
-        </div>
+   
     </div>
-</body>
+</div>
 
 <script>
     tips=["Limb used for flying","Set of rules used for correctness in computer programs","Japanese hot spring","Religious ceremonies or acts","American singer of Alice in Chains","Type of spiral","An ancient region in present-day Turkey","Highly unpleasant to the senses","Color between blue and yellow","Sight, smell, hearing, taste and touch"]
@@ -684,23 +672,21 @@ window.onload = function(){
     updateHintText()
     
      function adjustSizes() {
-    // Get the width of the keyboard container
-        const keyboardWidth = document.getElementById('keyboard').offsetWidth;
-        // Calculate the height of the crossword table cells to match the width
-         const cellSize = (keyboardWidth / 5);
-
-          // Set the table cell size
+        const containerWidth = 300; // Fixed container width
+        const cellSize = containerWidth / 3;
+      
+ 
+        // Set cell sizes
         const cells = document.querySelectorAll('#table .cell');
         cells.forEach(cell => {
-          cell.style.width = cellSize + 'px';
-          cell.style.height = cellSize + 'px';
+            cell.style.width = cellSize + '%';
+            cell.style.height = cellSize + 'px';
         });
-
-        //adjust table to be the same width as the keyboard
-        document.getElementById('table').style.width = keyboardWidth+'px';
-            document.getElementById('hint-container').style.width = keyboardWidth+'px';
+         document.getElementById('table').style.width = containerWidth + 'px';
+           document.getElementById('hint-container').style.width = containerWidth+'%';
     }
-    adjustSizes()
+
+    adjustSizes();
     window.addEventListener('resize', adjustSizes);
 
 }
@@ -731,6 +717,8 @@ function updateCountDown(){
 }
 </script>
 <style>
+
+
 * {
     font-family: Verdana;
     font-size: 20px;
@@ -738,23 +726,17 @@ function updateCountDown(){
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 50px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+ width: 100%;
+ 
+  
 }
 
 /* Modal Content */
 .modal-content {
   background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
+  width: 100%;
+
+  
   border: 1px solid #888;
   width: 80%;
 }
@@ -770,6 +752,7 @@ function updateCountDown(){
 
 
 .cell {
+height: 70px !important;
     border-radius: 0;
     outline: none;
     border: none;
@@ -779,6 +762,7 @@ function updateCountDown(){
     -webkit-text-fill-color: black;
     box-sizing: border-box; /*Ensure padding and border don't affect size*/
     padding: 0;
+
 }
 
 .topnav {
@@ -792,63 +776,56 @@ function updateCountDown(){
 
 /* Modified Styles */
 #hint-container {
+
     display: flex;
     align-items: center; /* Vertically center items */
-    justify-content: space-between; /* Distribute space around items */
+    position: relative;
     margin-top: 10px;
-    width: 100%;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 97% !important;
     background-color: #add8e6; /* Light blue background color */
-    padding: 10px; /* Add some padding */
-    box-sizing: border-box;
+    padding: 7px; /* Add some padding */
+   
 }
 
 #hint-text {
+
     font-size: 10px;
     text-align: left;
-   
     margin: 0 10px; /* Add horizontal margin */
 }
 
-#prev-hint,
-#next-hint {
+#prev-hint {
     font-size: 16px;
-    padding: 5px 10px;
+   left: 10px;
     cursor: pointer;
     background-color: transparent; /* Remove button background color */
     border: none; /* Remove button border */
     font-weight: bold;
     flex-shrink: 0; /* Prevent buttons from shrinking */
 }
-}
-#bruh {
- background-color: #ececec;
-  display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-   
-    padding: 5px;
-    box-sizing: border-box;
-    padding-top: 15px;
-    padding-bottom: 15px;
+#next-hint {
+    font-size: 16px;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    background-color: transparent; /* Remove button background color */
+    border: none; /* Remove button border */
+    font-weight: bold;
+    flex-shrink: 0; /* Prevent buttons from shrinking */
 }
 
+
 #keyboard {
+ 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between; 
     width: 100%;
-    max-width: 400px;
+   
     margin-left: auto;
     margin-right: auto;
    
-    padding: 5px;
+     background-color: #ececec;
     box-sizing: border-box;
     padding-top: 15px;
     padding-bottom: 15px;
@@ -858,14 +835,15 @@ function updateCountDown(){
     display: flex;
     justify-content: center;
     width: 100%;
+    background-color: #ececec;
 }
 
 #keyboard button {
-    width: 34px;
+    width: 36px;
     height: 42px;
-    margin: 2px;
+    margin: 1.5px;
     margin-bottom: 5px;
-    font-size: 18px;
+    font-size: 20px;
     text-align: center;
     border: 1px solid #ccc;
     background-color: white;
@@ -878,21 +856,26 @@ function updateCountDown(){
 }
 /* Style for the crossword table to match keyboard width*/
 #table {
-  width: 100%;
-  max-width: 350px; /* Match keyboard max-width */
-  margin-left: auto;
-  margin-right: auto;
+ width: 100% !important;
   border-collapse: collapse; /* Required to stop table growing*/
   border: 3px solid black; /* Thicker outer border */
+  margin-left: auto;
+    margin-right: auto;
 }
+
+ 
+
 #table td {
+
     border: 1px solid gray; /* Thinner inner borders */
     padding: 0;
+
 }
   #overlay {
             position: fixed;
             top: 0;
             left: 0;
+            
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
