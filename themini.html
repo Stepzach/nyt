@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>Mini Crossword</title>
-   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta property="og:title" content="Crucig"/>
     <meta property="og:image" content="thumb.png"/>
@@ -41,13 +41,14 @@
         <table id="table">
       
          </table>
-        <div id="hint-container">
-            <button id="prev-hint" onclick="scrollHint(-1)"> < </button>
-            <span id="hint-text" style="font-size:16px;"></span>
-            <button id="next-hint" onclick="scrollHint(1)"> > </button>
-        </div>  
+         
     
-<div id="bruh" style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end;">
+<div id="bruh" style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end; position: relative">
+  <div id="hint-container">
+        <button id="prev-hint" onclick="scrollHint(-1)"> < </button>
+        <span id="hint-text" style="font-size:16px;"></span>
+        <button id="next-hint" onclick="scrollHint(1)"> > </button>
+    </div>  
     <div id="keyboard">
         <div class="keyboard-row">
             <button onclick="insertChar('Q')">Q</button>
@@ -120,20 +121,7 @@
 <script>
     tips=["Limb used for flying","Set of rules used for correctness in computer programs","Japanese hot spring","Religious ceremonies or acts","American singer of Alice in Chains","Type of spiral","An ancient region in present-day Turkey","Highly unpleasant to the senses","Color between blue and yellow","Sight, smell, hearing, taste and touch"]
 acrossWords=[" WING","HOARE","ONSEN","RITES","LAYN "]
-    
 </script>
-     <script>
-        // Additional safety measure to prevent double-tap zoom on mobile
-        let lastTouchEnd = 0;
-
-        document.addEventListener('touchend', (event) => {
-            const now = new Date().getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault(); // Prevent double-tap zoom
-            }
-            lastTouchEnd = now;
-        });
-    </script>
 
 <script type="text/javascript" src="confetti.js">var startConfetti,
     stopConfetti,
@@ -779,6 +767,9 @@ height: 75px !important;
 }
 
 .topnav {
+posistion: fixed;
+z-index: 10;
+width: 100%;
 padding-top: 10px;
   overflow: hidden;
   background-color: white;
@@ -787,7 +778,11 @@ padding-top: 10px;
     height: 35px;
 }
 
-
+@media (min-width: 0px) {
+            html {
+                touch-action: none; /* Prevent touch-based scrolling (mobile devices) */
+            }
+        }
 
 html, body {
     margin: 0;
@@ -799,15 +794,15 @@ html, body {
 /* Modified Styles */
 #hint-container {
 z-index: 2;
-position: relative;
-
+position: absolute;
+    bottom: calc(160px + 35px );
     display: flex;
     align-items: center; /* Vertically center items */
     position: relative;
-    margin-top: 18px;
+  
     width: 100% !important;
     background-color: #99DAFF; /* Light blue background color */
-    padding: 20px; /* Add some padding */
+    padding: 10px; /* Add some padding */
      overflow: hidden; /* Disable both vertical and horizontal scrolling */
 }
 
@@ -823,6 +818,7 @@ position: relative;
     font-size: 17px;
    left: 10px;
     cursor: pointer;
+    
     background-color: transparent; /* Remove button background color */
     border: none; /* Remove button border */
     font-weight: bold;
@@ -843,7 +839,8 @@ position: relative;
 
 
 #keyboard {
-  
+  position: fixed;
+  bottom: 0px;
     display: flex;
     flex-direction: column;
     justify-content: space-between; 
@@ -854,8 +851,9 @@ position: relative;
    
      background-color: #ececec;
     box-sizing: border-box;
-    padding-top: 15px;
+    padding-top: 25px;
     padding-bottom: 35px;
+   
 }
 
 .keyboard-row {
@@ -886,7 +884,8 @@ position: relative;
 /* Style for the crossword table to match keyboard width*/
 #table {
 position: relative;
-bottom: -8px;
+top: -10px !important;
+
  width: 95% !important;
  max-width: 390px;
   border-collapse: collapse; /* Required to stop table growing*/
