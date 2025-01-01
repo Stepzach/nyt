@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <title>Mini Crossword</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, initial-scale=1, maximum-scale=1">
 
     <meta property="og:title" content="Crucig"/>
     <meta property="og:image" content="thumb.png"/>
@@ -21,7 +20,8 @@
     <script type="text/javascript" src="game.js"></script>
     
 </head>
- <div class="bruhbruh">
+<body style = "overflow: hidden; height: 100vh">
+ <div class="bruhbruh" style = "display: flex; flex-direction: column; height: 100%; overflow: hidden;">
 
 <div id="overlay">
         <div id="popup">
@@ -47,7 +47,7 @@
             <button id="next-hint" onclick="scrollHint(1)"> > </button>
         </div>  
     
-<div id="bruh">
+<div id="bruh" style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end;">
     <div id="keyboard">
         <div class="keyboard-row">
             <button onclick="insertChar('Q')">Q</button>
@@ -120,7 +120,20 @@
 <script>
     tips=["Limb used for flying","Set of rules used for correctness in computer programs","Japanese hot spring","Religious ceremonies or acts","American singer of Alice in Chains","Type of spiral","An ancient region in present-day Turkey","Highly unpleasant to the senses","Color between blue and yellow","Sight, smell, hearing, taste and touch"]
 acrossWords=[" WING","HOARE","ONSEN","RITES","LAYN "]
+    
 </script>
+     <script>
+        // Additional safety measure to prevent double-tap zoom on mobile
+        let lastTouchEnd = 0;
+
+        document.addEventListener('touchend', (event) => {
+            const now = new Date().getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault(); // Prevent double-tap zoom
+            }
+            lastTouchEnd = now;
+        });
+    </script>
 
 <script type="text/javascript" src="confetti.js">var startConfetti,
     stopConfetti,
@@ -368,7 +381,7 @@ function checkLetters(){
         for (let i = start; i < end; i++) {
              let cell = document.getElementById("i" + x + "_" + i);
            if (cell && !cell.disabled) {
-            cell.style.backgroundColor = "LightBlue";
+            cell.style.backgroundColor = "#99DAFF";
             }
        }
      } else {
@@ -381,14 +394,14 @@ function checkLetters(){
             for (let i = start; i < end; i++) {
                let cell = document.getElementById("i" + i + "_" + y);
                 if (cell && !cell.disabled) {
-                   cell.style.backgroundColor = "LightBlue";
+                   cell.style.backgroundColor = "#99DAFF";
                 }
            }
      }
 
 
     if (document.getElementById("i" + x + "_" + y) && !document.getElementById("i" + x + "_" + y).disabled) {
-      document.getElementById("i" + x + "_" + y).style.backgroundColor = "Gold";
+      document.getElementById("i" + x + "_" + y).style.backgroundColor = "#FFD800";
     }
 }
     
@@ -743,7 +756,7 @@ function updateCountDown(){
 
 /* The Close Button */
 .close {
-  color: #aaaaaa;
+  color: #99DAFF;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -752,7 +765,7 @@ function updateCountDown(){
 
 
 .cell {
-height: 65px !important;
+height: 75px !important;
     border-radius: 0;
     outline: none;
     border: none;
@@ -774,11 +787,7 @@ padding-top: 10px;
     height: 35px;
 }
 
-@media (min-width: 0px) {
-            html {
-                touch-action: none; /* Prevent touch-based scrolling (mobile devices) */
-            }
-        }
+
 
 html, body {
     margin: 0;
@@ -791,14 +800,14 @@ html, body {
 #hint-container {
 z-index: 2;
 position: relative;
-bottom: -18px;
+
     display: flex;
     align-items: center; /* Vertically center items */
     position: relative;
     margin-top: 18px;
     width: 100% !important;
-    background-color: #add8e6; /* Light blue background color */
-    padding: 10px; /* Add some padding */
+    background-color: #99DAFF; /* Light blue background color */
+    padding: 20px; /* Add some padding */
      overflow: hidden; /* Disable both vertical and horizontal scrolling */
 }
 
@@ -807,11 +816,11 @@ bottom: -18px;
     font-size: 12px;
     text-align: left;
      margin-left: 15px; /* Add horizontal margin */
-    margin-right: 55px; /* Add horizontal margin */
+    margin-right: 70px; /* Add horizontal margin */
 }
 
 #prev-hint {
-    font-size: 16px;
+    font-size: 17px;
    left: 10px;
     cursor: pointer;
     background-color: transparent; /* Remove button background color */
@@ -822,7 +831,7 @@ bottom: -18px;
 }
 #next-hint {
     font-size: 16px;
-    position: absolute;
+    position: fixed;
     right: 20px;
     cursor: pointer;
     background-color: transparent; /* Remove button background color */
@@ -834,8 +843,7 @@ bottom: -18px;
 
 
 #keyboard {
-    position: absolute;
-    bottom: 0;
+  
     display: flex;
     flex-direction: column;
     justify-content: space-between; 
@@ -846,7 +854,7 @@ bottom: -18px;
    
      background-color: #ececec;
     box-sizing: border-box;
-    padding-top: 25px;
+    padding-top: 15px;
     padding-bottom: 35px;
 }
 
@@ -879,8 +887,8 @@ bottom: -18px;
 #table {
 position: relative;
 bottom: -8px;
- width: 90% !important;
- max-width: 350px;
+ width: 95% !important;
+ max-width: 390px;
   border-collapse: collapse; /* Required to stop table growing*/
   border: 3px solid black; /* Thicker outer border */
   margin-left: auto;
@@ -932,8 +940,8 @@ bottom: -8px;
             box-sizing: border-box;
         }
         #popup button {
-            background-color: #007bff;
-            color: white;
+            background-color: #99DAFF;
+            color: black;
             padding: 12px 20px;
              font-size: 16px;
             border: none;
@@ -943,7 +951,7 @@ bottom: -8px;
         }
 
         #popup button:hover {
-            background-color: #0056b3;
+            background-color: #FFD800;
         }
 
 </style>
