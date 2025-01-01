@@ -752,7 +752,7 @@ function updateCountDown(){
 
 
 .cell {
-height: 70px !important;
+height: 65px !important;
     border-radius: 0;
     outline: none;
     border: none;
@@ -773,7 +773,12 @@ height: 70px !important;
 
 
 
-
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Use border-box model for consistent sizing */
+   height: 100%; /* Ensure body occupies 100% of viewport height */
+}
 /* Modified Styles */
 #hint-container {
 
@@ -781,7 +786,7 @@ height: 70px !important;
     align-items: center; /* Vertically center items */
     position: relative;
     margin-top: 10px;
-    width: 97% !important;
+    width: 100% !important;
     background-color: #add8e6; /* Light blue background color */
     padding: 7px; /* Add some padding */
    
@@ -791,7 +796,7 @@ height: 70px !important;
 
     font-size: 10px;
     text-align: left;
-    margin: 0 10px; /* Add horizontal margin */
+    margin: 0 20px; /* Add horizontal margin */
 }
 
 #prev-hint {
@@ -806,7 +811,7 @@ height: 70px !important;
 #next-hint {
     font-size: 16px;
     position: absolute;
-    right: 10px;
+    right: 20px;
     cursor: pointer;
     background-color: transparent; /* Remove button background color */
     border: none; /* Remove button border */
@@ -857,7 +862,7 @@ height: 70px !important;
 }
 /* Style for the crossword table to match keyboard width*/
 #table {
- width: 100% !important;
+ width: 90% !important;
   border-collapse: collapse; /* Required to stop table growing*/
   border: 3px solid black; /* Thicker outer border */
   margin-left: auto;
