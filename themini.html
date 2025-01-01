@@ -43,7 +43,7 @@
          </table>
          
     
-
+<div id="bruh" style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end;">
   <div id="hint-container">
         <button id="prev-hint" onclick="scrollHint(-1)"> < </button>
         <span id="hint-text" style="font-size:16px;"></span>
@@ -795,10 +795,10 @@ html, body {
 #hint-container {
 z-index: 2;
 position: absolute;
-    bottom: calc(160px + 35px );
+    bottom: calc(150px + 15px );
     display: flex;
-    align-items: center; /* Vertically center items */
-   
+    align-items: center     ; /* Vertically center items */
+    
   
     width: 100% !important;
     background-color: #99DAFF; /* Light blue background color */
@@ -809,7 +809,7 @@ position: absolute;
 #hint-text {
 
     font-size: 12px;
-    text-align: left;
+    text-align: left;     
      margin-left: 15px; /* Add horizontal margin */
     margin-right: 70px; /* Add horizontal margin */
 }
