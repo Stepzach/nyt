@@ -674,19 +674,21 @@ window.onload = function(){
     blackOut()
     updateHintText()
     
-     function adjustSizes() {
-        const containerWidth = 300; // Fixed container width
-        const cellSize = containerWidth / 3;
-      
- 
+   function adjustSizes() {
+        const containerWidth = Math.min(390, window.innerWidth * 0.9); // Fixed container width
+        const cellSize = containerWidth / 5;
+        const table = document.getElementById('table');
+
         // Set cell sizes
         const cells = document.querySelectorAll('#table .cell');
         cells.forEach(cell => {
-            cell.style.width = cellSize + '%';
+            cell.style.width = cellSize + 'px';
             cell.style.height = cellSize + 'px';
         });
-         document.getElementById('table').style.width = containerWidth + 'px';
-           document.getElementById('hint-container').style.width = containerWidth+'%';
+        
+         table.style.width = containerWidth + 'px';
+         table.style.height = containerWidth + 'px';
+         document.getElementById('hint-container').style.width = containerWidth+'px';
     }
 
     adjustSizes();
@@ -760,7 +762,7 @@ function updateCountDown(){
 
 
 .cell {
-height: 75px !important;
+
     border-radius: 0;
     outline: none;
     border: none;
@@ -778,11 +780,13 @@ posistion: fixed;
 z-index: 10;
 width: 100%;
 padding-top: 10px;
-  overflow: hidden;
+
   background-color: white;
   position: relative;
     background-color: #ececec;
     height: 35px;
+    display: block;
+    margin-bottom: ;
 }
 
 @media (min-width: 0px) {
@@ -853,6 +857,7 @@ position: relative;
   height: 200px;
   background-color: #ececec !important;
   display:block;
+  justify-content: center;
 }
 
 
@@ -868,11 +873,11 @@ position: relative;
     margin-right: auto;
     box-sizing: border-box;
     padding-top: 25px;
-    padding-bottom: 35px;
+    padding-bottom: 100px;
     padding-right: 15px;
     padding-left: 15px;
-    position: fixed;
-    bottom: 0;
+    position: relative;
+    top: 0px;
    
 }
 
@@ -884,7 +889,7 @@ position: relative;
 }
 
 #keyboard button {
-    width: 34px;
+    flex: 1;
     height: 42px;
     margin: 1.5px;
      
@@ -907,12 +912,12 @@ position: relative;
 position: relative;
 top: -10px !important;
 
- width: 95% !important;
+ width: 90% !important;
  max-width: 390px;
   border-collapse: collapse; /* Required to stop table growing*/
   border: 3px solid black; /* Thicker outer border */
   margin-left: auto;
-    margin-right: auto;
+  margin-right: auto;
 }
 
  
@@ -973,7 +978,6 @@ top: -10px !important;
         #popup button:hover {
             background-color: #FFD800;
         }
-
 </style>
 
 </html>
