@@ -80,7 +80,7 @@
             <button onclick="insertChar('B')">B</button>
             <button onclick="insertChar('N')">N</button>
              <button onclick="insertChar('M')">M</button>
-            <button onclick="deleteChar()" style="background-color: lightgray">⌫</button>
+            <button onclick="deleteChar()" style="background-color: lightgray; font-size: 20px;">⌫</button>
         </div>
     </div>
 </div>
@@ -774,13 +774,18 @@ padding-top: 10px;
     height: 35px;
 }
 
-
+@media (min-width: 0px) {
+            html {
+                touch-action: none; /* Prevent touch-based scrolling (mobile devices) */
+            }
+        }
 
 html, body {
     margin: 0;
     padding: 0;
     box-sizing: border-box; /* Use border-box model for consistent sizing */
    height: 100%; /* Ensure body occupies 100% of viewport height */
+     overflow: hidden; /* Disable both vertical and horizontal scrolling */
 }
 /* Modified Styles */
 #hint-container {
@@ -794,7 +799,7 @@ bottom: -18px;
     width: 100% !important;
     background-color: #add8e6; /* Light blue background color */
     padding: 10px; /* Add some padding */
-   
+     overflow: hidden; /* Disable both vertical and horizontal scrolling */
 }
 
 #hint-text {
@@ -864,6 +869,7 @@ bottom: -18px;
     cursor: pointer;
     border-radius: 5px;
     color: black;
+    
 }
 
 #keyboard button:hover {
@@ -941,4 +947,5 @@ bottom: -8px;
         }
 
 </style>
+
 </html>
