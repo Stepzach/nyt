@@ -732,6 +732,7 @@ document.addEventListener('scroll', (event) => {
             margin: 0;       /* Remove default margin to avoid unexpected shifts */
             height: 100%;    /* Ensure the body fills the viewport */
             width: 100%;     /* Ensure no unintended horizontal overflow */
+       
         }
 * {
     font-family: Verdana;
@@ -747,9 +748,9 @@ document.addEventListener('scroll', (event) => {
 
 /* Modal Content */
 .modal-content {
-  background-color: #fefefe;
+  
   width: 100%;
-
+background-color:black;
   
   border: 1px solid #888;
   width: 80%;
@@ -780,25 +781,23 @@ document.addEventListener('scroll', (event) => {
 }
 
 .topnav {
-posistion: fixed;
+position: relative;
 z-index: 10;
 width: 100%;
 padding-top: 10px;
+padding-bottom: 10px;
 max-width: 500px;
   background-color: white;
-  position: relative;
-    background-color: #ececec;
-    height: 35px;
-    display: block;
+
+    background-color: #fff;
+    border-bottom: 1.5px solid #ececec;
+    height: 23px;
+ 
      margin-left: auto; /* Add horizontal margin */
     margin-right: auto; /* Add horizontal margin */
 }
 
-@media (min-width: 0px) {
-            html {
-                touch-action: none; /* Prevent touch-based scrolling (mobile devices) */
-            }
-        }
+
 
 html, body {
     margin: 0;
@@ -924,7 +923,7 @@ position: relative;
 /* Style for the crossword table to match keyboard width*/
 #table {
 position: relative;
-top: -10px !important;
+top: -15px !important;
 
  width: 90% !important;
  max-width: 390px;
