@@ -652,7 +652,7 @@ window.onload = function(){
     for(i=0;i<5;i++){
         t += "<tr>";
         for(j=0;j<5;j++){
-          t += `<td><input autocomplete='off' readonly onkeyup='keyfunc()' onfocus='focusfunct(${i},${j})' onclick='handleCellClick(${i}, ${j})' class='cell' id='i${i}_${j}'></input></td>`;
+          t += `<td><div style="position:relative;"><input autocomplete='off' readonly onkeyup='keyfunc()' onfocus='focusfunct(${i},${j})' onclick='handleCellClick(${i}, ${j})' class='cell' id='i${i}_${j}'></input><span style="position: absolute; top: 1px; left: 2px; font-size: 22px; color: black;">${(i === 0 && j === 1) ? '1' : (i === 0 && j === 2) ? '2' : (i === 0 && j === 3) ? '3' : (i === 0 && j === 4) ? '4' : (i === 1 && j === 0) ? '5' : (i === 2 && j === 0) ? '6' : (i === 3 && j === 0) ? '7' : (i === 4 && j === 0) ? '8' : ''}</span></div></td>`;
         }
         t += "</tr>";
     }
@@ -777,12 +777,13 @@ background-color:black;
     outline: none;
     border: none;
     text-align: center;
-    font-size: 20px;
+    font-size: 40px;
     opacity: 1;
+   
     -webkit-text-fill-color: black;
     box-sizing: border-box; /*Ensure padding and border don't affect size*/
     padding: 0;
-
+    
 }
 
 .topnav {
@@ -833,6 +834,9 @@ position: relative;
 #hint-text {
      width: 100%;
     font-size: 12px;
+    
+    
+    
     text-align: left;     
      margin-left: 5px; /* Add horizontal margin */
     margin-right: 10px; /* Add horizontal margin */
