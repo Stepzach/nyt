@@ -733,6 +733,63 @@ document.addEventListener('scroll', (event) => {
     window.scrollTo(0, 0); // Force page back to the top
 }, { passive: false });
 
+
+    // Prevent zooming
+(function() {
+    // Disable pinch-zoom and other gestures
+    document.addEventListener('gesturestart', function(e) {
+        e.preventDefault();
+    });
+
+    document.addEventListener('gesturechange', function(e) {
+        e.preventDefault();
+    });
+
+    document.addEventListener('gestureend', function(e) {
+        e.preventDefault();
+    });
+
+    // Enforce zoom level by resetting it
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '0')) {
+            e.preventDefault();
+        }
+    });
+
+    let viewportMetaTag = document.querySelector("meta[name='viewport']");
+    if (!viewportMetaTag) {
+        viewportMetaTag = document.createElement('meta');
+        viewportMetaTag.name = 'viewport';
+        document.head.appendChild(viewportMetaTag);
+    }
+    viewportMetaTag.content = 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no';
+})();
+
+// Prevent scrolling
+(function() {
+    // Disable mouse wheel scrolling
+    window.addEventListener('wheel', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+
+    // Disable touch scrolling
+    window.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+
+    // Disable keyboard scrolling
+    window.addEventListener('keydown', function(e) {
+        const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End', ' '];
+        if (keys.includes(e.key)) {
+            e.preventDefault();
+        }
+    });
+
+    // Ensure no scrolling happens by setting body to fixed
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+})();
+
 </script>
 <style>
 
