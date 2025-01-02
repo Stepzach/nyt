@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>Mini Crossword</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <meta property="og:title" content="Crucig"/>
     <meta property="og:image" content="thumb.png"/>
@@ -18,7 +18,12 @@
 
     <link href="style.css" rel="stylesheet"></link>
     <script type="text/javascript" src="game.js"></script>
-    
+    <style>
+        /* Prevent scrolling caused by focus */
+        *:focus {
+            outline: none;
+        }
+    </style>
 </head>
 <body style = "overflow: hidden; height: 100vh">
  <div class="bruhbruh" style = "display: flex; flex-direction: column; height: 100%; overflow: hidden;">
@@ -829,8 +834,8 @@ position: relative;
      width: 100%;
     font-size: 12px;
     text-align: left;     
-     margin-left: 15px; /* Add horizontal margin */
-    margin-right: 20px; /* Add horizontal margin */
+     margin-left: 5px; /* Add horizontal margin */
+    margin-right: 10px; /* Add horizontal margin */
 }
 
 #prev-hint {
@@ -849,7 +854,7 @@ position: relative;
     margin-right: 7px;
     
     cursor: pointer;
-    background-color: transparent; /* Remove button background color */
+    background-color: transparent;
     border: none; /* Remove button border */
     font-weight: bold;
     flex-shrink: 0; /* Prevent buttons from shrinking */
