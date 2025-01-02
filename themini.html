@@ -734,60 +734,59 @@ document.addEventListener('scroll', (event) => {
 }, { passive: false });
 
 
-    // Prevent zooming
+// Prevent zooming and scrolling
 (function() {
-    // Disable pinch-zoom and other gestures
-    document.addEventListener('gesturestart', function(e) {
-        e.preventDefault();
-    });
+    // Disable zooming
+    const disableZoom = () => {
+        document.addEventListener('gesturestart', (e) => e.preventDefault());
+        document.addEventListener('gesturechange', (e) => e.preventDefault());
+        document.addEventListener('gestureend', (e) => e.preventDefault());
 
-    document.addEventListener('gesturechange', function(e) {
-        e.preventDefault();
-    });
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && ['+', '-', '0'].includes(e.key)) {
+                e.preventDefault();
+            }
+        });
 
-    document.addEventListener('gestureend', function(e) {
-        e.preventDefault();
-    });
+        document.addEventListener('dblclick', (e) => e.preventDefault());
 
-    // Enforce zoom level by resetting it
-    document.addEventListener('keydown', function(e) {
-        if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '0')) {
-            e.preventDefault();
+        let viewportMetaTag = document.querySelector("meta[name='viewport']");
+        if (!viewportMetaTag) {
+            viewportMetaTag = document.createElement('meta');
+            viewportMetaTag.name = 'viewport';
+            document.head.appendChild(viewportMetaTag);
         }
-    });
+        viewportMetaTag.content = 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no';
+    };
 
-    let viewportMetaTag = document.querySelector("meta[name='viewport']");
-    if (!viewportMetaTag) {
-        viewportMetaTag = document.createElement('meta');
-        viewportMetaTag.name = 'viewport';
-        document.head.appendChild(viewportMetaTag);
-    }
-    viewportMetaTag.content = 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no';
-})();
+    // Disable scrolling
+    const disableScrolling = () => {
+        const preventDefault = (e) => e.preventDefault();
 
-// Prevent scrolling
-(function() {
-    // Disable mouse wheel scrolling
-    window.addEventListener('wheel', function(e) {
-        e.preventDefault();
-    }, { passive: false });
+        window.addEventListener('wheel', preventDefault, { passive: false });
+        window.addEventListener('touchmove', preventDefault, { passive: false });
+        window.addEventListener('keydown', (e) => {
+            const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End', ' '];
+            if (keys.includes(e.key)) {
+                e.preventDefault();
+            }
+        });
 
-    // Disable touch scrolling
-    window.addEventListener('touchmove', function(e) {
-        e.preventDefault();
-    }, { passive: false });
+        // Ensure no scrolling happens by fixing the body
+        document.documentElement.style.position = 'fixed';
+        document.documentElement.style.overflow = 'hidden';
+        document.documentElement.style.width = '100%';
+        document.documentElement.style.height = '100%';
 
-    // Disable keyboard scrolling
-    window.addEventListener('keydown', function(e) {
-        const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End', ' '];
-        if (keys.includes(e.key)) {
-            e.preventDefault();
-        }
-    });
+        document.body.style.position = 'fixed';
+        document.body.style.overflow = 'hidden';
+        document.body.style.width = '100%';
+        document.body.style.height = '100%';
+        document.body.style.margin = '0';
+    };
 
-    // Ensure no scrolling happens by setting body to fixed
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
+    disableZoom();
+    disableScrolling();
 })();
 
 </script>
