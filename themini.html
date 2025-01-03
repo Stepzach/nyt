@@ -85,10 +85,12 @@
    
     
 </head>
+<div id="whole">
 <body style="overflow: hidden; height: 100vh">
   <div class="bruhbruh" style="display: flex; flex-direction: column; height: 100%; overflow: hidden">
     <div id="overlay">
       <div id="popup">
+       <label>Welcome to today's Crossword!</label><br/>
         <label for="nameInput">Enter your name:</label><br />
         <input type="text" id="nameInput" /><br />
         <button onclick="startGame()">Start Crossword</button>
@@ -1012,6 +1014,7 @@ html, body {
     box-sizing: border-box; /* Use border-box model for consistent sizing */
    height: 100%; /* Ensure body occupies 100% of viewport height */
      overflow: hidden; /* Disable both vertical and horizontal scrolling */
+     background-color: black;
 }
 /* Modified Styles */
 #hint-container {
@@ -1027,7 +1030,7 @@ position: relative;
     padding: 3px; /* Add some padding */
      overflow: hidden; /* Disable both vertical and horizontal scrolling */
      height: 38px;
-     max-width: 500px
+     max-width: 495px;
        margin-left: auto; /* Add horizontal margin */
     margin-right: auto; /* Add horizontal margin */
 }
@@ -1200,6 +1203,17 @@ top: -15px !important;
 
         #popup button:hover {
             background-color: #FFD800;
+        }
+        
+        #whole {
+        margin-left: auto;
+        margin-right: auto;
+           width: 100%;
+           height: 100%;
+           max-width: 495px;
+           border-left: 1px solid lightgrey;
+           background-color: white;
+           border-right: 1px solid lightgrey;
         }
 </style>
 
