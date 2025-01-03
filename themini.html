@@ -112,6 +112,27 @@
       </div>
     </div>
   </div>
+    <!-- Congratulations Popup -->
+    <div id="congratsModal" class="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; max-width: 400px; background-color: white; border-radius: 10px; text-align: center; z-index: 1001; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+        <div class="modal-content" style="padding: 30px;">
+            <h2>Congratulations!</h2>
+            <p>You have successfully completed the crossword.</p>
+            <button onclick="resumeGame()" style="background-color: #99DAFF; color: black; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; margin-bottom: 10px;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">Return to Game</button>
+            <button onclick="gotoLeaderboard()" style="background-color: #99DAFF; color: black; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">See Leaderboard</button>
+        </div>
+    </div>
+
+    <!-- Try Again Popup -->
+    <div id="tryAgainModal" class="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; max-width: 400px; background-color: white; border-radius: 10px; text-align: center; z-index: 1001; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+        <div class="modal-content" style="padding: 30px;">
+            <h2>Try Again!</h2>
+            <p>Your current answers are not correct. Keep trying!</p>
+            <button onclick="hideTryAgainPopup()" style="background-color: #99DAFF; color: black; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">Return to Game</button>
+        </div>
+    </div>
+
+    <!-- Overlay for Popups -->
+    <div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;"></div>
 
   <div id="onboard" class="modal">
     <div class="modal-content">
@@ -167,7 +188,7 @@
     let startTime;
     let timerInterval;
     let isPaused = false;
-    let pausedTime = 0;
+    let pausedTime = 0; // To store the elapsed time when the game is paused
     let score = 0;
 
     // --- Helper Functions ---
@@ -618,9 +639,11 @@
         }
     
         if (isCorrect) {
-            handlePuzzleCompletion(true); // Correct solution
+            showCongratsPopup();
+            startConfetti();
         } else {
-            handlePuzzleCompletion(false); // Incorrect solution
+            showTryAgainPopup();
+            stopConfetti();
         }
     }
 
@@ -640,19 +663,35 @@
     function handlePuzzleCompletion(isCorrect) {
         
 
-        if (isCorrect) {
-            clearInterval(timerInterval);
-            alert("Congratulations!");
-            startConfetti();
-        } else {
-            alert("Try again!");
-            stopConfetti();
-        }
+      
     }
 
     function showWinModal() {
         document.getElementById("myModal").style.display = "block";
         document.getElementById("myModal").focus();
+    }
+
+    function showCongratsPopup() {
+        document.getElementById("modalOverlay").style.display = "block";
+        document.getElementById("congratsModal").style.display = "block";
+        clearInterval(timerInterval); // Stop the timer when the congrats popup is shown
+    }
+
+    function showTryAgainPopup() {
+        document.getElementById("modalOverlay").style.display = "block";
+        document.getElementById("tryAgainModal").style.display = "block";
+        // Don't pause the timer here
+    }
+    
+    function hideTryAgainPopup() {
+        document.getElementById("modalOverlay").style.display = "none";
+        document.getElementById("tryAgainModal").style.display = "none";
+        // Timer continues running in the background
+    }
+
+    function gotoLeaderboard() {
+        // Placeholder for leaderboard URL
+        window.location.href = "leaderboard.html"; // Replace with your actual leaderboard URL
     }
     
     // --- Timer Functions ---
@@ -660,7 +699,7 @@
         isPaused = !isPaused;
         if (isPaused) {
             clearInterval(timerInterval);
-            pausedTime = new Date() - startTime;
+            pausedTime = new Date() - startTime; // Calculate elapsed time before pausing
             document.getElementById("pauseModal").style.display = "flex";
         } else {
             resumeGame();
@@ -669,21 +708,31 @@
 
     function resumeGame() {
         document.getElementById("pauseModal").style.display = "none";
-        startTime = new Date() - pausedTime;
-        updateTimerDisplay();
-        timerInterval = setInterval(updateTimerDisplay, 1000);
+        document.getElementById("modalOverlay").style.display = "none";
+        document.getElementById("congratsModal").style.display = "none";
+        
+    
+        // Only resume the timer if the game was previously paused and not completed
+        if (isPaused) {
+            startTime = new Date() - pausedTime; // Adjust start time to resume from paused time
+            updateTimerDisplay();
+            timerInterval = setInterval(updateTimerDisplay, 1000);
+            isPaused = false;
+            pausedTime = 0; // Reset paused time
+        }
     }
+    
 
     function updateTimerDisplay() {
         const currentTime = new Date();
-        const elapsedTime = Math.floor((currentTime - startTime - (isPaused ? new Date() - startTime + pausedTime : 0)) / 1000);
+        const elapsedTime = Math.floor((currentTime - startTime) / 1000);
         const minutes = Math.floor(elapsedTime / 60).toString().padStart(2, "0");
         const seconds = (elapsedTime % 60).toString().padStart(2, "0");
         document.getElementById("timerDisplay").textContent = `${minutes}:${seconds}`;
     }
 
     function startTimer() {
-        startTime = isPaused ? new Date() - pausedTime : new Date();
+        startTime = isPaused ? new Date() - pausedTime : new Date(); // Start time depends on whether the game was paused
         updateTimerDisplay();
         timerInterval = setInterval(updateTimerDisplay, 1000);
     }
