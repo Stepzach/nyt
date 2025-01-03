@@ -10,14 +10,37 @@
             width: 100%;
         }
         th, td {
+       font-family: 'Arial', sans-serif;
             border: 1px solid black;
             padding: 8px;
             text-align: left;
+        }
+        /* Style for the first row (header) */
+        thead tr {
+            background-color: lightgrey;
+        }
+        /* Style for the date text */
+        .date {
+        font-family: 'Arial', sans-serif;
+            font-size: 18px;
+            color: #636363;
+            
+            text-align: center; /* Center the date text */
+        }
+        /* Style for the h1 font */
+        h1 {
+            font-family: 'Arial', sans-serif; /* Change the font family */
+            font-size: 2.5em; /* Adjust the size */
+            text-align: center; /* Center the h1 text */
         }
     </style>
 </head>
 <body>
     <h1>Crossword Leaderboard</h1>
+    
+    <!-- Today's date below the h1 -->
+    <p class="date" id="date"></p>
+    
     <table id="leaderboardTable">
         <thead>
             <tr>
@@ -36,15 +59,15 @@
 
     <script>
         // Firebase config (use your actual config)
-       const firebaseConfig = {
-  apiKey: "AIzaSyBukFC83UnD1r6SaiSv-M95dz9PINFhqWU",
-  authDomain: "crosswordleader.firebaseapp.com",
-  databaseURL: "https://crosswordleader-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "crosswordleader",
-  storageBucket: "crosswordleader.firebasestorage.app",
-  messagingSenderId: "762979733536",
-  appId: "1:762979733536:web:2f8afc76b9dc1156942c45"
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyBukFC83UnD1r6SaiSv-M95dz9PINFhqWU",
+            authDomain: "crosswordleader.firebaseapp.com",
+            databaseURL: "https://crosswordleader-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "crosswordleader",
+            storageBucket: "crosswordleader.firebasestorage.app",
+            messagingSenderId: "762979733536",
+            appId: "1:762979733536:web:2f8afc76b9dc1156942c45"
+        };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -67,18 +90,18 @@
                     time: data[key].time
                 });
             }
-          leaderboardArray.sort((a, b) => {
-    // Convert times to seconds for proper sorting
-    const timeToSeconds = (time) => {
-        const parts = time.split(':').map(Number);
-        return parts[0] * 60 + parts[1];
-    };
+            leaderboardArray.sort((a, b) => {
+                // Convert times to seconds for proper sorting
+                const timeToSeconds = (time) => {
+                    const parts = time.split(':').map(Number);
+                    return parts[0] * 60 + parts[1];
+                };
 
-    const timeA = timeToSeconds(a.time);
-    const timeB = timeToSeconds(b.time);
+                const timeA = timeToSeconds(a.time);
+                const timeB = timeToSeconds(b.time);
 
-    return timeA - timeB;
-});
+                return timeA - timeB;
+            });
 
             // Add new entries to the table
             leaderboardArray.forEach((entry, index) => {
@@ -94,12 +117,37 @@
         }
 
         // Listen for changes to the leaderboard data
-leaderboardRef.orderByChild('time').on('value', (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-        displayLeaderboard(data);
-    }
-});
+        leaderboardRef.orderByChild('time').on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                displayLeaderboard(data);
+            }
+        });
+
+        // Function to format the date as "Monday 21st October 2025"
+        function formatDate() {
+            const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('en-GB', options);
+            
+            // Add suffix to the day
+            const day = today.getDate();
+            let suffix = 'th';
+            if (day === 1 || day === 21 || day === 31) {
+                suffix = 'st';
+            } else if (day === 2 || day === 22) {
+                suffix = 'nd';
+            } else if (day === 3 || day === 23) {
+                suffix = 'rd';
+            }
+
+            const formattedDate = dateStr.replace(day, day + suffix);
+            document.getElementById('date').textContent = formattedDate;
+        }
+
+        // Call the function to set the date when the page loads
+        window.onload = formatDate;
     </script>
 </body>
 </html>
+
