@@ -26,6 +26,29 @@
             outline: none;
         }
     </style>
+     <script>
+    const firebaseConfig = {
+  apiKey: "AIzaSyBukFC83UnD1r6SaiSv-M95dz9PINFhqWU",
+  authDomain: "crosswordleader.firebaseapp.com",
+  databaseURL: "https://crosswordleader-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "crosswordleader",
+  storageBucket: "crosswordleader.firebasestorage.app",
+  messagingSenderId: "762979733536",
+  appId: "1:762979733536:web:2f8afc76b9dc1156942c45"
+};
+
+
+// Initialize Firebase with your config
+firebase.initializeApp(firebaseConfig);
+
+// Get a reference to the Realtime Database
+const database = firebase.database();
+const leaderboardRef = database.ref('leaderboard'); // "leaderboard" is the name of the node in your database where you'll store leaderboard data
+</script>
+     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-database-compat.js"></script>
+    
+    
 </head>
 <body style="overflow: hidden; height: 100vh">
   <div class="bruhbruh" style="display: flex; flex-direction: column; height: 100%; overflow: hidden">
@@ -121,7 +144,7 @@
             <h2>Congratulations!</h2>
             <p id="completionMessage">You have successfully completed the crossword.</p>
             <button onclick="resumeGame()" style="background-color: #99DAFF; color: black; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; margin-bottom: 10px;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">Return to Game</button>
-            <button onclick="gotoLeaderboard()" style="background-color: #99DAFF; color: black; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">See Leaderboard</button>
+            <button onclick="location.href='./leaderboard.html';" style="background-color: #99DAFF; color: black; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">See Leaderboard</button>
         </div>
     </div>
 
@@ -675,13 +698,22 @@
     }
 
     function showCongratsPopup() {
-        const completionTime = document.getElementById("timerDisplay").textContent;
-        document.getElementById("completionMessage").textContent = `You have successfully completed the crossword in ${completionTime}`;
-        document.getElementById("modalOverlay").style.display = "block";
-        document.getElementById("congratsModal").style.display = "block";
-        clearInterval(timerInterval); // Stop the timer when the congrats popup is shown
-    }
+    const completionTime = document.getElementById("timerDisplay").textContent;
+    document.getElementById("completionMessage").textContent = `You have successfully completed the crossword in ${completionTime}`;
+    document.getElementById("modalOverlay").style.display = "block";
+    document.getElementById("congratsModal").style.display = "block";
+    clearInterval(timerInterval); // Stop the timer
 
+    // Get the player's name
+    const playerName = document.getElementById("userNameDisplay").textContent;
+
+    // Save the result to Firebase
+    leaderboardRef.push({
+        name: playerName,
+        time: completionTime,
+        timestamp: firebase.database.ServerValue.TIMESTAMP // Optional: Add a server-side timestamp for accurate ordering
+    });
+}
     function showTryAgainPopup() {
         document.getElementById("modalOverlay").style.display = "block";
         document.getElementById("tryAgainModal").style.display = "block";
