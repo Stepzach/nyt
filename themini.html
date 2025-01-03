@@ -119,7 +119,7 @@
     <div id="congratsModal" class="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; max-width: 400px; background-color: white; border-radius: 10px; text-align: center; z-index: 1001; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
         <div class="modal-content" style="padding: 30px;">
             <h2>Congratulations!</h2>
-            <p>You have successfully completed the crossword.</p>
+            <p id="completionMessage">You have successfully completed the crossword.</p>
             <button onclick="resumeGame()" style="background-color: #99DAFF; color: black; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; margin-bottom: 10px;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">Return to Game</button>
             <button onclick="gotoLeaderboard()" style="background-color: #99DAFF; color: black; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">See Leaderboard</button>
         </div>
@@ -221,11 +221,11 @@
         // Update hint text based on the current direction and cell
         if (horizontal) {
             const acrossHints = [
-                "", 
-                "Second letter", 
-                "Third letter", 
-                "Fourth letter", 
-                "Fifth letter",
+                "Yadda yadda yadda", 
+                "Break in action", 
+                "Aromatic seed used in baking", 
+                "Carried out (war)", 
+                "Narrow cut",
                 "Sixth letter",
                 "Eleventh letter",
                 "Sixteenth letter",
@@ -235,11 +235,11 @@
             hintTextElement.textContent = acrossHints[x] || "";
         } else {
             const downHints = [
-                "", 
-                "Sixth letter", 
-                "Seventh letter", 
-                "Eighth letter", 
-                "Ninth letter",
+                "Dog's feet", 
+                "Obvious and boring", 
+                "Mario's brother", 
+                "Something of worth", 
+                "Pay attention to; Obey",
                 "Tenth letter",
                 "Fifteenth letter",
                 "Twentieth letter",
@@ -604,11 +604,11 @@
     function checkLetter(i, j, letter) {
         // Define the correct solution
         const correctSolution = [
-            ["", "A", "B", "C", "D"],
-            ["E", "F", "G", "H", "I"],
-            ["J", "K", "L", "M", "N"],
-            ["O", "P", "Q", "R", "S"],
-            ["T", "U", "V", "W", ""],
+            ["", "B", "L", "A", "H"],
+            ["P", "A", "U", "S", "E"],
+            ["A", "N", "I", "S", "E"],
+            ["W", "A", "G", "E", "D"],
+            ["S", "L", "I", "T", ""],
         ];
 
         // Check if the entered letter matches the correct solution
@@ -653,11 +653,11 @@
     function getExpectedLetter(i, j) {
         // Define the correct solution
         const correctSolution = [
-            ["", "A", "B", "C", "D"],
-            ["E", "F", "G", "H", "I"],
-            ["J", "K", "L", "M", "N"],
-            ["O", "P", "Q", "R", "S"],
-            ["T", "U", "V", "W", ""],
+            ["", "B", "L", "A", "H"],
+            ["P", "A", "U", "S", "E"],
+            ["A", "N", "I", "S", "E"],
+            ["W", "A", "G", "E", "D"],
+            ["S", "L", "I", "T", ""],
         ];
         return correctSolution[i][j];
     }
@@ -675,6 +675,8 @@
     }
 
     function showCongratsPopup() {
+        const completionTime = document.getElementById("timerDisplay").textContent;
+        document.getElementById("completionMessage").textContent = `You have successfully completed the crossword in ${completionTime}`;
         document.getElementById("modalOverlay").style.display = "block";
         document.getElementById("congratsModal").style.display = "block";
         clearInterval(timerInterval); // Stop the timer when the congrats popup is shown
