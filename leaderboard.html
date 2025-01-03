@@ -1,50 +1,95 @@
 <!-- leaderboard.html -->
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-database-compat.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard</title>
-    <script src="/socket.io/socket.io.js"></script>
     <style>
         table {
-            width: 100%;
             border-collapse: collapse;
+            width: 100%;
         }
         th, td {
+            border: 1px solid black;
             padding: 8px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
         }
     </style>
 </head>
 <body>
-    <h1>Leaderboard</h1>
-    <table id="leaderboard">
+    <h1>Crossword Leaderboard</h1>
+    <table id="leaderboardTable">
         <thead>
             <tr>
+                <th>Rank</th>
                 <th>Name</th>
-                <th>Time (Seconds)</th>
+                <th>Time</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Leaderboard entries will go here -->
+            <!-- Leaderboard entries will be added here -->
         </tbody>
     </table>
 
+    <!-- Add Firebase SDK scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-database-compat.js"></script>
+
     <script>
-        const socket = io();
+        // Firebase config (same as in index.html)
+        const firebaseConfig = {
+        
+  apiKey: "AIzaSyBukFC83UnD1r6SaiSv-M95dz9PINFhqWU",
+  authDomain: "crosswordleader.firebaseapp.com",
+  databaseURL: "https://crosswordleader-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "crosswordleader",
+  storageBucket: "crosswordleader.firebasestorage.app",
+  messagingSenderId: "762979733536",
+  appId: "1:762979733536:web:2f8afc76b9dc1156942c45"
 
-        socket.on('leaderboard', function(leaderboard) {
-            const tbody = document.getElementById('leaderboard').getElementsByTagName('tbody')[0];
-            tbody.innerHTML = ''; // Clear the table
+        };
 
-            leaderboard.forEach(entry => {
-                const row = tbody.insertRow();
-                const nameCell = row.insertCell(0);
-                const timeCell = row.insertCell(1);
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const leaderboardRef = database.ref('leaderboard');
+
+        // Get the leaderboard table body element
+        const leaderboardTableBody = document.getElementById('leaderboardTable').getElementsByTagName('tbody')[0];
+
+        // Function to display the leaderboard data
+        function displayLeaderboard(data) {
+            leaderboardTableBody.innerHTML = ''; // Clear existing entries
+
+            // Sort by time (fastest first) - assumes time is in "MM:SS" format
+            const sortedData = Object.entries(data)
+                .map(([key, value]) => ({ key, ...value }))
+                .sort((a, b) => {
+                    const timeA = a.time.split(':').map(Number);
+                    const timeB = b.time.split(':').map(Number);
+                    return (timeA[0] * 60 + timeA[1]) - (timeB[0] * 60 + timeB[1]); // Compare in seconds
+                });
+
+            // Add new entries to the table
+            sortedData.forEach((entry, index) => {
+                const row = leaderboardTableBody.insertRow();
+                const rankCell = row.insertCell();
+                const nameCell = row.insertCell();
+                const timeCell = row.insertCell();
+
+                rankCell.textContent = index + 1;
                 nameCell.textContent = entry.name;
-                timeCell.textContent = (entry.time / 1000).toFixed(2); // Convert milliseconds to seconds
+                timeCell.textContent = entry.time;
             });
+        }
+
+        // Listen for changes in the 'leaderboard' node
+        leaderboardRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                displayLeaderboard(data);
+            }
         });
     </script>
 </body>
