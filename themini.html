@@ -26,9 +26,40 @@
             outline: none;
         }
     </style>
+     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-database-compat.js"></script>
+    <script 
+            // Firebase App (the core Firebase SDK) is always required and
+        // must be listed before other Firebase SDKs
+        import { initializeApp } from 'firebase/app';
+        // Add the Firebase products that you want to use
+        import { getAuth } from "firebase/realtimedatabase";
+         import { getAuth } from "firebase/database";
+                 import { getAuth } from "firebase/app";
+                 import { getAuth } from "firebase/webapp";
+        import { getFirestore } from "firebase/firestore";
+        
+        // TODO: Replace the following with your app's Firebase project configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBukFC83UnD1r6SaiSv-M95dz9PINFhqWU",
+  authDomain: "crosswordleader.firebaseapp.com",
+  databaseURL: "https://crosswordleader-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "crosswordleader",
+  storageBucket: "crosswordleader.firebasestorage.app",
+  messagingSenderId: "762979733536",
+  appId: "1:762979733536:web:2f8afc76b9dc1156942c45"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+</script>
     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-database-compat.js">
+    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-database-compat.js"></script>
      <script>
+
+         
     const firebaseConfig = {
   apiKey: "AIzaSyBukFC83UnD1r6SaiSv-M95dz9PINFhqWU",
   authDomain: "crosswordleader.firebaseapp.com",
