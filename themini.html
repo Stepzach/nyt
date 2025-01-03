@@ -39,13 +39,17 @@
   appId: "1:762979733536:web:2f8afc76b9dc1156942c45"
 };
 
-
+</script>
+     <script>
 // Initialize Firebase with your config
-firebase.initializeApp(firebaseConfig);
+ // 3. Initialize Firebase (AFTER SDK scripts are loaded)
+        firebase.initializeApp(firebaseConfig);
 
-// Get a reference to the Realtime Database
-const database = firebase.database();
-const leaderboardRef = database.ref('leaderboard'); // "leaderboard" is the name of the node in your database where you'll store leaderboard data
+        // 4. Get a reference to the database service
+        const database = firebase.database();
+
+        // 5. Define leaderboardRef globally (so it's accessible to other functions)
+        const leaderboardRef = database.ref('leaderboard');
 </script>
    
     
@@ -697,47 +701,37 @@ const leaderboardRef = database.ref('leaderboard'); // "leaderboard" is the name
         document.getElementById("myModal").focus();
     }
 
+  
    function showCongratsPopup() {
-    const completionTime = document.getElementById("timerDisplay").textContent;
-    document.getElementById("completionMessage").textContent = `You have successfully completed the crossword in ${completionTime}`;
-    document.getElementById("modalOverlay").style.display = "block";
-    document.getElementById("congratsModal").style.display = "block";
-    clearInterval(timerInterval); // Stop the timer
+            const completionTime = document.getElementById("timerDisplay").textContent;
+            document.getElementById("completionMessage").textContent = `You have successfully completed the crossword in ${completionTime}`;
+            document.getElementById("modalOverlay").style.display = "block";
+            document.getElementById("congratsModal").style.display = "block";
+            clearInterval(timerInterval); // Stop the timer
 
-    // Get the player's name
-    const playerName = document.getElementById("userNameDisplay").textContent;
+            // Get the player's name (ensure it's not empty)
+            const playerName = document.getElementById("userNameDisplay").textContent;
 
-    // --- Debugging Checks ---
-
-    // 1. Check if Firebase is initialized (leaderboardRef exists)
-    if (typeof leaderboardRef === 'undefined') {
-        console.error("Firebase is not initialized or leaderboardRef is not defined.");
-        return; // Stop execution if Firebase is not ready
-    }
-
-    // 2. Check if player name is valid
-    if (!playerName) {
-        console.error("Player name is empty or invalid.");
-        return; // Stop if player name is not valid
-    }
-
-    // 3. Log data before pushing to Firebase
-    console.log("Data to be saved:", { name: playerName, time: completionTime });
-
-    // --- Push data to Firebase with error handling ---
-
-    leaderboardRef.push({
-        name: playerName,
-        time: completionTime
-    })
-    .then(() => {
-        console.log("Leaderboard entry saved successfully!");
-    })
-    .catch((error) => {
-        console.error("Error saving leaderboard entry:", error);
-        // You might want to display an error message to the user here
-    });
-}
+            // Check if leaderboardRef is defined (Firebase is initialized)
+            if (typeof leaderboardRef !== 'undefined') {
+                // Save the result to Firebase
+                leaderboardRef.push({
+                    name: playerName,
+                    time: completionTime
+                })
+                .then(() => {
+                    console.log("Leaderboard entry saved successfully!");
+                })
+                .catch((error) => {
+                    console.error("Error saving leaderboard entry:", error);
+                    // Display an error message to the user if needed
+                    alert("An error occurred while saving your score. Please try again.");
+                });
+            } else {
+                console.error("Firebase is not initialized. Leaderboard entry not saved.");
+                alert("An error occurred. Please check your Firebase setup.");
+            }
+        }
     function showTryAgainPopup() {
         document.getElementById("modalOverlay").style.display = "block";
         document.getElementById("tryAgainModal").style.display = "block";
@@ -798,13 +792,14 @@ const leaderboardRef = database.ref('leaderboard'); // "leaderboard" is the name
         timerInterval = setInterval(updateTimerDisplay, 1000);
     }
 
-    function startGame() {
-        const name = document.getElementById("nameInput").value;
-        document.getElementById("userNameDisplay").textContent = name;
-        document.getElementById("overlay").style.display = "none";
-        startTimer();
-       
-    }
+      function startGame() {
+            const name = document.getElementById("nameInput").value;
+            document.getElementById("userNameDisplay").textContent = name;
+            document.getElementById("overlay").style.display = "none";
+            startTimer();
+            // You might want to add a check here:
+           
+        }
     function adjustSizes() {
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
