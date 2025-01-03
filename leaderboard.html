@@ -8,23 +8,25 @@
         table {
             border-collapse: collapse;
             width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
         }
         th, td {
-       font-family: 'Arial', sans-serif;
+            font-family: 'Arial', sans-serif;
             border: 1px solid black;
             padding: 8px;
             text-align: left;
         }
         /* Style for the first row (header) */
         thead tr {
-            background-color: lightgrey;
+            background-color: #99DAFF;
         }
         /* Style for the date text */
         .date {
-        font-family: 'Arial', sans-serif;
+            font-family: 'Arial', sans-serif;
             font-size: 18px;
             color: #636363;
-            
             text-align: center; /* Center the date text */
         }
         /* Style for the h1 font */
@@ -32,6 +34,16 @@
             font-family: 'Arial', sans-serif; /* Change the font family */
             font-size: 2.5em; /* Adjust the size */
             text-align: center; /* Center the h1 text */
+        }
+        /* Styles for the top three ranks */
+        .gold {
+            background-color: gold;
+        }
+        .silver {
+            background-color: silver;
+        }
+        .bronze {
+            background-color: #cd7f32;
         }
     </style>
 </head>
@@ -113,6 +125,15 @@
                 rankCell.textContent = index + 1;
                 nameCell.textContent = entry.name;
                 timeCell.textContent = entry.time;
+
+                // Apply styles for top 3 ranks
+                if (index === 0) {
+                    row.classList.add('gold');
+                } else if (index === 1) {
+                    row.classList.add('silver');
+                } else if (index === 2) {
+                    row.classList.add('bronze');
+                }
             });
         }
 
@@ -150,4 +171,3 @@
     </script>
 </body>
 </html>
-
