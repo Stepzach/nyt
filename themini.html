@@ -90,11 +90,14 @@
   <div class="bruhbruh" style="display: flex; flex-direction: column; height: 100%; overflow: hidden">
     <div id="overlay">
       <div id="popup">
-       <label>Welcome to today's Crossword!</label><br/>
-        <label for="nameInput">Enter your name:</label><br />
-        <input type="text" id="nameInput" /><br />
-        <button onclick="startGame()">Start Crossword</button>
-      </div>
+       <label style="margin-bottom: 0;">Welcome to today's Crossword!</label>
+       <p style="margin-top: 5px; margin-bottom: 35px; color: grey; font-size: 16px;">Friday 3rd Jan 2025</p>
+       
+       
+        <label style="font-weight: normal !important; margin-bottom: 20px;" for="nameInput">Enter your name:</label>
+        <input style="margin-bottom: 20px;" type="text" id="nameInput" /><br />
+        <button onclick="startGame()" style="font-weight:bold">Start Crossword</button>
+        <br><p style="color:grey; font-size: 15px;"> </div>
     </div>
 
     <div class="topnav">
@@ -113,11 +116,11 @@
         </button>
       </div>
     </div>
-<div id="pauseModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000; overflow: hidden;">
-  <div class="modal-content" style="position: absolute; bottom: 100px; width: 100%; height: 300px; background: white; padding: 20px; transition: bottom 0.3s; left: 50%;
+<div id="pauseModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000; border-radius: 10px; overflow: hidden;">
+  <div class="modal-content" style="position: absolute; bottom: 0px; width: 100%; max-width: 455px; height: 400px;  background: white; padding: 20px; transition: bottom 0.3s; left: 50%;
     transform: translateX(-50%); text-align: center;">
-    <p style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">Your game is paused</p>
-    <button onclick="resumeGame()" style="padding: 10px 20px; font-size: 16px; color: black; background-color: #99DAFF; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">Resume</button>
+    <p style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">YOUR GAME IS PAUSED</p>  <p style="font-size: 17px; margin-bottom: 2px; padding-left: 20px;  padding-right: 20px;">Take a break, and return when you're ready.</p> <p style="font-size: 15px; color: grey; margin-top: 5px; margin-bottom: 25px; padding-left: 20px; padding-right: 20px;">(Don't close the window, you will lose all progress)</p>
+    <button onclick="resumeGame()" style="padding: 10px 20px; font-size: 18px; font-weight: bold; color: black; background-color: rgb(153, 218, 255); border: medium; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">RESUME</button>
   </div>
 </div>
 
@@ -176,10 +179,17 @@
     </div>
   </div>
     <!-- Congratulations Popup -->
-    <div id="congratsModal" class="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; max-width: 400px; background-color: white; border-radius: 10px; text-align: center; z-index: 1001; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+    <div id="congratsModal" class="modal" style="display: none; position: absolute; bottom: 0px; width: 100%; max-width: 495px; height: 500px; background-color: white; border-radius: 10px; text-align: center; z-index: 1001; box-shadow: rgba(0,0,0,0.2);">
+        
+       
+        
+        
+        
+        
         <div class="modal-content" style="padding: 30px;">
             <h2>Congratulations!</h2>
             <p id="completionMessage">You have successfully completed the crossword.</p>
+            <p style="color: grey; font-size: 15px;">Come back for tomorow's crossword!</p>
             <button onclick="resumeGame()" style="background-color: #99DAFF; color: black; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; margin-bottom: 10px;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">Return to Game</button>
             <button onclick="location.href='./leaderboard.html';" style="background-color: #99DAFF; color: black; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">See Leaderboard</button>
         </div>
@@ -935,7 +945,7 @@
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
- width: 100%;
+ width: 80%;
  
   
 }
@@ -943,11 +953,10 @@
 /* Modal Content */
 .modal-content {
   
-  width: 100%;
+
 background-color:white;
   
-  border: 1px solid #888;
-  width: 80%;
+
 }
 
 
@@ -1169,26 +1178,33 @@ top: -15px !important;
         }
         #popup {
             background-color: white;
-            padding: 30px;
+            padding-top: 30px;
             border-radius: 10px;
             text-align: center;
-            max-width: 400px; /* Limit width */
-             width: 70%; /* Make it responsive */
+            max-width: 495px; /* Limit width */
+             width: 100%; /* Make it responsive */
+             bottom:0px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: absolute;
+            
+            height: 500px;;
         }
          #popup label {
             display: block;
             margin-bottom: 10px;
             font-weight: bold;
+            padding-left: 20px;
+            padding-right: 20px;
           }
           #popup input[type="text"] {
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #575757;
             border-radius: 5px;
             margin-bottom: 15px;
             width: 80%;
              font-size: 16px;
             box-sizing: border-box;
+            background-color: lightgrey;
         }
         #popup button {
             background-color: #99DAFF;
