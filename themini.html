@@ -291,11 +291,11 @@
         // Update hint text based on the current direction and cell
         if (horizontal) {
             const acrossHints = [
-                "Yadda yadda yadda", 
-                "Break in action", 
-                "Aromatic seed used in baking", 
-                "Carried out (war)", 
-                "Narrow cut",
+                "Not wild, opposite of feral", 
+                "H2O", 
+                "A theatrical performance combining singing and music", 
+                "Jewelry for fingers", 
+                "A partner or companion, often in chess",
                 "Sixth letter",
                 "Eleventh letter",
                 "Sixteenth letter",
@@ -305,11 +305,11 @@
             hintTextElement.textContent = acrossHints[x] || "";
         } else {
             const downHints = [
-                "Dog's feet", 
-                "Obvious and boring", 
-                "Mario's brother", 
-                "Something of worth", 
-                "Pay attention to; Obey",
+                "A creature often found in soil", 
+                "Type of tree native to Madagascar", 
+                "A____ (portable shelter used for camping)", 
+                "To combine or fuse into one", 
+                "Long periods in history (also a taylor swift tour)",
                 "Tenth letter",
                 "Fifteenth letter",
                 "Twentieth letter",
@@ -674,11 +674,11 @@
     function checkLetter(i, j, letter) {
         // Define the correct solution
         const correctSolution = [
-            ["", "B", "L", "A", "H"],
-            ["P", "A", "U", "S", "E"],
-            ["A", "N", "I", "S", "E"],
-            ["W", "A", "G", "E", "D"],
-            ["S", "L", "I", "T", ""],
+            ["", "T", "A", "M", "E"],
+            ["W", "A", "T", "E", "R"],
+            ["O", "P", "E", "R", "A"],
+            ["R", "I", "N", "G", "S"],
+            ["M", "A", "T", "E", ""],
         ];
 
         // Check if the entered letter matches the correct solution
@@ -723,11 +723,11 @@
     function getExpectedLetter(i, j) {
         // Define the correct solution
         const correctSolution = [
-            ["", "B", "L", "A", "H"],
-            ["P", "A", "U", "S", "E"],
-            ["A", "N", "I", "S", "E"],
-            ["W", "A", "G", "E", "D"],
-            ["S", "L", "I", "T", ""],
+            ["", "T", "A", "M", "E"],
+            ["W", "A", "T", "E", "R"],
+            ["O", "P", "E", "R", "A"],
+            ["R", "I", "N", "G", "S"],
+            ["M", "A", "T", "E", ""],
         ];
         return correctSolution[i][j];
     }
