@@ -847,7 +847,8 @@ let lastClickedCellId = null;
                 // Save the result to Firebase
                 leaderboardRef.push({
                     name: playerName,
-                    time: completionTime
+                    time: completionTime,
+                    timestamp: new Date().toUTCString() // Add the timestamp in UTC string format
                 })
                 .then(() => {
                     console.log("Leaderboard entry saved successfully!");
