@@ -49,125 +49,135 @@
 </head>
 <body>
     <h1>Crossword Leaderboard</h1>
-    
-    <!-- Today's date below the h1 -->
-    <p class="date" id="date"></p>
-    
-    <table id="leaderboardTable">
-        <thead>
-            <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Leaderboard entries will be added here -->
-        </tbody>
-    </table>
+<!-- Today's date below the h1 -->
+<p class="date" id="date"></p>
 
-    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-database-compat.js"></script>
+<table id="leaderboardTable">
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Leaderboard entries will be added here -->
+    </tbody>
+</table>
 
-    <script>
-        // Firebase config (use your actual config)
-        const firebaseConfig = {
-            apiKey: "AIzaSyBukFC83UnD1r6SaiSv-M95dz9PINFhqWU",
-            authDomain: "crosswordleader.firebaseapp.com",
-            databaseURL: "https://crosswordleader-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "crosswordleader",
-            storageBucket: "crosswordleader.firebasestorage.app",
-            messagingSenderId: "762979733536",
-            appId: "1:762979733536:web:2f8afc76b9dc1156942c45"
-        };
+<script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-database-compat.js"></script>
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const leaderboardRef = database.ref('leaderboard');
+<script>
+    // Firebase config (use your actual config)
+    const firebaseConfig = {
+        apiKey: "AIzaSyBukFC83UnD1r6SaiSv-M95dz9PINFhqWU",
+        authDomain: "crosswordleader.firebaseapp.com",
+        databaseURL: "https://crosswordleader-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "crosswordleader",
+        storageBucket: "crosswordleader.firebasestorage.app",
+        messagingSenderId: "762979733536",
+        appId: "1:762979733536:web:2f8afc76b9dc1156942c45"
+    };
 
-        // Get the leaderboard table body
-        const leaderboardTableBody = document.getElementById('leaderboardTable').getElementsByTagName('tbody')[0];
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const leaderboardRef = database.ref('leaderboard');
 
-        // Function to display and update the leaderboard
-        function displayLeaderboard(data) {
-            leaderboardTableBody.innerHTML = ''; // Clear existing entries
+    // Get the leaderboard table body
+    const leaderboardTableBody = document.getElementById('leaderboardTable').getElementsByTagName('tbody')[0];
 
-            // Convert data to an array, sort it, and then display
-            const leaderboardArray = [];
-            for (const key in data) {
+    // Function to filter and display the leaderboard for today's entries only
+    function displayTodaysLeaderboard(data) {
+        leaderboardTableBody.innerHTML = ''; // Clear existing entries
+
+        // Get the start and end of today (midnight to midnight GMT)
+        const startOfToday = new Date();
+        startOfToday.setUTCHours(0, 0, 0, 0); // Set to start of day GMT
+        const endOfToday = new Date();
+        endOfToday.setUTCHours(23, 59, 59, 999); // Set to end of day GMT
+
+        // Convert data to an array, filter it for today's entries, sort it, and then display
+        const leaderboardArray = [];
+        for (const key in data) {
+            const entryDate = new Date(data[key].timestamp); // Assuming you have a timestamp field in each entry
+            if (entryDate >= startOfToday && entryDate <= endOfToday) {
                 leaderboardArray.push({
                     key: key,
                     name: data[key].name,
-                    time: data[key].time
+                    time: data[key].time,
+                    timestamp: data[key].timestamp // Include the timestamp
                 });
             }
-            leaderboardArray.sort((a, b) => {
-                // Convert times to seconds for proper sorting
-                const timeToSeconds = (time) => {
-                    const parts = time.split(':').map(Number);
-                    return parts[0] * 60 + parts[1];
-                };
-
-                const timeA = timeToSeconds(a.time);
-                const timeB = timeToSeconds(b.time);
-
-                return timeA - timeB;
-            });
-
-            // Add new entries to the table
-            leaderboardArray.forEach((entry, index) => {
-                const row = leaderboardTableBody.insertRow();
-                const rankCell = row.insertCell();
-                const nameCell = row.insertCell();
-                const timeCell = row.insertCell();
-
-                rankCell.textContent = index + 1;
-                nameCell.textContent = entry.name;
-                timeCell.textContent = entry.time;
-
-                // Apply styles for top 3 ranks
-                if (index === 0) {
-                    row.classList.add('gold');
-                } else if (index === 1) {
-                    row.classList.add('silver');
-                } else if (index === 2) {
-                    row.classList.add('bronze');
-                }
-            });
         }
 
-        // Listen for changes to the leaderboard data
-        leaderboardRef.orderByChild('time').on('value', (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                displayLeaderboard(data);
-            }
+        leaderboardArray.sort((a, b) => {
+            // Convert times to seconds for proper sorting
+            const timeToSeconds = (time) => {
+                const parts = time.split(':').map(Number);
+                return parts[0] * 60 + parts[1];
+            };
+
+            const timeA = timeToSeconds(a.time);
+            const timeB = timeToSeconds(b.time);
+
+            return timeA - timeB;
         });
 
-        // Function to format the date as "Monday 21st October 2025"
-        function formatDate() {
-            const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-            const today = new Date();
-            const dateStr = today.toLocaleDateString('en-GB', options);
-            
-            // Add suffix to the day
-            const day = today.getDate();
-            let suffix = 'th';
-            if (day === 1 || day === 21 || day === 31) {
-                suffix = 'st';
-            } else if (day === 2 || day === 22) {
-                suffix = 'nd';
-            } else if (day === 3 || day === 23) {
-                suffix = 'rd';
-            }
+        // Add new entries to the table
+        leaderboardArray.forEach((entry, index) => {
+            const row = leaderboardTableBody.insertRow();
+            const rankCell = row.insertCell();
+            const nameCell = row.insertCell();
+            const timeCell = row.insertCell();
 
-            const formattedDate = dateStr.replace(day, day + suffix);
-            document.getElementById('date').textContent = formattedDate;
+            rankCell.textContent = index + 1;
+            nameCell.textContent = entry.name;
+            timeCell.textContent = entry.time;
+
+            // Apply styles for top 3 ranks
+            if (index === 0) {
+                row.classList.add('gold');
+            } else if (index === 1) {
+                row.classList.add('silver');
+            } else if (index === 2) {
+                row.classList.add('bronze');
+            }
+        });
+    }
+
+    // Listen for changes to the leaderboard data
+    leaderboardRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            displayTodaysLeaderboard(data);
+        }
+    });
+
+    // Function to format the date as "Monday 21st October 2025"
+    function formatDate() {
+        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+        const today = new Date();
+        const dateStr = today.toLocaleDateString('en-GB', options);
+
+        // Add suffix to the day
+        const day = today.getDate();
+        let suffix = 'th';
+        if (day === 1 || day === 21 || day === 31) {
+            suffix = 'st';
+        } else if (day === 2 || day === 22) {
+            suffix = 'nd';
+        } else if (day === 3 || day === 23) {
+            suffix = 'rd';
         }
 
-        // Call the function to set the date when the page loads
-        window.onload = formatDate;
-    </script>
+        const formattedDate = dateStr.replace(day, day + suffix);
+        document.getElementById('date').textContent = formattedDate;
+    }
+
+    // Call the function to set the date when the page loads
+    window.onload = formatDate;
+</script>
 </body>
 </html>
