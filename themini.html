@@ -29,6 +29,7 @@
      <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-database-compat.js"></script>
     <script 
+        
             // Firebase App (the core Firebase SDK) is always required and
         // must be listed before other Firebase SDKs
         import { initializeApp } from 'firebase/app';
@@ -54,6 +55,24 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+
+        const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+admin.initializeApp();
+
+exports.clearLeaderboard = functions.https.onRequest((req, res) => {
+  const db = admin.database();
+  const leaderboardRef = db.ref('leaderboard'); // Replace 'leaderboard' with your actual path
+
+  leaderboardRef.set(null).then(() => {
+    console.log('Leaderboard cleared successfully!');
+    res.status(200).send('Leaderboard cleared!');
+  }).catch((error) => {
+    console.error('Error clearing leaderboard:', error);
+    res.status(500).send('Error clearing leaderboard!');
+  });
+});
+
 </script>
     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-database-compat.js"></script>
