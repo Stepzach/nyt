@@ -324,29 +324,23 @@
         // Update hint text based on the current direction and cell
         if (horizontal) {
             const acrossHints = [
-                "Not wild, opposite of feral", 
-                "H2O", 
-                "A theatrical performance combining singing and music", 
-                "Jewelry for fingers (plural)", 
-                "A partner or companion, often in chess",
-                "Sixth letter",
-                "Eleventh letter",
-                "Sixteenth letter",
-                "Twenty-first letter"
+                "Not a verb, adjective, or adverb", 
+                "It's on the ____ (free)", 
+                "Landlord; possessor; proprietor", 
+                "Opposite of micro", 
+                "They're rolled in annoyance",
+               
 
             ];
             hintTextElement.textContent = acrossHints[x] || "";
         } else {
             const downHints = [
-                "A creature often found in soil", 
-                "Type of tree native to Madagascar", 
-                "A____ (portable shelter used for camping)", 
-                "To combine or fuse into one", 
-                "Long periods in history (also a taylor swift tour)",
-                "Tenth letter",
-                "Fifteenth letter",
-                "Twentieth letter",
-                "Twenty-fifth letter"
+                "Where the heart is", 
+                "Absolutely not!", 
+                "American unit of measurement (roughly equal to 28 grams)", 
+                "App customers", 
+                "Infamous ruler of Rome",
+               
             ];
             hintTextElement.textContent = downHints[y] || "";
         }
@@ -762,11 +756,11 @@ let lastClickedCellId = null;
     function checkLetter(i, j, letter) {
         // Define the correct solution
         const correctSolution = [
-            ["", "T", "A", "M", "E"],
-            ["W", "A", "T", "E", "R"],
-            ["O", "P", "E", "R", "A"],
-            ["R", "I", "N", "G", "S"],
-            ["M", "A", "T", "E", ""],
+            ["", "N", "O", "U", "N"],
+            ["H", "O", "U", "S", "E"],
+            ["O", "W", "N", "E", "R"],
+            ["M", "A", "C", "R", "O"],
+            ["E", "Y", "E", "S", ""],
         ];
 
         // Check if the entered letter matches the correct solution
@@ -811,11 +805,11 @@ let lastClickedCellId = null;
     function getExpectedLetter(i, j) {
         // Define the correct solution
         const correctSolution = [
-            ["", "T", "A", "M", "E"],
-            ["W", "A", "T", "E", "R"],
-            ["O", "P", "E", "R", "A"],
-            ["R", "I", "N", "G", "S"],
-            ["M", "A", "T", "E", ""],
+            ["", "N", "O", "U", "N"],
+            ["H", "O", "U", "S", "E"],
+            ["O", "W", "N", "E", "R"],
+            ["M", "A", "C", "R", "O"],
+            ["E", "Y", "E", "S", ""],
         ];
         return correctSolution[i][j];
     }
