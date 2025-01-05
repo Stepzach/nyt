@@ -218,20 +218,41 @@
     </div>
   </div>
     <!-- Congratulations Popup -->
+    <!-- Congratulations Popup -->
     <div id="congratsModal" class="modal" style="display: none; position: absolute; bottom: 0px; width: 100%; max-width: 495px; height: 500px; background-color: white; border-radius: 10px; text-align: center; z-index: 1001; box-shadow: rgba(0,0,0,0.2);">
-        
-       
-        
-        
-        
-        
-        <div class="modal-content" style="padding: 30px;">
-            <h2>Congratulations!</h2>
-            <p id="completionMessage">You have successfully completed the crossword.</p>
-            <p style="color: grey; font-size: 15px;">Come back for tomorow's crossword!</p>
-            <button onclick="location.href='./leaderboard.html';" style="background-color: #99DAFF; color: black; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">See Leaderboard</button>
-        </div>
+    <div style="display: flex; justify-content: flex-end; padding: 10px;">
+        <span id="closeButton" style="cursor: pointer; font-size: 20px;">x</span>
     </div>
+    <div class="modal-content" style="padding: 0px 30px 30px 30px;">
+        <h2>Congratulations!</h2>
+        <p id="completionMessage">You have successfully completed the crossword.</p>
+        <p style="color: grey; font-size: 15px;">Come back for tomorow's crossword!</p>
+        <button onclick="location.href='./leaderboard.html';" style="background-color: #99DAFF; color: black; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">See Leaderboard</button>
+    </div>
+</div>
+
+<div id="minimizedCongrats" style="display: none; position: fixed; bottom: 0; width: 100%; max-width: 475px; text-align: center; background-color: white; padding: 10px; border-top: 1px solid #ccc; z-index: 1001;">
+    <span id="expandButton" style="cursor: pointer; font-size: 20px;">^</span>
+    Congratulations!
+</div>
+
+<script>
+    const congratsModal = document.getElementById('congratsModal');
+    const closeButton = document.getElementById('closeButton');
+    const expandButton = document.getElementById('expandButton');
+    const minimizedCongrats = document.getElementById('minimizedCongrats');
+    const modalContent = congratsModal.querySelector('.modal-content');
+
+    closeButton.addEventListener('click', () => {
+        congratsModal.style.display = 'none';
+        minimizedCongrats.style.display = 'block';
+    });
+
+    expandButton.addEventListener('click', () => {
+        congratsModal.style.display = 'block';
+        minimizedCongrats.style.display = 'none';
+    });
+</script>
 
     <!-- Try Again Popup -->
     <div id="tryAgainModal" class="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; max-width: 400px; background-color: white; border-radius: 10px; text-align: center; z-index: 1001; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
