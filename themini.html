@@ -328,7 +328,7 @@
             }
         }
         
-
+let lastClickedCellId = null; // Track the last clicked cell
         let start, end;
         if (horizontal) {
             start = 0;
@@ -444,25 +444,80 @@
         updateHintText();
     }
 
-    function handleCellClick(clickedX, clickedY) {
-        const cellId = `i${clickedX}_${clickedY}`;
-        const cell = document.getElementById(cellId);
 
-        if (cell.disabled) return;
 
-        if (directionMap[cellId] === "across") {
-            directionMap[cellId] = "down";
-            horizontal = false;
-        } else {
-            directionMap[cellId] = "across";
-            horizontal = true;
+function handleCellClick(clickedX, clickedY) {
+    const cellId = `i${clickedX}_${clickedY}`;
+    const cell = document.getElementById(cellId);
+
+    if (cell.disabled) return;
+
+    // If a different cell is clicked, reset its state
+    if (lastClickedCellId && lastClickedCellId !== cellId) {
+        const lastCell = document.getElementById(lastClickedCellId);
+        if (lastCell) {
+            lastCell.dataset.clickCount = "0"; // Reset click count
+            delete directionMap[lastClickedCellId]; // Reset direction
         }
+    }
 
-        x = clickedX;
-        y = clickedY;
-        cell.focus();
-        updateHintText();
-        colorSquares();
+    let clickCount = parseInt(cell.dataset.clickCount) || 0;
+    let cellHorizontal = directionMap[cellId] === "across";
+
+    // First click logic
+    if (clickCount === 0) {
+        clickCount = 1;
+        if (clickedX === 0) {
+            cellHorizontal = isWordFilled('down', clickedX, clickedY);
+        } else if (clickedY === 0) {
+            cellHorizontal = !isWordFilled('across', clickedX, clickedY);
+        } else { 
+            cellHorizontal = true; // Default to horizontal
+        }
+    } else {
+        // Toggle logic (and special case for first row/column)
+        if ((clickedX === 0 || clickedY === 0) && clickCount === 1) {
+            cellHorizontal = !cellHorizontal;
+            clickCount = 0; // Reset after toggle
+        } else {
+            cellHorizontal = !cellHorizontal;
+        }
+        clickCount++;
+    }
+
+    // Update cell data and global variables
+    directionMap[cellId] = cellHorizontal ? "across" : "down";
+    cell.dataset.clickCount = clickCount;
+    horizontal = cellHorizontal;
+
+    // Update last clicked cell ID
+    lastClickedCellId = cellId;
+
+    // Other logic
+    x = clickedX;
+    y = clickedY;
+    cell.focus();
+    updateHintText();
+    colorSquares();
+}
+
+
+// Initialize lastClickedCellId outside the function
+let lastClickedCellId = null;
+
+    function isWordFilled(direction, startX, startY) {
+        if (direction === 'across') {
+            for (let j = 0; j < 5; j++) {
+                const cell = document.getElementById(`i${startX}_${j}`);
+                if (!cell || cell.disabled || cell.value === "") return false;
+            }
+        } else { // direction === 'down'
+            for (let i = 0; i < 5; i++) {
+                const cell = document.getElementById(`i${i}_${startY}`);
+                if (!cell || cell.disabled || cell.value === "") return false;
+            }
+        }
+        return true;
     }
 
     function insertChar(char) {
