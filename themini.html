@@ -89,15 +89,49 @@
 <body style="overflow: hidden; height: 100vh">
   <div class="bruhbruh" style="display: flex; flex-direction: column; height: 100%; overflow: hidden">
     <div id="overlay">
-      <div id="popup">
-       <label style="margin-bottom: 0;">Welcome to today's Crossword!</label>
-       <p style="margin-top: 5px; margin-bottom: 35px; color: grey; font-size: 16px;">Saturday 4th Jan 2025</p>
-       
-       
-        <label style="font-weight: normal !important; margin-bottom: 20px;" for="nameInput">Enter your name:</label>
-        <input style="margin-bottom: 20px;" type="text" id="nameInput" /><br />
-        <button onclick="startGame()" style="font-weight:bold">Start Crossword</button>
-        <br><p style="color:grey; font-size: 15px;"> </div>
+     <div id="popup">
+  <label style="margin-bottom: 0;">Welcome to today's Crossword!</label>
+  <p id="crosswordDate" style="margin-top: 5px; margin-bottom: 35px; color: grey; font-size: 16px;"></p>
+  
+  <label style="font-weight: normal !important; margin-bottom: 20px;" for="nameInput">Enter your name:</label>
+  <input style="margin-bottom: 20px;" type="text" id="nameInput" /><br />
+  <button onclick="startGame()" style="font-weight:bold">Start Crossword</button>
+  <br>
+  <p style="color:grey; font-size: 15px;"></p>
+</div>
+
+<script>
+  // Function to set the date in the format "Saturday 4th Jan 2025"
+  function updateCrosswordDate() {
+    const dateElement = document.getElementById('crosswordDate');
+    const today = new Date();
+    
+    // Get day of the week
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayName = days[today.getDay()];
+    
+    // Get day of the month and suffix
+    const day = today.getDate();
+    const suffix = (day % 10 === 1 && day !== 11) ? 'st' : (day % 10 === 2 && day !== 12) ? 'nd' : (day % 10 === 3 && day !== 13) ? 'rd' : 'th';
+    
+    // Get month
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const monthName = months[today.getMonth()];
+    
+    // Get year
+    const year = today.getFullYear();
+    
+    // Combine into the desired format
+    const formattedDate = `${dayName} ${day}${suffix} ${monthName} ${year}`;
+    
+    // Update the date element
+    dateElement.textContent = formattedDate;
+  }
+  
+  // Call the function on page load
+  updateCrosswordDate();
+</script>
+
     </div>
 
     <div class="topnav">
