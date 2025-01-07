@@ -9,7 +9,7 @@ body {
     overflow: hidden;
     /* Disable both vertical and horizontal scrolling */
     background-color: black;
-    /* Prevents window scrolling or unexpected shifts */
+   
 }
 
 /* Default Font Family And Size for app*/
