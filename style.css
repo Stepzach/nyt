@@ -274,6 +274,8 @@ top: -15px !important;
              font-size: 16px;
             box-sizing: border-box;
             background-color: lightgrey;
+           margin-left: auto;
+           margin-right: auto;
         }
         #popup button {
             background-color: #99DAFF;
@@ -284,6 +286,9 @@ top: -15px !important;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         #popup button:hover {
