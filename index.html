@@ -350,22 +350,22 @@
         // Update hint text based on the current direction and cell
         if (horizontal) {
             const acrossHints = [
-                "Unwanted email", 
-                "Hollow rock lined with crystals (think geology)", 
-                "Symbol pointing the way", 
-                "What a staircase consists of", 
-                "History or time before now", 
+                "It's in the middle of your face", 
+                "To assume or suggest", 
+                "Used to describe a large number; In engineering: Forces that oppose a structure", 
+                "In tune; accurate in pitch", 
+                "No longer alive", 
                
 
             ];
             hintTextElement.textContent = acrossHints[x] || "";
         } else {
             const downHints = [
-                "Audible reaction to a shock", 
-                "Brand known for dreamy sleep", 
-                "Tiny skin openings for sweat or oil", 
-                "Formally take responsibility for", 
-                "Narrow streets in London with posh homes",
+                "To walk taking slow steps, as if your feet are heavy", 
+                "Literally, nobody", 
+                "Japan's third-largest city, known as "The Kitchen of Japan"", 
+                "One _____ argument, doesn’t consider other perspectives", 
+                "Online Marketplace for handmade goods",
                
             ];
             hintTextElement.textContent = downHints[y] || "";
@@ -782,11 +782,11 @@ let lastClickedCellId = null;
     function checkLetter(i, j, letter) {
         // Define the correct solution
         const correctSolution = [
-            ["", "S", "P", "A", "M"],
-            ["G", "E", "O", "D", "E"],
-            ["A", "R", "R", "O", "W"],
-            ["S", "T", "E", "P", "S"],
-            ["P", "A", "S", "T", ""],
+            ["", "N", "O", "S", "E"],
+            ["P", "O", "S", "I", "T"],
+            ["L", "O", "A", "D", "S"],
+            ["O", "N", "K", "E", "Y"],
+            ["D", "E", "A", "D", ""],
         ];
 
         // Check if the entered letter matches the correct solution
@@ -831,11 +831,11 @@ let lastClickedCellId = null;
     function getExpectedLetter(i, j) {
         // Define the correct solution
         const correctSolution = [
-            ["", "S", "P", "A", "M"],
-            ["G", "E", "O", "D", "E"],
-            ["A", "R", "R", "O", "W"],
-            ["S", "T", "E", "P", "S"],
-            ["P", "A", "S", "T", ""],
+            ["", "N", "O", "S", "E"],
+            ["P", "O", "S", "I", "T"],
+            ["L", "O", "A", "D", "S"],
+            ["O", "N", "K", "E", "Y"],
+            ["D", "E", "A", "D", ""],
         ];
         return correctSolution[i][j];
     }
