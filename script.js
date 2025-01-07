@@ -18,7 +18,6 @@ const correctSolution = [
     ["D", "E", "A", "D", ""],
 ];
 
-
 const acrossHints = [
     "It's in the middle of your face",
     "To assume or suggest",
@@ -494,11 +493,17 @@ function checkSolution() {
       if (isCorrect) {
            showCongratsPopup();
              startConfetti();
+              playWinSound();
            } else {
             showTryAgainPopup();
             stopConfetti();
            }
     }
+
+    function playWinSound() {
+    const winSound = document.getElementById("winSound");
+     winSound.play();
+}
 
 
 
@@ -621,6 +626,27 @@ function startGame() {
          });
      document.getElementById("hint-container").style.width = `${containerWidth}px`;
     }
+
+    // --- Confetti Functions ---
+function startConfetti() {
+    const confettiContainer = document.getElementById('confetti-container');
+    const numberOfConfetti = 150;
+
+    for (let i = 0; i < numberOfConfetti; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.animationDelay = `${Math.random() * 2}s`;
+        confettiContainer.appendChild(confetti);
+        const hue = Math.random() * 360;
+        confetti.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+    }
+}
+
+function stopConfetti() {
+    const confettiContainer = document.getElementById('confetti-container');
+    confettiContainer.innerHTML = '';
+}
 
  // --- Initialization ---
     window.onload = function () {
