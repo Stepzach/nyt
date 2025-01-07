@@ -22,7 +22,7 @@ const correctSolution = [
 const acrossHints = [
     "It's in the middle of your face",
     "To assume or suggest",
-    "Used to describe a large number; In engineering: Forces that oppose a structure",
+    "Used to describe a large number or amount",
     "In tune; accurate in pitch",
     "No longer alive",
 ];
