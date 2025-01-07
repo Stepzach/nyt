@@ -1,319 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Mini Crossword</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta property="og:title" content="Mini Xword"/>
-    <meta property="og:image" content=""/>
-    <meta property="og:description" content="Competitive mini crossword"/>
-    <meta property="og:url" content=""/>
-    <meta property="og:image:width" content="1200"/>
-    <meta property="og:image:height" content="626"/>
-    <meta property="og:type" content="website"/>
+    <title>Mini Crossword</title>
+
+    <!-- SEO and Social Media Meta Tags -->
+    <meta property="og:title" content="Mini Xword" />
+    <meta property="og:description" content="Competitive mini crossword" />
+
+    <!-- Theme Color Meta Tags -->
     <meta name="theme-color" content="#000">
     <meta name="msapplication-navbutton-color" content="#000">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-    <meta http-equiv="Pragma" content="no-cache"/>
-    <meta http-equiv="Expires" content="0"/>
+     <!-- Caching Meta Tags -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
 
-    <link href="style.css" rel="stylesheet">
-    <script type="text/javascript" src="script.js"></script>
-    <style>
+    <!-- External Stylesheets -->
+     <link rel="stylesheet" type="text/css" href="style.css">
+
+    <!-- Firebase Libraries-->
+   <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-database-compat.js" defer></script>
+    
+  <!-- Internal Styles -->
+      <style>
         /* Prevent scrolling caused by focus */
         *:focus {
-            outline: none;
+          outline: none;
         }
-    </style>
-     <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-database-compat.js"></script>
-    <script 
-        
+        </style>
+
+
+  <!-- Firebase Config Script-->
+
+    <script defer>
             // Firebase App (the core Firebase SDK) is always required and
-        // must be listed before other Firebase SDKs
-        import { initializeApp } from 'firebase/app';
-        // Add the Firebase products that you want to use
-        import { getAuth } from "firebase/realtimedatabase";
-         import { getAuth } from "firebase/database";
-                 import { getAuth } from "firebase/app";
-                 import { getAuth } from "firebase/webapp";
-        import { getFirestore } from "firebase/firestore";
-        
-        // TODO: Replace the following with your app's Firebase project configuration
-        const firebaseConfig = {
-          apiKey: "AIzaSyBukFC83UnD1r6SaiSv-M95dz9PINFhqWU",
-  authDomain: "crosswordleader.firebaseapp.com",
-  databaseURL: "https://crosswordleader-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "crosswordleader",
-  storageBucket: "crosswordleader.firebasestorage.app",
-  messagingSenderId: "762979733536",
-  appId: "1:762979733536:web:2f8afc76b9dc1156942c45"
-        };
-        
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+            // must be listed before other Firebase SDKs
 
-     
-});
+           
+              const firebaseConfig = {
+                  apiKey: "AIzaSyBukFC83UnD1r6SaiSv-M95dz9PINFhqWU",
+                    authDomain: "crosswordleader.firebaseapp.com",
+                   databaseURL: "https://crosswordleader-default-rtdb.europe-west1.firebasedatabase.app",
+                  projectId: "crosswordleader",
+                   storageBucket: "crosswordleader.firebasestorage.app",
+                     messagingSenderId: "762979733536",
+                   appId: "1:762979733536:web:2f8afc76b9dc1156942c45"
+                    };
 
-</script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-database-compat.js"></script>
-     <script>
 
-         
-    const firebaseConfig = {
-  apiKey: "AIzaSyBukFC83UnD1r6SaiSv-M95dz9PINFhqWU",
-  authDomain: "crosswordleader.firebaseapp.com",
-  databaseURL: "https://crosswordleader-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "crosswordleader",
-  storageBucket: "crosswordleader.firebasestorage.app",
-  messagingSenderId: "762979733536",
-  appId: "1:762979733536:web:2f8afc76b9dc1156942c45"
-};
-
-</script>
-    <link rel="stylesheet" type="text/css" href="style.css">
-
-     <script>
-// Initialize Firebase with your config
- // 3. Initialize Firebase (AFTER SDK scripts are loaded)
-        firebase.initializeApp(firebaseConfig);
-
-        // 4. Get a reference to the database service
+          firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+         const leaderboardRef = database.ref('leaderboard');
 
-        // 5. Define leaderboardRef globally (so it's accessible to other functions)
-        const leaderboardRef = database.ref('leaderboard');
-</script>
-   
-    
+
+
+    </script>
+
 </head>
+
 <div id="whole">
-<body style="overflow: hidden; height: 100vh">
-  <div class="bruhbruh" style="display: flex; flex-direction: column; height: 100%; overflow: hidden">
-    <div id="overlay">
-     <div id="popup">
-  <label style="margin-bottom: 0;">Welcome to today's Crossword!</label>
-  <p id="crosswordDate" style="margin-top: 5px; margin-bottom: 35px; color: grey; font-size: 16px;"></p>
-  
-  <label style="font-weight: normal !important; margin-bottom: 20px;" for="nameInput">Enter your name:</label>
-  <input style="margin-bottom: 20px;" type="text" id="nameInput" /><br />
-  <button onclick="startGame()" style="font-weight:bold">Start Crossword</button>
-  <br>
-  <p style="color:grey; font-size: 15px;"></p>
-</div>
 
-<script>
-  // Function to set the date in the format "Saturday 4th Jan 2025"
-  function updateCrosswordDate() {
-    const dateElement = document.getElementById('crosswordDate');
-    const today = new Date();
-    
-    // Get day of the week
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const dayName = days[today.getDay()];
-    
-    // Get day of the month and suffix
-    const day = today.getDate();
-    const suffix = (day % 10 === 1 && day !== 11) ? 'st' : (day % 10 === 2 && day !== 12) ? 'nd' : (day % 10 === 3 && day !== 13) ? 'rd' : 'th';
-    
-    // Get month
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const monthName = months[today.getMonth()];
-    
-    // Get year
-    const year = today.getFullYear();
-    
-    // Combine into the desired format
-    const formattedDate = `${dayName} ${day}${suffix} ${monthName} ${year}`;
-    
-    // Update the date element
-    dateElement.textContent = formattedDate;
-  }
-  
-  // Call the function on page load
-  updateCrosswordDate();
-</script>
+  <body style="overflow: hidden; height: 100vh"> <!--Body-->
 
-    </div>
+      <div class="bruhbruh">  <!--Main Parent Container -->
 
-    <div class="topnav">
-      <div style="float: left; margin-left: 15px">
-        <b id="userNameDisplay" style="font-weight: 100; font-size: 18px;"></b>
-      </div>
 
-      <div style="float: right; margin-right: 12px">
-        <b id="timerDisplay" style="font-weight: 100">00:00</b>
-      </div>
-      
-       <!-- Pause button -->
-      <div style="float: right; margin-right: 22px;">
-        <button id="pauseButton" style="all: unset; cursor: pointer;" onclick="togglePause()">
-          <img src="icons/4141_pause-button.png" width="13px" style="opacity:0.5;">
-        </button>
-      </div>
-    </div>
-<div id="pauseModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000; border-radius: 10px; overflow: hidden;">
-  <div class="modal-content" style="position: absolute; bottom: 0px; width: 100%; max-width: 455px; height: 400px;  background: white; padding: 20px; transition: bottom 0.3s; left: 50%;
-    transform: translateX(-50%); text-align: center;">
-    <p style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">YOUR GAME IS PAUSED</p>  <p style="font-size: 17px; margin-bottom: 2px; padding-left: 20px;  padding-right: 20px;">Take a break, and return when you're ready.</p> <p style="font-size: 15px; color: grey; margin-top: 5px; margin-bottom: 25px; padding-left: 20px; padding-right: 20px;">(Don't close the window, you will lose all progress)</p>
-    <button onclick="resumeGame()" style="padding: 10px 20px; font-size: 18px; font-weight: bold; color: black; background-color: rgb(153, 218, 255); border: medium; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">RESUME</button>
-  </div>
-</div>
+       <!-- Overlay Container For Popups-->
+        <div id="overlay" style="display:flex; justify-content:center;"> 
+
+         <!-- Popup - Player Welcome Modal -->
+         <div id="popup" style="display:flex; flex-direction: column; max-width:350px; min-height: 350px;
+                padding: 20px;
+            background-color: white;
+                border-radius: 10px;">
+                 
+                <label style="margin-bottom: 0; text-align:center; font-weight:bold; margin-top:10px;">Welcome to today's Crossword!</label>
+                  <p id="crosswordDate" style="margin-top: 5px; margin-bottom: 35px; color: grey; font-size: 16px; text-align:center;"></p>
+
+                   <label style="font-weight: normal !important; margin-bottom: 10px;" for="nameInput">Enter your name:</label>
+                  <input style="margin-bottom: 10px;" type="text" id="nameInput" /><br />
+                 
+               <button onclick="startGame()" style="font-weight:bold; margin-bottom:25px;">Start Crossword</button>
+
+                 <p style="color:grey; font-size: 15px;"></p>
+
+
+         </div>
+         <script defer>
+         function updateCrosswordDate() {
+                  const dateElement = document.getElementById('crosswordDate');
+                     const today = new Date();
+
+               // Get day of the week
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                  const dayName = days[today.getDay()];
+
+        // Get day of the month and suffix
+                 const day = today.getDate();
+                  const suffix = (day % 10 === 1 && day !== 11) ? 'st' : (day % 10 === 2 && day !== 12) ? 'nd' : (day % 10 === 3 && day !== 13) ? 'rd' : 'th';
+           // Get month
+                   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                const monthName = months[today.getMonth()];
+
+                  // Get year
+                     const year = today.getFullYear();
+               const formattedDate = `${dayName} ${day}${suffix} ${monthName} ${year}`;
+                 dateElement.textContent = formattedDate;
+
+           }
+
+            updateCrosswordDate();
+         </script>
+
+       </div>
 
 
 
-    <br />
+      <div class="topnav">   <!--Top Navbar -->
+           <div style="float: left; margin-left: 15px">
+              <b id="userNameDisplay" style="font-weight: 100; font-size: 18px;"></b>
+            </div>
 
-    <table id="table"></table>
-
-    <div class="keysize1">
-      <div id="bruh" style="">
-        <div id="hint-container">
-          <button id="prev-hint" onclick="scrollHint(-1)"> < </button>
-          <span id="hint-text" style="font-size: 16px"></span>
-          <button id="next-hint" onclick="scrollHint(1)"> > </button>
+        <div style="float: right; margin-right: 12px">
+            <b id="timerDisplay" style="font-weight: 100">00:00</b>
         </div>
 
-        <div id="keyboard">
-          <div class="keyboard-row">
-            <button onclick="insertChar('Q')">Q</button>
-            <button onclick="insertChar('W')">W</button>
-            <button onclick="insertChar('E')">E</button>
-            <button onclick="insertChar('R')">R</button>
-            <button onclick="insertChar('T')">T</button>
-            <button onclick="insertChar('Y')">Y</button>
-            <button onclick="insertChar('U')">U</button>
-            <button onclick="insertChar('I')">I</button>
-            <button onclick="insertChar('O')">O</button>
-            <button onclick="insertChar('P')">P</button>
-          </div>
-          <div class="keyboard-row">
-            <button onclick="insertChar('A')">A</button>
-            <button onclick="insertChar('S')">S</button>
-            <button onclick="insertChar('D')">D</button>
-            <button onclick="insertChar('F')">F</button>
-            <button onclick="insertChar('G')">G</button>
-            <button onclick="insertChar('H')">H</button>
-            <button onclick="insertChar('J')">J</button>
-            <button onclick="insertChar('K')">K</button>
-            <button onclick="insertChar('L')">L</button>
-          </div>
-          <div class="keyboard-row">
-            <button onclick="insertChar('Z')">Z</button>
-            <button onclick="insertChar('X')">X</button>
-            <button onclick="insertChar('C')">C</button>
-            <button onclick="insertChar('V')">V</button>
-            <button onclick="insertChar('B')">B</button>
-            <button onclick="insertChar('N')">N</button>
-            <button onclick="insertChar('M')">M</button>
-            <button onclick="deleteChar()" style="background-color: lightgray; font-size: 23px">
-              <img src="icons/backspace-icon-2048x1714-fco8gl58.png" width="20px" />
-            </button>
-          </div>
-        </div>
+      <div style="float: right; margin-right: 22px;">   <!--Pause Button-->
+          <button id="pauseButton" style="all: unset; cursor: pointer;" onclick="togglePause()">
+            <img src="icons/4141_pause-button.png" width="13px" style="opacity:0.5;">
+          </button>
       </div>
     </div>
-  </div>
-    <!-- Congratulations Popup -->
-    <!-- Congratulations Popup -->
-    <div id="congratsModal" class="modal" style="display: none; position: absolute; bottom: 0px; width: 100%; max-width: 495px; height: 500px; background-color: white; border-radius: 10px; text-align: center; z-index: 1001; box-shadow: rgba(0,0,0,0.2);">
-    <div style="display: flex; justify-content: flex-end; padding: 10px;">
-        <span id="closeButton" style="cursor: pointer; font-size: 20px;">x</span>
-    </div>
-    <div class="modal-content" style="padding: 0px 30px 30px 30px;">
-        <h2>Congratulations!</h2>
-        <p id="completionMessage">You have successfully completed the crossword.</p>
-        <p style="color: grey; font-size: 15px;">Come back for tomorow's crossword!</p>
-        <button onclick="window.open('./leaderboard.html', '_blank');" style="background-color: #99DAFF; color: black; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">See Leaderboard</button>
-    </div>
-</div>
 
-<div id="minimizedCongrats" style="display: none; position: fixed; bottom: 0; width: 100%; max-width: 475px; text-align: center; background-color: white; padding: 10px; border-top: 1px solid #ccc; z-index: 1001;">
-    <span id="expandButton" style="cursor: pointer; font-size: 20px;">^</span>
-    
-</div>
 
-<script>
-    const congratsModal = document.getElementById('congratsModal');
-    const closeButton = document.getElementById('closeButton');
-    const expandButton = document.getElementById('expandButton');
-    const minimizedCongrats = document.getElementById('minimizedCongrats');
-    const modalContent = congratsModal.querySelector('.modal-content');
 
-    closeButton.addEventListener('click', () => {
-        congratsModal.style.display = 'none';
-        minimizedCongrats.style.display = 'block';
-    });
+     <div id="pauseModal" class="modal" style="display: none; position:fixed; top: 0; left: 0;
+               width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000; border-radius: 10px; overflow: hidden;  ">  <!-- Pause Modal -->
+
+           <div class="modal-content" style="position:absolute; bottom:0; width: 100%;  
+         max-width:455px;height: 400px;
+          background: white; padding:20px; transition: bottom 0.3s;  left: 50%;
+             transform: translateX(-50%);
+                 text-align: center;">
+
+                <p style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">YOUR GAME IS PAUSED</p>
+               <p style="font-size: 17px; margin-bottom: 2px; padding-left: 20px;  padding-right: 20px;">Take a break, and return when you're ready.</p>
+                 <p style="font-size: 15px; color: grey; margin-top: 5px; margin-bottom: 25px; padding-left: 20px; padding-right: 20px;">(Don't close the window, you will lose all progress)</p>
+
+                 <button onclick="resumeGame()" style="padding: 10px 20px; font-size: 18px; font-weight: bold;
+            color: black;
+            background-color: rgb(153, 218, 255);
+              border: medium; border-radius: 5px;
+              cursor: pointer;
+                 transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">RESUME</button>
+             </div>
+
+   </div>
+
+   <br />
+
+       <table id="table"></table>  <!--Crossword Grid -->
+
+         <div class="keysize1"> <!--Keyboard area -->
+
+         <div id="bruh">
+                 
+                  <!--Hints area-->
+                    <div id="hint-container" style="display: flex;
+                  justify-content: space-between; margin-bottom: 25px;">
+
+                           <button id="prev-hint" onclick="scrollHint(-1)"> < </button>
+                                <span id="hint-text" style="font-size: 16px"></span>
+                           <button id="next-hint" onclick="scrollHint(1)"> > </button>
+                    </div>
+             <div id="keyboard">
+                   <!--Keyboard-->
+                <div class="keyboard-row">
+                   <button onclick="insertChar('Q')">Q</button>
+                <button onclick="insertChar('W')">W</button>
+                <button onclick="insertChar('E')">E</button>
+                  <button onclick="insertChar('R')">R</button>
+                 <button onclick="insertChar('T')">T</button>
+                 <button onclick="insertChar('Y')">Y</button>
+                <button onclick="insertChar('U')">U</button>
+                    <button onclick="insertChar('I')">I</button>
+                 <button onclick="insertChar('O')">O</button>
+                  <button onclick="insertChar('P')">P</button>
+                 </div>
+
+                  <div class="keyboard-row">
+                       <button onclick="insertChar('A')">A</button>
+                      <button onclick="insertChar('S')">S</button>
+                        <button onclick="insertChar('D')">D</button>
+                    <button onclick="insertChar('F')">F</button>
+                     <button onclick="insertChar('G')">G</button>
+                      <button onclick="insertChar('H')">H</button>
+                    <button onclick="insertChar('J')">J</button>
+                 <button onclick="insertChar('K')">K</button>
+                <button onclick="insertChar('L')">L</button>
+              </div>
+       
+              <div class="keyboard-row">
+                 <button onclick="insertChar('Z')">Z</button>
+                 <button onclick="insertChar('X')">X</button>
+                 <button onclick="insertChar('C')">C</button>
+                 <button onclick="insertChar('V')">V</button>
+                    <button onclick="insertChar('B')">B</button>
+                  <button onclick="insertChar('N')">N</button>
+               <button onclick="insertChar('M')">M</button>
+             
+              <button onclick="deleteChar()" style="background-color: lightgray; font-size: 23px;">
+                <img src="icons/backspace-icon-2048x1714-fco8gl58.png" width="20px" />
+                </button>
+                   </div>
+           </div>
+      </div>
+ </div>
+
+
+     <!-- Congratulations Modal-->
+
+ <div id="congratsModal" class="modal"
+           style="display: none;
+          position: absolute;
+            bottom: 0;
+              width: 100%;
+               max-width: 495px;
+                 height: 500px;
+                   background-color: white;
+                      border-radius: 10px;
+                        text-align: center;
+                             z-index: 1001;
+                            box-shadow: rgba(0,0,0,0.2);">
+
+
+      <div style="display: flex; justify-content: flex-end; padding: 10px;">
+          <span id="closeButton" style="cursor: pointer; font-size: 20px;">x</span>
+        </div>
+  
+           <div class="modal-content" style="padding: 0px 30px 30px 30px;">
+              <h2>Congratulations!</h2>
+               <p id="completionMessage">You have successfully completed the crossword.</p>
+                <p style="color: grey; font-size: 15px;">Come back for tomorow's crossword!</p>
+                 <button onclick="window.open('./leaderboard.html', '_blank');" style="background-color: #99DAFF;
+                       color: black;
+                 padding: 12px 20px;
+                    font-size: 16px;
+                border: none;
+                   border-radius: 5px;
+                     cursor: pointer;
+                 transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">See Leaderboard</button>
+      </div>
+ </div>
+
+
+
+<div id="minimizedCongrats"
+       style="display: none; position: fixed;
+                bottom: 0;
+             width: 100%;
+                  max-width: 475px;
+                   text-align: center;
+                    background-color: white;
+                        padding: 10px;
+                  border-top: 1px solid #ccc; z-index: 1001;">
+
+     <span id="expandButton" style="cursor: pointer; font-size: 20px;">^</span>
+ </div>
+
+
+  <script defer>
+
+  const congratsModal = document.getElementById('congratsModal');
+ const closeButton = document.getElementById('closeButton');
+ const expandButton = document.getElementById('expandButton');
+     const minimizedCongrats = document.getElementById('minimizedCongrats');
+
+
+     closeButton.addEventListener('click', () => {
+     congratsModal.style.display = 'none';
+     minimizedCongrats.style.display = 'block';
+     });
+
 
     expandButton.addEventListener('click', () => {
-        congratsModal.style.display = 'block';
-        minimizedCongrats.style.display = 'none';
-    });
-</script>
-
-    <!-- Try Again Popup -->
-    <div id="tryAgainModal" class="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; max-width: 400px; background-color: white; border-radius: 10px; text-align: center; z-index: 1001; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-        <div class="modal-content" style="padding: 30px;">
-            <h2>Try Again!</h2>
-            <p>Your current answers are not correct. Keep trying!</p>
-            <button onclick="hideTryAgainPopup()" style="background-color: #99DAFF; color: black; padding: 12px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">Return to Game</button>
-        </div>
-    </div>
-
-    <!-- Overlay for Popups -->
-    <div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;"></div>
-
-  <div id="onboard" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('onboard')">×</span>
-      <p><b>Wrist crosswords</b> are small 5x5 letter crosswords</p>
-      <p>
-        Touch the ACROSS and DOWN buttons to change the
-        <b>direction</b> of writing:
-      </p>
-      <table bgcolor="black">
-        <tr>
-          <td style="background-color: gold"><input class="cell" style="opacity: 0" /></td>
-          <td id="anim1"><input class="cell" style="opacity: 0" /></td>
-          <td id="anim2"><input class="cell" style="opacity: 0" /></td>
-          <td id="anim3"><input class="cell" style="opacity: 0" /></td>
-          <td id="anim4"><input class="cell" style="opacity: 0" /></td>
-        </tr>
-        <tr>
-          <td id="anim5"><input class="cell" style="opacity: 0" /></td>
-          <td><input class="cell" /></td>
-          <td><input class="cell" /></td>
-          <td><input class="cell" /></td>
-          <td><input class="cell" /></td>
-        </tr>
-      </table>
-      <p>
-        <button id="anim6" style="font-size: 16px">
-          <b>ACROSS:</b> Sentences are made of these
-        </button>
-      </p>
-      <button id="anim7" style="font-size: 16px">
-        <b>DOWN:</b> Opposite of below
-      </button>
-      <p style="text-align: right" onclick="closeModal('onboard'); showModal('onboard2')">
-        <button>Next</button>
-      </p>
-    </div>
-  </div>
-
-  <script>
-  //Removed tips and acrossWords array since we are harcoding the correct answer
-    
-  </script>
-
-  <script type="text/javascript" src="script.js"></script>
- <link rel="stylesheet" type="text/css" href="style.css">
+       congratsModal.style.display = 'block';
+         minimizedCongrats.style.display = 'none';
+  });
 
 
+    </script>
+
+      <!-- Try Again Popup -->
+
+    <div id="tryAgainModal" class="modal"
+               style="display: none;
+             position: fixed;
+            top: 50%;
+          left: 50%;
+    transform: translate(-50%, -50%);
+            width: 100%;
+              max-width: 400px;
+               background-color: white;
+             border-radius: 10px;
+            text-align: center;
+             z-index: 1001;
+                  box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+
+
+          <div class="modal-content" style="padding: 30px;">
+          <h2>Try Again!</h2>
+        <p>Your current answers are not correct. Keep trying!</p>
+          <button onclick="hideTryAgainPopup()"
+                style="background-color: #99DAFF; color: black;
+                 padding: 12px 20px;
+               font-size: 16px; border: none;
+               border-radius: 5px; cursor: pointer;
+                  transition: background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#FFD800'" onmouseout="this.style.backgroundColor='#99DAFF'">Return to Game</button>
+          </div>
+
+       </div>
+    <!-- Overlay for Popups-->
+    <div id="modalOverlay"
+     style="display: none; position: fixed; top: 0;
+       left: 0;
+           width: 100%;
+      height: 100%;
+           background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+     </div>
+
+
+
+
+</div>
+    <!--Main App Logic: This is where you edit the crossword words and clues -->
+ <script  src="script.js" defer></script>
+
+</body>
 
 </html>
