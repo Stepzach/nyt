@@ -176,8 +176,8 @@ body {
   background-color: #99DAFF;
   /* Light blue background color */
   padding: 3px;
-  height: 38px;
-  max-width: 495px;
+     height: 40px;
+    max-width: 490px;
     /* matches fixed app content container*/
   margin-left: auto;
   margin-right: auto;
