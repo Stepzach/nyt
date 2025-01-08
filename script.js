@@ -10,40 +10,150 @@ let timerInterval;
 let isPaused = false;
 let pausedTime = 0;
 let lastClickedCellId = null;
-const correctSolution = [
-    ["", "N", "O", "S", "E"],
-    ["P", "O", "S", "I", "T"],
-    ["L", "O", "A", "D", "S"],
-    ["O", "N", "K", "E", "Y"],
-    ["D", "E", "A", "D", ""],
-];
 
-const acrossHints = [
-    "It's in the middle of your face",
-    "To assume or suggest",
-    "Used to describe a large number or amount",
-    "In tune; accurate in pitch",
-    "No longer alive",
-];
+let dailyPuzzleIndex = 0;
+const puzzles = [
+    {
+         correctSolution: [
+            ["", "S", "L", "A", "B"],
+            ["C", "H", "I", "C", "O"],
+            ["L", "I", "E", "T", "O"],
+            ["I", "N", "G", "O", "T"],
+            ["P", "E", "E", "R", ""]
+          ],
+            acrossHints: [
+            "Flat piece of stone or concrete, often used for paving",
+            "'Boy' in Spanish",
+             "Italian for 'happy'",
+           "A block of metal (In minecraft: what iron ore becomes when you smelt it)",
+           "Someone at the same level (At school: someone in your year)",
+         ],
+           downHints: [
+             "Fasten securely, or a short video snippet",
+            "Polish to a gleaming finish, or radiate brightness",
+          "Middle ages term for my Lord or My King",
+            "Performer in film, theater, or television",
+            "Footwear for rugged tasks, muddy terrain or rainy days",
+         ]
 
-const downHints = [
-    "To walk taking slow steps, as if your feet are heavy",
-    "Literally, nobody",
-    "Japan's third-largest city, known as 'The Kitchen of Japan'",
-    "One _____ argument: doesn’t consider other perspectives",
-    "Online Marketplace for handmade goods",
-];
+       ,   cellsWithNumber : {
+            "i0_1": "1",
+              "i0_2": "2",
+                "i0_3": "3",
+               "i0_4": "4",
+              "i1_0": "5",
+                "i2_0": "6",
+                "i3_0": "7",
+                "i4_0": "8"
+            }
+    },
+        {
+       correctSolution: [
+            ["", "V", "I", "C", "E"],
+            ["D", "E", "B", "R", "A"],
+            ["O", "N", "S", "E", "T"],
+            ["I", "T", "E", "M", "S"],
+            ["N", "I", "N", "E", ""]
+        ],
+         acrossHints: [
+          "Joe Biden, ____ president to Obama",
+         "First name of actress Messing from 'Will & Grace'",
+         "The beginning of something, often unpleasant",
+           "Things on a checklist or shopping list",
+           "Number of lives a cat is said to have"
+         ],
+           downHints: [
+            "Slangy contraction of “doing,” often in casual speech",
+               "Starbucks size that means “twenty” in Italian",
+              "Norwegian playwright behind 'A Doll’s House'",
+              "Rich dessert topping, often paired with brûlée",
+            "Slang for food; Uber service",
+           ],
+        cellsWithNumber : {
+              "i0_1": "1",
+                "i0_2": "2",
+                  "i0_3": "3",
+               "i0_4": "4",
+              "i1_0": "5",
+             "i2_0": "6",
+             "i3_0": "7",
+              "i4_0": "8"
+         }
+    },
+   {
+        correctSolution: [
+            ["", "Y", "O", "L", "O"],
+            ["T", "E", "N", "O", "R"],
+            ["U", "N", "S", "U", "B"],
+            ["S", "T", "E", "P", "S"],
+             ["K", "A", "T", "E", ""]
+         ],
+           acrossHints: [
+          "You only live once",
+         "The highest male voice type in a choir; or the length of time an employee has worked for their employer",
+            "Un-subscribe",
+            "Series of actions or stairs to climb",
+            "First name of Middleton/Spade/Moss",
 
-const cellsWithNumber = {
-    "i0_1": "1",
-    "i0_2": "2",
-    "i0_3": "3",
-    "i0_4": "4",
-    "i1_0": "5",
-    "i2_0": "6",
-    "i3_0": "7",
-    "i4_0": "8"
-};
+         ],
+           downHints: [
+          "Elephant's long ivory tooth",
+             "A woman who is a gossip or nosy matchmaker in Yiddish culture",
+               "Beginning of an event, often unwelcome",
+            "Small magnifying lens used by jewelers (french)",
+           "Spherical objects, like planets or eyes"
+
+         ],
+      cellsWithNumber : {
+             "i0_1": "1",
+            "i0_2": "2",
+              "i0_3": "3",
+                "i0_4": "4",
+                "i1_0": "5",
+             "i2_0": "6",
+              "i3_0": "7",
+               "i4_0": "8"
+        }
+
+   },
+  {
+       correctSolution: [
+            ["", "C", "C", "T", "V"],
+             ["M", "A", "R", "I", "A"],
+             ["A", "R", "E", "N", "T"],
+            ["M", "O", "P", "E", "S"],
+              ["A", "L", "E", "S", ""]
+           ],
+           acrossHints: [
+           "Surveillance system (closed-circuit television)",
+            "Lead character in “West Side Story”",
+              "Contraction of 'are not'",
+              "(Plural) Informal expression for a people in mildly depressed states",
+                "Somewhat bitter brews, often served in pints",
+
+           ],
+            downHints: [
+              "Mother, affectionately",
+                "Festive song sung at Christmas",
+                 "Thin pancake, often French-style",
+              "Prongs on a fork or rake",
+               "Video Assisted Thoracoscopic Surgery"
+           ],
+        cellsWithNumber : {
+              "i0_1": "1",
+              "i0_2": "2",
+                "i0_3": "3",
+                 "i1_0": "4",
+                  "i2_0": "5",
+                "i3_0": "6",
+               "i3_1": "7",
+            "i3_2": "8",
+          }
+
+   },
+
+
+];
 
 // --- Helper Functions ---
 
@@ -71,22 +181,21 @@ function animTutorial() {
 
 
 function updateHintText() {
-    const hintTextElement = document.getElementById("hint-text");
+  const hintTextElement = document.getElementById("hint-text");
 
-    // Update hint text based on the current direction and cell
-    if (horizontal) {
-        hintTextElement.textContent = acrossHints[currentCellX] || "";
-    } else {
-        hintTextElement.textContent = downHints[currentCellY] || "";
-    }
-}
+     if (horizontal) {
+          hintTextElement.textContent = puzzles[dailyPuzzleIndex].acrossHints[currentCellX] || "";
+      } else {
+        hintTextElement.textContent = puzzles[dailyPuzzleIndex].downHints[currentCellY] || "";
+      }
+ }
 
 function colorSquares() {
     //Reset colours
     for (let i = 0; i < 5; i++) {
         for (let j = 0; j < 5; j++) {
             let cell = document.getElementById(`i${i}_${j}`);
-            // Determine if the cell should be black based on the position
+             // Determine if the cell should be black based on the position
              cell.style.backgroundColor = (i === 0 && j === 0) || (i === 4 && j === 4)  ? "black" : "white";;
           }
      }
@@ -138,7 +247,7 @@ function initializeGame() {
                     id='${cellId}'
                  ${isBlackCell ? "disabled" : ""}
                      >
-                    <span class="cell-number">${cellsWithNumber[cellId] ? cellsWithNumber[cellId] : ""}</span>
+                    <span class="cell-number">${puzzles[dailyPuzzleIndex].cellsWithNumber[cellId] ? puzzles[dailyPuzzleIndex].cellsWithNumber[cellId] : ""}</span>
            </div></td>`;
        }
        tableHTML += "</tr>";
@@ -480,7 +589,7 @@ function checkSolution() {
          for (let j = 0; j < 5; j++) {
            const cell = document.getElementById(`i${i}_${j}`);
                   if (!cell.disabled) {
-                   if (cell.value !== correctSolution[i][j]) {
+                   if (cell.value !== puzzles[dailyPuzzleIndex].correctSolution[i][j]) {
                  isCorrect = false;
                    break;
                      }
@@ -647,9 +756,15 @@ function stopConfetti() {
     const confettiContainer = document.getElementById('confetti-container');
     confettiContainer.innerHTML = '';
 }
-
+ function setDailyPuzzle() {
+        const now = new Date();
+     const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const diffInDays = Math.floor((now - startOfDay) / (1000 * 60 * 60 * 24));
+    dailyPuzzleIndex = diffInDays % puzzles.length;
+     }
  // --- Initialization ---
     window.onload = function () {
+        setDailyPuzzle();
       setInterval(animTutorial, 2000);
          initializeGame();
          adjustSizes();
