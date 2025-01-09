@@ -13,40 +13,7 @@ let lastClickedCellId = null;
 
 let dailyPuzzleIndex = 0;
 const puzzles = [
-    {
-         correctSolution: [
-            ["", "S", "L", "A", "B"],
-            ["C", "H", "I", "C", "O"],
-            ["L", "I", "E", "T", "O"],
-            ["I", "N", "G", "O", "T"],
-            ["P", "E", "E", "R", ""]
-          ],
-            acrossHints: [
-            "Flat piece of stone or concrete, often used for paving",
-            "'Boy' in Spanish",
-             "Italian for 'happy'",
-           "A block of metal (In minecraft: what iron ore becomes when you smelt it)",
-           "Someone at the same level (At school: someone in your year)",
-         ],
-           downHints: [
-             "Fasten securely, or a short video snippet",
-            "Polish to a gleaming finish, or radiate brightness",
-          "Middle ages term for my Lord or My King",
-            "Performer in film, theater, or television",
-            "Footwear for rugged tasks, muddy terrain or rainy days",
-         ]
-
-       ,   cellsWithNumber : {
-            "i0_1": "1",
-              "i0_2": "2",
-                "i0_3": "3",
-               "i0_4": "4",
-              "i1_0": "5",
-                "i2_0": "6",
-                "i3_0": "7",
-                "i4_0": "8"
-            }
-    },
+    
         {
        correctSolution: [
             ["", "V", "I", "C", "E"],
@@ -151,7 +118,40 @@ const puzzles = [
           }
 
    },
+{
+         correctSolution: [
+            ["", "S", "L", "A", "B"],
+            ["C", "H", "I", "C", "O"],
+            ["L", "I", "E", "T", "O"],
+            ["I", "N", "G", "O", "T"],
+            ["P", "E", "E", "R", ""]
+          ],
+            acrossHints: [
+            "Flat piece of stone or concrete, often used for paving",
+            "'Boy' in Spanish",
+             "Italian for 'happy'",
+           "A block of metal (In minecraft: what iron ore becomes when you smelt it)",
+           "Someone at the same level (At school: someone in your year)",
+         ],
+           downHints: [
+             "Fasten securely, or a short video snippet",
+            "Polish to a gleaming finish, or radiate brightness",
+          "Middle ages term for my Lord or My King",
+            "Performer in film, theater, or television",
+            "Footwear for rugged tasks, muddy terrain or rainy days",
+         ]
 
+       ,   cellsWithNumber : {
+            "i0_1": "1",
+              "i0_2": "2",
+                "i0_3": "3",
+               "i0_4": "4",
+              "i1_0": "5",
+                "i2_0": "6",
+                "i3_0": "7",
+                "i4_0": "8"
+            }
+    },
 
 ];
 
