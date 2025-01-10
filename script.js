@@ -25,7 +25,7 @@ const puzzles = [
          ],
            acrossHints: [
           "You only live once",
-         "The highest male voice type in a choir; or the length of time an employee has worked for their employer",
+         "The highest male voice type in a choir",
             "Un-subscribe",
             "Series of actions or stairs to climb",
             "First name of Middleton/Spade/Moss",
