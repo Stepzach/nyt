@@ -14,39 +14,7 @@ let lastClickedCellId = null;
 let dailyPuzzleIndex = 0;
 const puzzles = [
     
-        {
-       correctSolution: [
-            ["", "V", "I", "C", "E"],
-            ["D", "E", "B", "R", "A"],
-            ["O", "N", "S", "E", "T"],
-            ["I", "T", "E", "M", "S"],
-            ["N", "I", "N", "E", ""]
-        ],
-         acrossHints: [
-          "Joe Biden, ____ president to Obama",
-         "First name of actress Messing from 'Will & Grace'",
-         "The beginning of something, often unpleasant",
-           "Things on a checklist or shopping list",
-           "Number of lives a cat is said to have"
-         ],
-           downHints: [
-            "Slangy contraction of “doing,” often in casual speech",
-               "Starbucks size that means “twenty” in Italian",
-              "Norwegian playwright behind 'A Doll’s House'",
-              "Rich dessert topping, often paired with brûlée",
-            "Slang for food; Uber service",
-           ],
-        cellsWithNumber : {
-              "i0_1": "1",
-                "i0_2": "2",
-                  "i0_3": "3",
-               "i0_4": "4",
-              "i1_0": "5",
-             "i2_0": "6",
-             "i3_0": "7",
-              "i4_0": "8"
-         }
-    },
+      
    {
         correctSolution: [
             ["", "Y", "O", "L", "O"],
@@ -151,6 +119,39 @@ const puzzles = [
                 "i3_0": "7",
                 "i4_0": "8"
             }
+    },
+      {
+       correctSolution: [
+            ["", "V", "I", "C", "E"],
+            ["D", "E", "B", "R", "A"],
+            ["O", "N", "S", "E", "T"],
+            ["I", "T", "E", "M", "S"],
+            ["N", "I", "N", "E", ""]
+        ],
+         acrossHints: [
+          "Joe Biden, ____ president to Obama",
+         "First name of actress Messing from 'Will & Grace'",
+         "The beginning of something, often unpleasant",
+           "Things on a checklist or shopping list",
+           "Number of lives a cat is said to have"
+         ],
+           downHints: [
+            "Slangy contraction of “doing,” often in casual speech",
+               "Starbucks size that means “twenty” in Italian",
+              "Norwegian playwright behind 'A Doll’s House'",
+              "Rich dessert topping, often paired with brûlée",
+            "Slang for food; Uber service",
+           ],
+        cellsWithNumber : {
+              "i0_1": "1",
+                "i0_2": "2",
+                  "i0_3": "3",
+               "i0_4": "4",
+              "i1_0": "5",
+             "i2_0": "6",
+             "i3_0": "7",
+              "i4_0": "8"
+         }
     },
 
 ];
