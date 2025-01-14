@@ -15,42 +15,7 @@ let dailyPuzzleIndex = 0;
 const puzzles = [
     
       
-   {
-        correctSolution: [
-            ["", "Y", "O", "L", "O"],
-            ["T", "E", "N", "O", "R"],
-            ["U", "N", "S", "U", "B"],
-            ["S", "T", "E", "P", "S"],
-             ["K", "A", "T", "E", ""]
-         ],
-           acrossHints: [
-          "You only live once",
-         "The highest male voice type in a choir",
-            "Un-subscribe",
-            "Series of actions or stairs to climb",
-            "First name of Middleton/Spade/Moss",
 
-         ],
-           downHints: [
-          "Elephant's long ivory tooth",
-             "A woman who is a gossip or nosy matchmaker in Yiddish culture",
-               "Beginning of an event, often unwelcome",
-            "Small magnifying lens used by jewelers (french)",
-           "Spherical objects, like planets or eyes"
-
-         ],
-      cellsWithNumber : {
-             "i0_1": "1",
-            "i0_2": "2",
-              "i0_3": "3",
-                "i0_4": "4",
-                "i1_0": "5",
-             "i2_0": "6",
-              "i3_0": "7",
-               "i4_0": "8"
-        }
-
-   },
   {
        correctSolution: [
             ["", "C", "C", "T", "V"],
