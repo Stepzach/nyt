@@ -39,15 +39,14 @@ const puzzles = [
               "Prongs on a fork or rake",
                "Video Assisted Thoracoscopic Surgery"
            ],
-        cellsWithNumber : {
-              "i0_1": "1",
-              "i0_2": "2",
-                "i0_3": "3",
-                 "i1_0": "4",
-                  "i2_0": "5",
-                "i3_0": "6",
-               "i3_1": "7",
-            "i3_2": "8",
+        cellsWithNumber : {     "i0_1": "1",
+                "i0_2": "2",
+                  "i0_3": "3",
+               "i0_4": "4",
+              "i1_0": "5",
+             "i2_0": "6",
+             "i3_0": "7",
+              "i4_0": "8"
           }
 
    },
