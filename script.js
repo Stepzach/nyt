@@ -12,33 +12,38 @@ let pausedTime = 0;
 let lastClickedCellId = null;
 
 let dailyPuzzleIndex = 0;
-const puzzles = [
-    
- [
-  {
-    correctSolution: [
-      ["", "L", "I", "S", "T"],
-      ["W", "A", "R", "I", "O"],
-      ["A", "N", "O", "D", "E"],
-      ["L", "A", "N", "E", "S"],
-      ["K", "I", "S", "S", ""]
-    ],
-    acrossHints: [
-      "Something to bring to the supermarket to remember what to get",
-      "Mario’s mischievous rival",
-      "Positive terminal in a battery",
-      "Paths for bowling or traffic",
-      "Touch of lips"
-    ],
-    downHints: [
-      "Leisurely stroll",
-      "Hawaiian veranda or island",
-      "West Ham supporters",
-      "French fries or mashed potatoes, perhaps",
-      "On the end of feet"
-    ]
-  }
-];
+const puzzles = [  {
+       correctSolution: [
+    ["", "L", "I", "S", "T"],
+    ["W", "A", "R", "I", "O"],
+    ["A", "N", "O", "D", "E"],
+    ["L", "A", "N", "E", "S"],
+    ["K", "I", "S", "S", ""],
+           ],
+
+      
+
+
+
+
+      
+
+
+           acrossHints: [
+           "Something to bring to the supermarket to remember what to get",
+            "Mario’s mischievous rival",
+              "Positive terminal in a battery",
+              "Paths for bowling or traffic",
+                "Touch of lips",
+
+           ],
+            downHints: [
+              "Leisurely stroll",
+                "Hawaiian veranda or island",
+                 "West Ham supporters",
+              "French fries or mashed potatoes, perhaps",
+               "On the end of feet",
+           ],
 
       
         cellsWithNumber : {     "i0_1": "1",
