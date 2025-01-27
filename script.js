@@ -46,7 +46,7 @@ const puzzles = [
                 "Hawaiian veranda or island",
                  "West Ham supporters",
               "French fries or mashed potatoes, perhaps",
-               "On the end of feet "
+               "On the end of feet",
            ],
         cellsWithNumber : {     "i0_1": "1",
                 "i0_2": "2",
