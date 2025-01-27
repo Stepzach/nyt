@@ -18,26 +18,35 @@ const puzzles = [
 
   {
        correctSolution: [
-            ["", "C", "C", "T", "V"],
-             ["M", "A", "R", "I", "A"],
-             ["A", "R", "E", "N", "T"],
-            ["M", "O", "P", "E", "S"],
-              ["A", "L", "E", "S", ""]
+    ["", "L", "I", "S", "T"],
+    ["W”, "A", “R", "I", "O"],
+    ["A", "N", "O", "D", "E"],
+    ["L", "A", "N", "E”, "S"],
+    ["K", "I", "S", "S", ""],
            ],
+
+      
+
+
+
+
+      
+
+
            acrossHints: [
-           "Surveillance system (closed-circuit television)",
-            "Lead character in “West Side Story”",
-              "Contraction of 'are not'",
-              "(Plural) Informal expression for a people in mildly depressed states",
-                "Somewhat bitter brews, often served in pints",
+           "Something to bring to the supermarket to remember what to get",
+            "Mario’s mischievous rival",
+              "Positive terminal in a battery",
+              "Paths for bowling or traffic",
+                "Touch of lips",
 
            ],
             downHints: [
-              "Mother, affectionately",
-                "Festive song sung at Christmas",
-                 "Thin pancake, often French-style",
-              "Prongs on a fork or rake",
-               "Video Assisted Thoracoscopic Surgery"
+              "Leisurely stroll",
+                "Hawaiian veranda or island",
+                 "West Ham supporters",
+              "French fries or mashed potatoes, perhaps",
+               "On the end of feet "
            ],
         cellsWithNumber : {     "i0_1": "1",
                 "i0_2": "2",
