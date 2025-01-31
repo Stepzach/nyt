@@ -14,11 +14,11 @@ let lastClickedCellId = null;
 let dailyPuzzleIndex = 0;
 const puzzles = [  {
        correctSolution: [
-    ["", "L", "I", "S", "T"],
-    ["W", "A", "R", "I", "O"],
-    ["A", "N", "O", "D", "E"],
-    ["L", "A", "N", "E", "S"],
-    ["K", "I", "S", "S", ""],
+    ["", "L", "I", "N", "K"],
+    ["D", "E", "M", "O", "N"],
+    ["E", "M", "O", "T", "E"],
+    ["M", "O", "U", "S", "E"],
+    ["O", "N", "T", "O", ""],
            ],
 
       
@@ -30,19 +30,19 @@ const puzzles = [  {
 
 
            acrossHints: [
-           "Something to bring to the supermarket to remember what to get",
-            "Mario’s mischievous rival",
-              "Positive terminal in a battery",
-              "Paths for bowling or traffic",
-                "Touch of lips",
+           "Slang for a meet up with someone, can be sneaky",
+            "A scary supernatural entity",
+              "Dance online (what you might do after a victory royale)",
+              "Computer device or small rodent",
+                "I’m ___ you. (Suspicious of)",
 
            ],
             downHints: [
-              "Leisurely stroll",
-                "Hawaiian veranda or island",
-                 "West Ham supporters",
-              "French fries or mashed potatoes, perhaps",
-               "On the end of feet",
+              "Trial version",
+                "Sour fruit used to treat scurvy",
+                 "Phrase you might say when you leave",
+              "Expression of disagreement",
+               "Bending body part",
            ],
 
       
