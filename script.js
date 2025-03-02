@@ -34,7 +34,7 @@ const puzzles = [  {
             "Worn in winter or during a boxing match",
               "The month of showers, fools and bunnies",
               "Small, crude cabin (some sell burgers)",
-                "Short way of describing music genres by artists outside the mainstream",
+                "Short way of describing music genres outside the mainstream",
 
            ],
             downHints: [
