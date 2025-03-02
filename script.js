@@ -14,11 +14,11 @@ let lastClickedCellId = null;
 let dailyPuzzleIndex = 0;
 const puzzles = [  {
        correctSolution: [
-    ["", "L", "I", "N", "K"],
+    ["", "L", "I", "N", ""],
     ["D", "E", "M", "O", "N"],
     ["E", "M", "O", "T", "E"],
     ["M", "O", "U", "S", "E"],
-    ["O", "N", "T", "O", ""],
+    ["", "N", "T", "O", ""],
            ],
 
       
@@ -49,11 +49,11 @@ const puzzles = [  {
         cellsWithNumber : {     "i0_1": "1",
                 "i0_2": "2",
                   "i0_3": "3",
-               "i0_4": "4",
-              "i1_0": "5",
-             "i2_0": "6",
-             "i3_0": "7",
-              "i4_0": "8"
+             
+              "i1_0": "4",
+             "i2_0": "5",
+             "i3_0": "6"
+          
           }
 
    },
@@ -103,7 +103,7 @@ function colorSquares() {
         for (let j = 0; j < 5; j++) {
             let cell = document.getElementById(`i${i}_${j}`);
              // Determine if the cell should be black based on the position
-             cell.style.backgroundColor = (i === 0 && j === 0) || (i === 4 && j === 4)  ? "black" : "white";;
+             cell.style.backgroundColor = (i === 0 && j === 0) || (i === 0 && j === 4) || (i === 4 && j === 0) || (i === 4 && j === 4)  ? "black" : "white";;
           }
      }
 
@@ -141,7 +141,7 @@ function initializeGame() {
             tableHTML += "<tr>";
              for (let j = 0; j < 5; j++) {
                     const cellId = `i${i}_${j}`;
-             const isBlackCell = (i === 0 && j === 0) || (i === 4 && j === 4);
+             const isBlackCell = (i === 0 && j === 0) || (i === 0 && j === 4) || (i === 4 && j === 0) || (i === 4 && j === 4);
 
             tableHTML += `<td><div style="position:relative;">
              <input
