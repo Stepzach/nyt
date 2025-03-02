@@ -14,11 +14,11 @@ let lastClickedCellId = null;
 let dailyPuzzleIndex = 0;
 const puzzles = [  {
        correctSolution: [
-    ["", "L", "I", "N", ""],
-    ["D", "E", "M", "O", "N"],
-    ["E", "M", "O", "T", "E"],
-    ["M", "O", "U", "S", "E"],
-    ["", "N", "T", "O", ""],
+    ["", "A", "C", "E", ""],
+    ["G", "L", "O", "V", "E"],
+    ["A", "P", "R", "I", "L"],
+    ["S", "H", "A", "C", "K"],
+    ["", "A", "L", "T", ""],
            ],
 
       
@@ -30,19 +30,19 @@ const puzzles = [  {
 
 
            acrossHints: [
-           "Slang for a meet up with someone, can be sneaky",
-            "A scary supernatural entity",
-              "Dance online (what you might do after a victory royale)",
-              "Computer device or small rodent",
-                "I’m ___ you. (Suspicious of)",
+           "Serve that's unreturnable",
+            "Worn in winter or during a boxing match",
+              "The month of showers, fools and bunnies",
+              "Small, crude cabin (some sell burgers)",
+                "Short way of describing music genres by artists outside the mainstream",
 
            ],
             downHints: [
-              "Trial version",
-                "Sour fruit used to treat scurvy",
-                 "Phrase you might say when you leave",
-              "Expression of disagreement",
-               "Bending body part",
+              "Laugh-inducing substance",
+                "What Andrew Tate thinks he is",
+                 "Shade of pinkish-orange",
+              "To force someone to leave somewhere",
+               "Large deer native to North America",
            ],
 
       
