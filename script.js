@@ -34,7 +34,7 @@ const puzzles = [  {
             "Horror, romance and sci-fi are each a...",
               "Raised structure on which religious sacrifices are offered", 
               "Low-tech snowmobiles with no brakes, no steering, and no fear",
-                "Santa lives at one, strippers dance on one and magents have two",
+                "Santa lives at one, strippers dance on one",
 
            ],
             downHints: [
