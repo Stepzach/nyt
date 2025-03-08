@@ -40,7 +40,7 @@ const puzzles = [  {
             downHints: [
               "Sound effect for plot twists and cold swimming pools",
                 "Adele’s favorite way to start a song",
-                 "Secret (intelligent) information, for example about an enemy group",
+                 "Secret intelligence, for ex about an enemy group",
               "Letters that decide if you go to uni",
                "Paired with “His” in towels, mugs, and unnecessary wedding gifts",
            ],
