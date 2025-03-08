@@ -88,29 +88,21 @@
     // Get the leaderboard table body
     const leaderboardTableBody = document.getElementById('leaderboardTable').getElementsByTagName('tbody')[0];
 
-    // Function to filter and display the leaderboard for today's entries only
-    function displayTodaysLeaderboard(data) {
+    // Function to display the leaderboard
+    function displayLeaderboard(data) {
         leaderboardTableBody.innerHTML = ''; // Clear existing entries
 
-        // Get the start and end of today (midnight to midnight GMT)
-        const startOfToday = new Date();
-        startOfToday.setUTCHours(0, 0, 0, 0); // Set to start of day GMT
-        const endOfToday = new Date();
-        endOfToday.setUTCHours(23, 59, 59, 999); // Set to end of day GMT
-
-        // Convert data to an array, filter it for today's entries, sort it, and then display
+        // Convert data to an array,  sort it.
         const leaderboardArray = [];
         for (const key in data) {
-            const entryDate = new Date(data[key].timestamp); // Assuming you have a timestamp field in each entry
-            if (entryDate >= startOfToday && entryDate <= endOfToday) {
-                leaderboardArray.push({
-                    key: key,
-                    name: data[key].name,
-                    time: data[key].time,
-                    timestamp: data[key].timestamp // Include the timestamp
-                });
-            }
+            leaderboardArray.push({
+                key: key,
+                name: data[key].name,
+                time: data[key].time,
+                timestamp: data[key].timestamp // Include the timestamp
+            });
         }
+
 
         leaderboardArray.sort((a, b) => {
             // Convert times to seconds for proper sorting
@@ -147,14 +139,14 @@
         });
     }
 
+
     // Listen for changes to the leaderboard data
     leaderboardRef.on('value', (snapshot) => {
         const data = snapshot.val();
         if (data) {
-            displayTodaysLeaderboard(data);
+            displayLeaderboard(data);
         }
     });
-
     // Function to format the date as "Monday 21st October 2025"
     function formatDate() {
         const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
@@ -178,6 +170,7 @@
 
     // Call the function to set the date when the page loads
     window.onload = formatDate;
+
 </script>
 </body>
 </html>
