@@ -5,10 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard</title>
     <style>
+    
+    body {
+    background-color: rgba(255, 236, 218, 0.94);
+    
+    }
+        /* ... (All your CSS styles remain the same) ... */
         table {
+        background-color: wheat;
             border-collapse: collapse;
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -28,6 +35,7 @@
             font-size: 18px;
             color: #636363;
             text-align: center; /* Center the date text */
+            margin-top: -23px;
         }
         /* Style for the h1 font */
         h1 {
@@ -36,141 +44,231 @@
             text-align: center; /* Center the h1 text */
         }
         /* Styles for the top three ranks */
-        .gold {
+        /* Apply to the first cell (rank) of the row */
+        tr.gold td:first-child {
             background-color: gold;
         }
-        .silver {
+        tr.silver td:first-child {
             background-color: silver;
         }
-        .bronze {
+        tr.bronze td:first-child {
             background-color: #cd7f32;
+        }
+        /* Style for new day separator */
+        .new-day {
+            border-bottom: 3px solid black;
+
+        }
+        tr.spacer td{
+            border: none;
+            padding: 5px;
+            background-color: rgba(255, 236, 218, 0.94);
+        }
+        .date-header {
+         border: none;
+ background-color: rgba(255, 236, 218, 0.94);
+            font-size: 1.1em;
+
+            text-align: center;
+             padding-top: 1.1em;
+            margin-top: 1em; /* Add some space above the date header */
+            margin-bottom: 0.5em; /* Add space below for visual separation*/
         }
     </style>
 </head>
 <body>
-    <h1>Crossword Leaderboard</h1>
-<!-- Today's date below the h1 -->
-<p class="date" id="date"></p>
+    <h1>Leaderboard</h1>
+    <!-- Today's date below the h1 -->
+    <p style="font-size: 1.3em;" class="date" id="date"></p>
 
-<table id="leaderboardTable">
-    <thead>
-        <tr>
-            <th>Rank</th>
-            <th>Name</th>
-            <th>Time</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Leaderboard entries will be added here -->
-    </tbody>
-</table>
+    <table id="leaderboardTable">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Leaderboard entries will be added here -->
+        </tbody>
+    </table>
 
-<script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-database-compat.js"></script>
 
-<script>
-    // Firebase config (use your actual config)
-    const firebaseConfig = {
-        apiKey: "AIzaSyBukFC83UnD1r6SaiSv-M95dz9PINFhqWU",
-        authDomain: "crosswordleader.firebaseapp.com",
-        databaseURL: "https://crosswordleader-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "crosswordleader",
-        storageBucket: "crosswordleader.firebasestorage.app",
-        messagingSenderId: "762979733536",
-        appId: "1:762979733536:web:2f8afc76b9dc1156942c45"
-    };
+    <script>
+        // Firebase config (use your actual config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBukFC83UnD1r6SaiSv-M95dz9PINFhqWU",
+            authDomain: "crosswordleader.firebaseapp.com",
+            databaseURL: "https://crosswordleader-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "crosswordleader",
+            storageBucket: "crosswordleader.firebasestorage.app",
+            messagingSenderId: "762979733536",
+            appId: "1:762979733536:web:2f8afc76b9dc1156942c45"
+        };
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-    const leaderboardRef = database.ref('leaderboard');
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const leaderboardRef = database.ref('leaderboard');
 
-    // Get the leaderboard table body
-    const leaderboardTableBody = document.getElementById('leaderboardTable').getElementsByTagName('tbody')[0];
+        // Get the leaderboard table body
+        const leaderboardTableBody = document.getElementById('leaderboardTable').getElementsByTagName('tbody')[0];
+        // Get today's date (for comparison later)
+        const today = new Date();
+        const todayString = formatDateWithSuffix(today);
 
-    // Function to display the leaderboard
-    function displayLeaderboard(data) {
-        leaderboardTableBody.innerHTML = ''; // Clear existing entries
+        //Function to format date to text with suffix.
+        function formatDateWithSuffix(date) {
+            const options = { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' };
+            const dateStr = date.toLocaleDateString('en-GB', options);
+            const day = date.getDate();
+            let suffix = 'th';
+            if (day === 1 || day === 21 || day === 31) {
+                suffix = 'st';
+            } else if (day === 2 || day === 22) {
+                suffix = 'nd';
+            } else if (day === 3 || day === 23) {
+                suffix = 'rd';
+            }
+            return dateStr.replace(day, day + suffix);
+        }
 
-        // Convert data to an array,  sort it.
-        const leaderboardArray = [];
-        for (const key in data) {
-            leaderboardArray.push({
-                key: key,
-                name: data[key].name,
-                time: data[key].time,
-                timestamp: data[key].timestamp // Include the timestamp
+        // NEW: Function to parse the formatted date string back into a Date object
+        function parseFormattedDate(dateString) {
+            const parts = dateString.match(/(\w+)\s(\d+)(?:st|nd|rd|th)\s(\w+)\s(\d+)/);
+            if (!parts) {
+                return null; // Or handle the error as appropriate
+            }
+            const [, , day, month, year] = parts;
+            const monthIndex = {
+                'January': 0, 'February': 1, 'March': 2, 'April': 3,
+                'May': 4, 'June': 5, 'July': 6, 'August': 7,
+                'September': 8, 'October': 9, 'November': 10, 'December': 11
+            }[month];
+            return new Date(year, monthIndex, day);
+        }
+
+
+        // Function to display the leaderboard
+        function displayLeaderboard(data) {
+            leaderboardTableBody.innerHTML = ''; // Clear existing entries
+
+            // Convert data to an array
+            const leaderboardArray = [];
+            for (const key in data) {
+                leaderboardArray.push({
+                    key: key,
+                    name: data[key].name,
+                    time: data[key].time,
+                    timestamp: data[key].timestamp,
+                    row: null, // Initialize row property
+                });
+            }
+
+            // Group scores by date
+            const scoresByDate = {};
+            leaderboardArray.forEach(entry => {
+                const date = new Date(entry.timestamp);
+                const dateString = formatDateWithSuffix(date); // Use the formatting function
+                if (!scoresByDate[dateString]) {
+                    scoresByDate[dateString] = [];
+                }
+                scoresByDate[dateString].push(entry);
+            });
+
+            // Sort each date's scores by time
+            for (const date in scoresByDate) {
+                scoresByDate[date].sort((a, b) => {
+                    const timeToSeconds = (time) => {
+                        const parts = time.split(':').map(Number);
+                        return parts[0] * 60 + parts[1];
+                    };
+                    return timeToSeconds(a.time) - timeToSeconds(b.time);
+                });
+            }
+
+            // Sort dates in descending order (most recent first)
+            const sortedDates = Object.keys(scoresByDate).sort((a, b) => {
+                // Use the parseFormattedDate function for reliable comparison
+                const dateA = parseFormattedDate(a);
+                const dateB = parseFormattedDate(b);
+
+                // Check if parsing was successful.  If not, default to sorting alphabetically (shouldn't happen).
+                if (!dateA || !dateB) {
+                  return b.localeCompare(a);
+                }
+
+                return dateB - dateA;  // Descending order (most recent first)
+            });
+
+            sortedDates.forEach(date => {
+             // Add date header (conditionally)
+              if (date !== todayString) {  // Only add header if NOT today
+                const dateHeaderRow = leaderboardTableBody.insertRow();
+                dateHeaderRow.innerHTML = `<td colspan="3" class="date-header">${date}</td>`;
+              }
+
+              let dailyRank = 1; // Reset rank for each day
+              scoresByDate[date].forEach((entry, index) => {
+                const row = leaderboardTableBody.insertRow();
+                entry.row = row;  //store the row in the entry.
+                const rankCell = row.insertCell();
+                const nameCell = row.insertCell();
+                const timeCell = row.insertCell();
+
+                rankCell.textContent = dailyRank++;
+                nameCell.textContent = entry.name;
+                timeCell.textContent = entry.time;
+
+                // Apply styles to the *row*, but the color will be applied to the first cell.
+                if (index === 0) {
+                    entry.row.classList.add('gold');  // Use entry.row
+                } else if (index === 1) {
+                    entry.row.classList.add('silver'); // Use entry.row
+                } else if (index === 2) {
+                    entry.row.classList.add('bronze');  //Use entry.row
+                }
+              });
+
+              //Spacer row after each days scores.
+              const spacerRow = leaderboardTableBody.insertRow();
+              spacerRow.classList.add('spacer');
+              spacerRow.innerHTML = `<td colspan="3"></td>`;
             });
         }
-
-
-        leaderboardArray.sort((a, b) => {
-            // Convert times to seconds for proper sorting
-            const timeToSeconds = (time) => {
-                const parts = time.split(':').map(Number);
-                return parts[0] * 60 + parts[1];
-            };
-
-            const timeA = timeToSeconds(a.time);
-            const timeB = timeToSeconds(b.time);
-
-            return timeA - timeB;
-        });
-
-        // Add new entries to the table
-        leaderboardArray.forEach((entry, index) => {
-            const row = leaderboardTableBody.insertRow();
-            const rankCell = row.insertCell();
-            const nameCell = row.insertCell();
-            const timeCell = row.insertCell();
-
-            rankCell.textContent = index + 1;
-            nameCell.textContent = entry.name;
-            timeCell.textContent = entry.time;
-
-            // Apply styles for top 3 ranks
-            if (index === 0) {
-                row.classList.add('gold');
-            } else if (index === 1) {
-                row.classList.add('silver');
-            } else if (index === 2) {
-                row.classList.add('bronze');
+        // Listen for changes to the leaderboard data
+        leaderboardRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                displayLeaderboard(data);
             }
         });
-    }
 
+          // Function to format the date
+          function formatDate() {
+            const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('en-GB', options);
 
-    // Listen for changes to the leaderboard data
-    leaderboardRef.on('value', (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-            displayLeaderboard(data);
+            // Add suffix to the day
+            const day = today.getDate();
+            let suffix = 'th';
+            if (day === 1 || day === 21 || day === 31) {
+                suffix = 'st';
+            } else if (day === 2 || day === 22) {
+                suffix = 'nd';
+            } else if (day === 3 || day === 23) {
+                suffix = 'rd';
+            }
+
+            const formattedDate = dateStr.replace(day, day + suffix);
+            document.getElementById('date').textContent = formattedDate;
         }
-    });
-    // Function to format the date as "Monday 21st October 2025"
-    function formatDate() {
-        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-        const today = new Date();
-        const dateStr = today.toLocaleDateString('en-GB', options);
-
-        // Add suffix to the day
-        const day = today.getDate();
-        let suffix = 'th';
-        if (day === 1 || day === 21 || day === 31) {
-            suffix = 'st';
-        } else if (day === 2 || day === 22) {
-            suffix = 'nd';
-        } else if (day === 3 || day === 23) {
-            suffix = 'rd';
-        }
-
-        const formattedDate = dateStr.replace(day, day + suffix);
-        document.getElementById('date').textContent = formattedDate;
-    }
-
-    // Call the function to set the date when the page loads
-    window.onload = formatDate;
-
-</script>
+        // Call the function to set the date when the page loads
+        window.onload = formatDate;
+    </script>
 </body>
 </html>
