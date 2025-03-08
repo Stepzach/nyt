@@ -26,23 +26,23 @@ const puzzles = [  {
 
 
 
-      
+     
 
 
            acrossHints: [
-           "Serve that's unreturnable",
-            "Worn in winter or during a boxing match",
-              "The month of showers, fools and bunnies",
-              "Small, crude cabin (some sell burgers)",
-                "Short way of describing music genres outside the mainstream",
+           "How one might feel on April 20",
+            "Horror, romance and sci-fi are all...",
+              "Raised structure on which religious sacrifices are offered", 
+              "Low-tech snowmobiles with no brakes, no steering, and no fear",
+                "Santa lives at one, strippers dance on one and magents have two",
 
            ],
             downHints: [
-              "Laugh-inducing substance",
-                "What Andrew Tate thinks he is",
-                 "Shade of pinkish-orange",
-              "To force someone to leave somewhere",
-               "Large deer native to North America",
+              "Sound effect for plot twists and cold swimming pools",
+                "Adele’s favorite way to start a song",
+                 "Secret (intelligent) information, for example about an enemy group",
+              "Letters that decide if you go to uni",
+               "Paired with “His” in towels, mugs, and unnecessary wedding gifts",
            ],
 
       
