@@ -14,11 +14,11 @@ let lastClickedCellId = null;
 let dailyPuzzleIndex = 0;
 const puzzles = [  {
        correctSolution: [
-    ["", "H", "I", "G", "H"],
-    ["G", "E", "N", "R", "E"],
-    ["A", "L", "T", "A", "R"],
-    ["S", "L", "E", "D", "S"],
-    ["P", "O", "L", "E", ""],
+    ["", "", "S", "P", "F"],
+    ["", "P", "O", "O", "L"],
+    ["P", "A", "R", "T", "Y"],
+    ["A", "I", "R", "S", ""],
+    ["D", "R", "Y", "", ""],
            ],
 
       
@@ -30,30 +30,31 @@ const puzzles = [  {
 
 
            acrossHints: [
-           "How one might feel on April 20",
-            "Horror, romance and sci-fi are each a...",
-              "Raised structure on which religious sacrifices are offered", 
-              "Low-tech snowmobiles with no brakes, no steering, and no fear",
-                "Santa lives at one, strippers dance on one",
+           "Defense against UV rays",
+            "You can dive into it or play it on a table",
+              "It may be political or just a good time", 
+              "To broadcast on TV or radio",
+                "Like toast without butter or comedy without exaggeration",
 
            ],
             downHints: [
-              "Sound effect for plot twists and cold swimming pools",
-                "Adele’s favorite way to start a song",
-                 "Secret intelligence, for ex about an enemy group",
-              "Letters that decide if you go to uni",
-               "Paired with “His” in towels, mugs, and unnecessary wedding gifts",
+              "Frog’s home or writer’s workspace",
+                "You’ll need one in poker (or your socks)",
+                 "A word that can be sincere or sometimes just a formality",
+              "Containers for plants or stews",
+               "How a US hip-hop artist might describe your fit",
            ],
 
       
-        cellsWithNumber : {     "i0_1": "1",
-                "i0_2": "2",
-                  "i0_3": "3",
-              "i0_4": "4",
-              "i1_0": "5",
-             "i2_0": "6",
-             "i3_0": "7",
-             "i4_0": "8"
+        cellsWithNumber : { 
+                "i0_2": "1",
+                  "i0_3": "2",
+              "i0_4": "3",
+               "i1_1": "4",
+           
+             "i2_0": "5",
+             "i3_0": "6",
+             "i4_0": "7"
           }
 
    },
@@ -103,7 +104,7 @@ function colorSquares() {
         for (let j = 0; j < 5; j++) {
             let cell = document.getElementById(`i${i}_${j}`);
              // Determine if the cell should be black based on the position
-             cell.style.backgroundColor = (i === 0 && j === 0) || (i === 4 && j === 4)  ? "black" : "white";;
+             cell.style.backgroundColor = (i === 0 && j === 0) || (i === 1 && j === 0) || (i === 0 && j === 1) || (i === 3 && j === 4) || (i === 4 && j === 3)  || (i === 4 && j === 4)  ? "black" : "white";;
           }
      }
 
@@ -141,7 +142,7 @@ function initializeGame() {
             tableHTML += "<tr>";
              for (let j = 0; j < 5; j++) {
                     const cellId = `i${i}_${j}`;
-             const isBlackCell = (i === 0 && j === 0) || (i === 4 && j === 4);
+             const isBlackCell = (i === 0 && j === 0) || (i === 1 && j === 0) || (i === 0 && j === 1) || (i === 3 && j === 4) || (i === 4 && j === 3)  || (i === 4 && j === 4);
 
             tableHTML += `<td><div style="position:relative;">
              <input
