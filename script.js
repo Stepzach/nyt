@@ -1,8 +1,8 @@
 // --- Global Variables ---
 let horizontal = true;
 let maxscore = 100;
-let currentCellX = 2;
-let currentCellY = 0;
+let currentCellX = 0;
+let currentCellY = 2;
 let currentHintIndex = 0;
 let directionMap = {};
 let startTime;
@@ -164,8 +164,8 @@ function initializeGame() {
 
 
     // Initial setup
-    currentCellX = 2;
-    currentCellY = 0;
+    currentCellX = 0;
+    currentCellY = 2;
     document.getElementById(`i${currentCellX}_${currentCellY}`).focus();
      colorSquares();
      updateHintText();
