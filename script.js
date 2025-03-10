@@ -2,7 +2,7 @@
 let horizontal = true;
 let maxscore = 100;
 let currentCellX = 0;
-let currentCellY = 2;
+let currentCellY = 1;
 let currentHintIndex = 0;
 let directionMap = {};
 let startTime;
@@ -14,11 +14,11 @@ let lastClickedCellId = null;
 let dailyPuzzleIndex = 0;
 const puzzles = [  {
        correctSolution: [
-    ["", "", "S", "P", "F"],
-    ["", "P", "O", "O", "L"],
-    ["P", "A", "R", "T", "Y"],
-    ["A", "I", "R", "S", ""],
-    ["D", "R", "Y", "", ""],
+    ["", "B", "E", "A", "N"],
+    ["B", "E", "L", "L", "Y"],
+    ["L", "I", "L", "A", "C"],
+    ["A", "G", "E", "S", ""],
+    ["H", "E", "N", "", ""],
            ],
 
       
@@ -30,31 +30,32 @@ const puzzles = [  {
 
 
            acrossHints: [
-           "Defense against UV rays",
-            "You can dive into it or play it on a table",
-              "It may be political or just a good time", 
-              "To broadcast on TV or radio",
-                "Like toast without butter or comedy without exaggeration",
+           "British sitcom, staring a childish Mr.",
+            "Your built-in storage compartment for all your snacks",
+              "Pale purple bloom", 
+              "18, 21, 30, 50, 100 are important ....",
+                "Egg producer",
 
            ],
             downHints: [
-              "Frog’s home or writer’s workspace",
-                "You’ll need one in poker (or your socks)",
-                 "A word that can be sincere or sometimes just a formality",
-              "Containers for plants or stews",
-               "How a US hip-hop artist might describe your fit",
+              "Used to refer to something which is boring",
+                "Can be used to describe pale and light brown shades",
+                 "First name of a Talk show host who got cancelled in 2022",
+              "The sophisticated version of “Oh, well”",
+               "Streets will make you feel brand new, Big lights will inspire you",
            ],
 
       
         cellsWithNumber : { 
-                "i0_2": "1",
-                  "i0_3": "2",
+                "i0_1": "1",
+                  "i0_2": "2",
+              "i0_3": "3",
               "i0_4": "3",
-               "i1_1": "4",
+               "i1_0": "5",
            
-             "i2_0": "5",
-             "i3_0": "6",
-             "i4_0": "7"
+             "i2_0": "6",
+             "i3_0": "7",
+             "i4_0": "8"
           }
 
    },
@@ -104,7 +105,7 @@ function colorSquares() {
         for (let j = 0; j < 5; j++) {
             let cell = document.getElementById(`i${i}_${j}`);
              // Determine if the cell should be black based on the position
-             cell.style.backgroundColor = (i === 0 && j === 0) || (i === 1 && j === 0) || (i === 0 && j === 1) || (i === 3 && j === 4) || (i === 4 && j === 3)  || (i === 4 && j === 4)  ? "black" : "white";;
+             cell.style.backgroundColor = (i === 0 && j === 0) || (i === 3 && j === 4) || (i === 4 && j === 3)  || (i === 4 && j === 4)  ? "black" : "white";;
           }
      }
 
@@ -142,7 +143,7 @@ function initializeGame() {
             tableHTML += "<tr>";
              for (let j = 0; j < 5; j++) {
                     const cellId = `i${i}_${j}`;
-             const isBlackCell = (i === 0 && j === 0) || (i === 1 && j === 0) || (i === 0 && j === 1) || (i === 3 && j === 4) || (i === 4 && j === 3)  || (i === 4 && j === 4);
+             const isBlackCell = (i === 0 && j === 0) || (i === 3 && j === 4) || (i === 4 && j === 3)  || (i === 4 && j === 4) ;
 
             tableHTML += `<td><div style="position:relative;">
              <input
@@ -165,7 +166,7 @@ function initializeGame() {
 
     // Initial setup
     currentCellX = 0;
-    currentCellY = 2;
+    currentCellY = 1;
     document.getElementById(`i${currentCellX}_${currentCellY}`).focus();
      colorSquares();
      updateHintText();
