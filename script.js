@@ -105,7 +105,7 @@ function colorSquares() {
         for (let j = 0; j < 5; j++) {
             let cell = document.getElementById(`i${i}_${j}`);
              // Determine if the cell should be black based on the position
-             cell.style.backgroundColor = (i === 0 && j === 0) || (i === 3 && j === 4) || (i === 4 && j === 4)  ? "black" : "white";;
+             cell.style.backgroundColor = (i === 0 && j === 0) || (i === 4 && j === 3) || (i === 4 && j === 4)  ? "black" : "white";;
           }
      }
 
@@ -143,7 +143,7 @@ function initializeGame() {
             tableHTML += "<tr>";
              for (let j = 0; j < 5; j++) {
                     const cellId = `i${i}_${j}`;
-             const isBlackCell = (i === 0 && j === 0) || (i === 3 && j === 4)  || (i === 4 && j === 4) ;
+             const isBlackCell = (i === 0 && j === 0) || (i === 4 && j === 3)  || (i === 4 && j === 4) ;
 
             tableHTML += `<td><div style="position:relative;">
              <input
