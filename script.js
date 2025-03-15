@@ -14,11 +14,11 @@ let lastClickedCellId = null;
 let dailyPuzzleIndex = 0;
 const puzzles = [  {
        correctSolution: [
-    ["", "B", "E", "A", "N"],
-    ["B", "E", "L", "L", "Y"],
-    ["L", "I", "L", "A", "C"],
-    ["A", "G", "E", "S", ""],
-    ["H", "E", "N", "", ""],
+    ["", "T", "R", "E", "K"],
+    ["S", "E", "E", "D", "Y"],
+    ["E", "X", "C", "E", "L"],
+    ["A", "T", "O", "N", "E"],
+    ["M", "S", "N", "", ""],
            ],
 
       
@@ -30,19 +30,19 @@ const puzzles = [  {
 
 
            acrossHints: [
-           "British sitcom, staring a childish Mr.",
-            "Your built-in storage compartment for all your snacks",
-              "Pale purple bloom", 
-              "18, 21, 30, 50, 100 are important ....",
-                "Egg producer",
+           "Long walk that goes where few have gone before?",
+            "Full of seeds",
+              "Microsoft program that really adds up?", 
+              "First name that can be short for Antonino?",
+                "Football trio Lionel, Luis and Neymar",
 
            ],
             downHints: [
-              "Used to refer to something which is boring",
-                "Can be used to describe pale and light brown shades",
-                 "First name of a Talk show host who got cancelled in 2022",
-              "The sophisticated version of “Oh, well”",
-               "Streets will make you feel brand new, Big lights will inspire you",
+              "The line where two pieces of fabric meet",
+                "Modern-day notes passed in class?",
+                 "Military scouting mission (Short for reconnaissance?)",
+              "Where Adam and Eve lived before their expulsion",
+               "Common first name for a boy",
            ],
 
       
@@ -105,7 +105,7 @@ function colorSquares() {
         for (let j = 0; j < 5; j++) {
             let cell = document.getElementById(`i${i}_${j}`);
              // Determine if the cell should be black based on the position
-             cell.style.backgroundColor = (i === 0 && j === 0) || (i === 3 && j === 4) || (i === 4 && j === 3)  || (i === 4 && j === 4)  ? "black" : "white";;
+             cell.style.backgroundColor = (i === 0 && j === 0) || (i === 3 && j === 4) || (i === 4 && j === 4)  ? "black" : "white";;
           }
      }
 
@@ -143,7 +143,7 @@ function initializeGame() {
             tableHTML += "<tr>";
              for (let j = 0; j < 5; j++) {
                     const cellId = `i${i}_${j}`;
-             const isBlackCell = (i === 0 && j === 0) || (i === 3 && j === 4) || (i === 4 && j === 3)  || (i === 4 && j === 4) ;
+             const isBlackCell = (i === 0 && j === 0) || (i === 3 && j === 4)  || (i === 4 && j === 4) ;
 
             tableHTML += `<td><div style="position:relative;">
              <input
