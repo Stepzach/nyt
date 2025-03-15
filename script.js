@@ -33,7 +33,7 @@ const puzzles = [  {
            "Long walk that goes where few have gone before?",
             "Full of seeds",
               "Microsoft program that really adds up?", 
-              "First name that can be short for Antonino?",
+              "Make amends or reparation for a misdeed",
                 "Football trio Lionel, Luis and Neymar",
 
            ],
